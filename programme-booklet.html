@@ -291,25 +291,23 @@
   @media (max-width:560px){.lect-grid{grid-template-columns:1fr;}.field-tabs{gap:8px;}.field-tab{padding:8px 14px;font-size:0.8rem;}}
 
 
-  /* ---------- PROGRAMME BOOKLET FLIPBOOK ---------- */
-  .booklet-hero{padding:52px 0 20px;text-align:center;}
+  /* ---------- PROGRAMME BOOKLET (SCROLL READER) ---------- */
+  .booklet-hero{padding:48px 0 18px;text-align:center;}
   .booklet-hero h1{font-size:clamp(1.6rem,3vw,2.3rem);margin-bottom:10px;}
   .booklet-hero p{color:var(--slate);max-width:560px;margin:0 auto;}
-  .booklet-toolbar{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;margin:22px 0 8px;}
-  .bk-btn{display:inline-flex;align-items:center;gap:7px;background:var(--white);border:1px solid var(--line);color:var(--ink);font-weight:600;font-size:0.86rem;padding:9px 16px;border-radius:6px;cursor:pointer;}
+  .booklet-toolbar{position:sticky;top:0;z-index:50;display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 16px;margin-top:18px;background:rgba(246,246,249,0.92);backdrop-filter:blur(6px);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .bk-btn{display:inline-flex;align-items:center;gap:7px;background:var(--white);border:1px solid var(--line);color:var(--ink);font-weight:600;font-size:0.86rem;padding:9px 16px;border-radius:6px;cursor:pointer;text-decoration:none;}
   .bk-btn:hover{border-color:var(--ink);}
   .bk-btn.primary{background:var(--ink);color:#fff;border-color:var(--ink);}
   .bk-btn.primary:hover{background:var(--red-deep);border-color:var(--red-deep);}
-  .bk-page-indicator{font-size:0.85rem;color:var(--slate);font-weight:600;min-width:90px;text-align:center;}
-  .booklet-stage{display:flex;justify-content:center;padding:10px 16px 70px;}
-  #flipbook{box-shadow:0 24px 60px rgba(11,26,69,0.28);}
-  #flipbook .page{background-color:#fff;background-size:cover;background-position:center;}
-  #flipbook .page img{width:100%;height:100%;display:block;object-fit:cover;}
-  .bk-hint{text-align:center;color:var(--slate);font-size:0.8rem;margin-top:14px;}
-  .bk-loading{display:flex;flex-direction:column;align-items:center;gap:14px;padding:80px 16px;color:var(--slate);}
-  .bk-spinner{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--ink);border-radius:50%;animation:bkspin 0.8s linear infinite;}
-  @keyframes bkspin{to{transform:rotate(360deg);}}
-  @media (max-width:760px){.booklet-hero{padding:36px 0 12px;}}
+  .bk-page-indicator{font-size:0.85rem;color:var(--slate);font-weight:600;min-width:96px;text-align:center;}
+  .booklet-scroll{max-width:900px;margin:0 auto;padding:28px 16px 90px;display:flex;flex-direction:column;align-items:center;gap:18px;}
+  .bk-page-wrap{width:100%;position:relative;background:#fff;box-shadow:0 8px 26px rgba(11,26,69,0.12);border-radius:4px;overflow:hidden;}
+  .bk-page-wrap img{width:100%;height:auto;display:block;}
+  .bk-page-num{position:absolute;bottom:10px;right:14px;background:rgba(11,26,69,0.72);color:#fff;font-size:0.72rem;font-weight:700;padding:3px 9px;border-radius:12px;}
+  .bk-page-placeholder{width:100%;aspect-ratio:992/1228;background:linear-gradient(100deg,#eceef4 25%,#f6f6f9 37%,#eceef4 63%);background-size:400% 100%;animation:bkshimmer 1.4s ease infinite;border-radius:4px;}
+  @keyframes bkshimmer{0%{background-position:100% 0;}100%{background-position:0 0;}}
+  @media (max-width:760px){.booklet-hero{padding:34px 0 10px;}.booklet-scroll{padding:20px 10px 70px;}}
 </style>
 <body>
 
@@ -348,26 +346,72 @@
     <div class="wrap">
       <span class="eyebrow-sm">SYNTHESIZING DIGITAL INTELLECT</span>
       <h1>Programme & Structure Handbook</h1>
-      <p>Faculty of Computing & Multimedia — Universiti Poly-Tech Malaysia. Klik tepi muka surat atau guna anak panah untuk baca macam buku sebenar.</p>
-      <div class="booklet-toolbar">
-        <button class="bk-btn" id="bkPrev">&larr; Prev</button>
-        <span class="bk-page-indicator" id="bkIndicator">Loading…</span>
-        <button class="bk-btn" id="bkNext">Next &rarr;</button>
-        <button class="bk-btn" id="bkZoomOut">&minus;</button>
-        <button class="bk-btn" id="bkZoomIn">+</button>
-        <a class="bk-btn primary" href="programme-booklet.pdf" target="_blank" rel="noopener">Download PDF</a>
-      </div>
+      <p>Faculty of Computing & Multimedia — Universiti Poly-Tech Malaysia. Scroll down to read each page.</p>
     </div>
   </section>
 
-  <div class="booklet-stage">
-    <div id="bkLoading" class="bk-loading">
-      <div class="bk-spinner"></div>
-      <span>Menyediakan buku program…</span>
-    </div>
-    <div id="flipbook" style="display:none;"></div>
+  <div class="booklet-toolbar">
+    <a class="bk-btn" id="bkTop" href="#main">&uarr; Top</a>
+    <span class="bk-page-indicator" id="bkIndicator">Page 1 / 55</span>
   </div>
-  <p class="bk-hint wrap">Tip: pada desktop, klik & seret sudut muka surat untuk membelek. Pada mobile, leret (swipe) kiri/kanan.</p>
+
+  <div class="booklet-scroll" id="bookletScroll">
+    <div class="bk-page-wrap" data-page="1"><div class="bk-page-placeholder"></div><div class="bk-page-num">1 / 55</div></div>
+    <div class="bk-page-wrap" data-page="2"><div class="bk-page-placeholder"></div><div class="bk-page-num">2 / 55</div></div>
+    <div class="bk-page-wrap" data-page="3"><div class="bk-page-placeholder"></div><div class="bk-page-num">3 / 55</div></div>
+    <div class="bk-page-wrap" data-page="4"><div class="bk-page-placeholder"></div><div class="bk-page-num">4 / 55</div></div>
+    <div class="bk-page-wrap" data-page="5"><div class="bk-page-placeholder"></div><div class="bk-page-num">5 / 55</div></div>
+    <div class="bk-page-wrap" data-page="6"><div class="bk-page-placeholder"></div><div class="bk-page-num">6 / 55</div></div>
+    <div class="bk-page-wrap" data-page="7"><div class="bk-page-placeholder"></div><div class="bk-page-num">7 / 55</div></div>
+    <div class="bk-page-wrap" data-page="8"><div class="bk-page-placeholder"></div><div class="bk-page-num">8 / 55</div></div>
+    <div class="bk-page-wrap" data-page="9"><div class="bk-page-placeholder"></div><div class="bk-page-num">9 / 55</div></div>
+    <div class="bk-page-wrap" data-page="10"><div class="bk-page-placeholder"></div><div class="bk-page-num">10 / 55</div></div>
+    <div class="bk-page-wrap" data-page="11"><div class="bk-page-placeholder"></div><div class="bk-page-num">11 / 55</div></div>
+    <div class="bk-page-wrap" data-page="12"><div class="bk-page-placeholder"></div><div class="bk-page-num">12 / 55</div></div>
+    <div class="bk-page-wrap" data-page="13"><div class="bk-page-placeholder"></div><div class="bk-page-num">13 / 55</div></div>
+    <div class="bk-page-wrap" data-page="14"><div class="bk-page-placeholder"></div><div class="bk-page-num">14 / 55</div></div>
+    <div class="bk-page-wrap" data-page="15"><div class="bk-page-placeholder"></div><div class="bk-page-num">15 / 55</div></div>
+    <div class="bk-page-wrap" data-page="16"><div class="bk-page-placeholder"></div><div class="bk-page-num">16 / 55</div></div>
+    <div class="bk-page-wrap" data-page="17"><div class="bk-page-placeholder"></div><div class="bk-page-num">17 / 55</div></div>
+    <div class="bk-page-wrap" data-page="18"><div class="bk-page-placeholder"></div><div class="bk-page-num">18 / 55</div></div>
+    <div class="bk-page-wrap" data-page="19"><div class="bk-page-placeholder"></div><div class="bk-page-num">19 / 55</div></div>
+    <div class="bk-page-wrap" data-page="20"><div class="bk-page-placeholder"></div><div class="bk-page-num">20 / 55</div></div>
+    <div class="bk-page-wrap" data-page="21"><div class="bk-page-placeholder"></div><div class="bk-page-num">21 / 55</div></div>
+    <div class="bk-page-wrap" data-page="22"><div class="bk-page-placeholder"></div><div class="bk-page-num">22 / 55</div></div>
+    <div class="bk-page-wrap" data-page="23"><div class="bk-page-placeholder"></div><div class="bk-page-num">23 / 55</div></div>
+    <div class="bk-page-wrap" data-page="24"><div class="bk-page-placeholder"></div><div class="bk-page-num">24 / 55</div></div>
+    <div class="bk-page-wrap" data-page="25"><div class="bk-page-placeholder"></div><div class="bk-page-num">25 / 55</div></div>
+    <div class="bk-page-wrap" data-page="26"><div class="bk-page-placeholder"></div><div class="bk-page-num">26 / 55</div></div>
+    <div class="bk-page-wrap" data-page="27"><div class="bk-page-placeholder"></div><div class="bk-page-num">27 / 55</div></div>
+    <div class="bk-page-wrap" data-page="28"><div class="bk-page-placeholder"></div><div class="bk-page-num">28 / 55</div></div>
+    <div class="bk-page-wrap" data-page="29"><div class="bk-page-placeholder"></div><div class="bk-page-num">29 / 55</div></div>
+    <div class="bk-page-wrap" data-page="30"><div class="bk-page-placeholder"></div><div class="bk-page-num">30 / 55</div></div>
+    <div class="bk-page-wrap" data-page="31"><div class="bk-page-placeholder"></div><div class="bk-page-num">31 / 55</div></div>
+    <div class="bk-page-wrap" data-page="32"><div class="bk-page-placeholder"></div><div class="bk-page-num">32 / 55</div></div>
+    <div class="bk-page-wrap" data-page="33"><div class="bk-page-placeholder"></div><div class="bk-page-num">33 / 55</div></div>
+    <div class="bk-page-wrap" data-page="34"><div class="bk-page-placeholder"></div><div class="bk-page-num">34 / 55</div></div>
+    <div class="bk-page-wrap" data-page="35"><div class="bk-page-placeholder"></div><div class="bk-page-num">35 / 55</div></div>
+    <div class="bk-page-wrap" data-page="36"><div class="bk-page-placeholder"></div><div class="bk-page-num">36 / 55</div></div>
+    <div class="bk-page-wrap" data-page="37"><div class="bk-page-placeholder"></div><div class="bk-page-num">37 / 55</div></div>
+    <div class="bk-page-wrap" data-page="38"><div class="bk-page-placeholder"></div><div class="bk-page-num">38 / 55</div></div>
+    <div class="bk-page-wrap" data-page="39"><div class="bk-page-placeholder"></div><div class="bk-page-num">39 / 55</div></div>
+    <div class="bk-page-wrap" data-page="40"><div class="bk-page-placeholder"></div><div class="bk-page-num">40 / 55</div></div>
+    <div class="bk-page-wrap" data-page="41"><div class="bk-page-placeholder"></div><div class="bk-page-num">41 / 55</div></div>
+    <div class="bk-page-wrap" data-page="42"><div class="bk-page-placeholder"></div><div class="bk-page-num">42 / 55</div></div>
+    <div class="bk-page-wrap" data-page="43"><div class="bk-page-placeholder"></div><div class="bk-page-num">43 / 55</div></div>
+    <div class="bk-page-wrap" data-page="44"><div class="bk-page-placeholder"></div><div class="bk-page-num">44 / 55</div></div>
+    <div class="bk-page-wrap" data-page="45"><div class="bk-page-placeholder"></div><div class="bk-page-num">45 / 55</div></div>
+    <div class="bk-page-wrap" data-page="46"><div class="bk-page-placeholder"></div><div class="bk-page-num">46 / 55</div></div>
+    <div class="bk-page-wrap" data-page="47"><div class="bk-page-placeholder"></div><div class="bk-page-num">47 / 55</div></div>
+    <div class="bk-page-wrap" data-page="48"><div class="bk-page-placeholder"></div><div class="bk-page-num">48 / 55</div></div>
+    <div class="bk-page-wrap" data-page="49"><div class="bk-page-placeholder"></div><div class="bk-page-num">49 / 55</div></div>
+    <div class="bk-page-wrap" data-page="50"><div class="bk-page-placeholder"></div><div class="bk-page-num">50 / 55</div></div>
+    <div class="bk-page-wrap" data-page="51"><div class="bk-page-placeholder"></div><div class="bk-page-num">51 / 55</div></div>
+    <div class="bk-page-wrap" data-page="52"><div class="bk-page-placeholder"></div><div class="bk-page-num">52 / 55</div></div>
+    <div class="bk-page-wrap" data-page="53"><div class="bk-page-placeholder"></div><div class="bk-page-num">53 / 55</div></div>
+    <div class="bk-page-wrap" data-page="54"><div class="bk-page-placeholder"></div><div class="bk-page-num">54 / 55</div></div>
+    <div class="bk-page-wrap" data-page="55"><div class="bk-page-placeholder"></div><div class="bk-page-num">55 / 55</div></div>
+  </div>
 </main>
 
 <footer>
@@ -445,8 +489,6 @@
 </html>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
 <script>
   const BOOKLET_PAGES = [
 "images-booklet/page-01.jpg",
@@ -506,63 +548,41 @@
 "images-booklet/page-55.jpg"
 ];
 
-  function initFlipbook() {
-    const $book = $('#flipbook');
-    BOOKLET_PAGES.forEach((src) => {
-      const $page = $('<div class="page"></div>');
-      $page.append('<img src="' + src + '" alt="Programme booklet page" loading="lazy">');
-      $book.append($page);
-    });
+  const wraps = document.querySelectorAll('.bk-page-wrap');
+  const indicator = document.getElementById('bkIndicator');
 
-    const isMobile = window.innerWidth < 760;
-    const maxW = Math.min(window.innerWidth - 32, isMobile ? 480 : 1000);
-    const pageRatio = 1228/992;
-    const bookW = maxW;
-    const bookH = Math.round((isMobile ? bookW : bookW/2) * pageRatio);
-
-    $book.turn({
-      width: bookW,
-      height: bookH,
-      autoCenter: true,
-      display: isMobile ? 'single' : 'double',
-      acceleration: true,
-      gradients: true,
-      elevation: 50,
-      when: {
-        turning: function(event, page) {
-          updateIndicator(page);
+  // Lazy-load each page image as it approaches the viewport
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const wrap = entry.target;
+        const idx = parseInt(wrap.dataset.page, 10) - 1;
+        if (!wrap.dataset.loaded) {
+          const img = new Image();
+          img.src = BOOKLET_PAGES[idx];
+          img.alt = 'Programme booklet page ' + (idx + 1);
+          img.loading = 'lazy';
+          img.onload = () => {
+            wrap.querySelector('.bk-page-placeholder').replaceWith(img);
+          };
+          wrap.dataset.loaded = 'true';
         }
+        io.unobserve(wrap);
       }
     });
+  }, { rootMargin: '600px 0px 600px 0px' });
 
-    document.getElementById('bkLoading').style.display = 'none';
-    $book.show();
-    updateIndicator(1);
+  wraps.forEach(w => io.observe(w));
 
-    document.getElementById('bkPrev').addEventListener('click', () => $book.turn('previous'));
-    document.getElementById('bkNext').addEventListener('click', () => $book.turn('next'));
-
-    let zoom = 1;
-    document.getElementById('bkZoomIn').addEventListener('click', () => {
-      zoom = Math.min(zoom + 0.2, 2);
-      $book.css('transform', 'scale(' + zoom + ')');
+  // Update page indicator based on scroll position
+  const pageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        indicator.textContent = 'Page ' + entry.target.dataset.page + ' / 55';
+      }
     });
-    document.getElementById('bkZoomOut').addEventListener('click', () => {
-      zoom = Math.max(zoom - 0.2, 0.6);
-      $book.css('transform', 'scale(' + zoom + ')');
-    });
-
-    function updateIndicator(page) {
-      document.getElementById('bkIndicator').textContent = 'Muka surat ' + page + ' / ' + BOOKLET_PAGES.length;
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') $book.turn('next');
-      if (e.key === 'ArrowLeft') $book.turn('previous');
-    });
-  }
-
-  window.addEventListener('load', initFlipbook);
+  }, { threshold: 0.5 });
+  wraps.forEach(w => pageObserver.observe(w));
 
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
