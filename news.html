@@ -448,7 +448,7 @@
       <img src="images/fcom-chatbot-icon.png" alt="" style="width:34px;height:34px;border-radius:50%;background:#fff;flex:none;">
       <div>
         <div class="chat-head-title">FCOM Assistant</div>
-        <div class="chat-head-sub">Tanya pasal program, yuran & kelayakan</div>
+        <div class="chat-head-sub">Tanya pasal program & peraturan akademik / Ask about programmes & regulations</div>
       </div>
     </div>
     <button class="chat-close" id="chatClose" aria-label="Close chat">
@@ -461,6 +461,7 @@
     <button class="chat-chip">Cyber Security</button>
     <button class="chat-chip">Yuran & kelayakan</button>
     <button class="chat-chip">Hubungi FCOM</button>
+    <button class="chat-chip">Peraturan Akademik</button>
   </div>
   <div class="chat-input-row">
     <input type="text" id="chatInput" placeholder="Taip soalan anda...">
@@ -480,99 +481,357 @@
 </div>
 
 <script>
-  /* ---------- FCOM ASSISTANT: simple keyword-search chatbot ---------- */
-  /* Knowledge base — TODO: replace/expand with full content from programme-booklet.html */
+    /* ---------- FCOM ASSISTANT: simple keyword-search chatbot ---------- */
+  /* Knowledge base — FCOM programme info + UPTM Academic Regulations, bilingual (BM & EN) */
   const FCOM_KB = [
     {
-      keywords: ["program", "programme", "kursus", "course", "tawar", "senarai program", "apa program", "list program"],
-      answer: "FCOM menawarkan <b>8 program</b>:<br>• Foundation in Information Technology (FT001)<br>• Diploma in Computer Science (CC101)<br>• Bachelor of Arts in 3D Animation & Digital Media (Hons) (CM201)<br>• Bachelor in Computer Science (Hons) (CC203)<br>• Bachelor of IT (Hons) — Computer Application Development (CT204)<br>• Bachelor of IT (Hons) — Cyber Security (CT206)<br>• Bachelor in IT (Hons) — Data Analytics (CT207)<br>• Bachelor in Artificial Intelligence (Hons) (CC204)<br><br>Tanya nama program tu untuk butiran penuh, atau baca <a href=\"programme-booklet.html\" target=\"_blank\">buku program</a>."
+      keywords: ["program", "programme", "kursus", "course", "tawar", "senarai program", "apa program", "list program", "programs offered", "what programmes"],
+      answer: {
+        ms: "FCOM menawarkan <b>8 program</b>:<br>• Foundation in Information Technology (FT001)<br>• Diploma in Computer Science (CC101)<br>• Bachelor of Arts in 3D Animation & Digital Media (Hons) (CM201)<br>• Bachelor in Computer Science (Hons) (CC203)<br>• Bachelor of IT (Hons) — Computer Application Development (CT204)<br>• Bachelor of IT (Hons) — Cyber Security (CT206)<br>• Bachelor in IT (Hons) — Data Analytics (CT207)<br>• Bachelor in Artificial Intelligence (Hons) (CC204)<br><br>Tanya nama program tu untuk butiran penuh, atau baca <a href=\"programme-booklet.html\" target=\"_blank\">buku program</a>.",
+        en: "FCOM offers <b>8 programmes</b>:<br>• Foundation in Information Technology (FT001)<br>• Diploma in Computer Science (CC101)<br>• Bachelor of Arts in 3D Animation & Digital Media (Hons) (CM201)<br>• Bachelor in Computer Science (Hons) (CC203)<br>• Bachelor of IT (Hons) — Computer Application Development (CT204)<br>• Bachelor of IT (Hons) — Cyber Security (CT206)<br>• Bachelor in IT (Hons) — Data Analytics (CT207)<br>• Bachelor in Artificial Intelligence (Hons) (CC204)<br><br>Ask the programme name for full details, or read the <a href='programme-booklet.html' target='_blank'>programme booklet</a>."
+      }
     },
     {
-      keywords: ["foundation", "foundation in information technology", "ft001", "asasi"],
-      answer: "<b>Foundation in Information Technology (FT001)</b><br>Tempoh: 1 tahun (51 jam kredit)<br>Bahasa Pengantar: Bahasa Melayu & English<br>Sijil: CompTIA<br><b>Yuran:</b> RM10,630 (jumlah keseluruhan tuition fee)<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• Lulus SPM dengan sekurang-kurangnya kepujian dalam 5 subjek termasuk English & Matematik<br>• O-Level gred C dalam 5 subjek termasuk English & Matematik<br>• UEC gred B dalam 3 subjek termasuk English & Matematik<br>• IGCSE gred C dalam 5 subjek termasuk English<br>• MUET Band 3 / CEFR Low B1 / IELTS 4.0 / TOEFL 5.0<br><br>Membuka laluan ke semua ijazah FCOM (Computer Science, Cyber Security, AI, 3D Animation, dll)."
+      keywords: ["foundation", "foundation in information technology", "ft001", "asasi", "foundation programme", "foundation requirements"],
+      answer: {
+        ms: "<b>Foundation in Information Technology (FT001)</b><br>Tempoh: 1 tahun (51 jam kredit)<br>Bahasa Pengantar: Bahasa Melayu & English<br>Sijil: CompTIA<br><b>Yuran:</b> RM10,630 (jumlah keseluruhan tuition fee)<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• Lulus SPM dengan sekurang-kurangnya kepujian dalam 5 subjek termasuk English & Matematik<br>• O-Level gred C dalam 5 subjek termasuk English & Matematik<br>• UEC gred B dalam 3 subjek termasuk English & Matematik<br>• IGCSE gred C dalam 5 subjek termasuk English<br>• MUET Band 3 / CEFR Low B1 / IELTS 4.0 / TOEFL 5.0<br><br>Membuka laluan ke semua ijazah FCOM (Computer Science, Cyber Security, AI, 3D Animation, dll).",
+        en: "<b>Foundation in Information Technology (FT001)</b><br>Duration: 1 year (51 credit hours)<br>Medium of Instruction: Bahasa Melayu & English<br>Certification: CompTIA<br><b>Fee:</b> RM10,630 (total tuition fee)<br><br><b>Entry requirements</b> (any one):<br>• SPM pass with at least a credit in 5 subjects including English & Mathematics<br>• O-Level grade C in 5 subjects including English & Mathematics<br>• UEC grade B in 3 subjects including English & Mathematics<br>• IGCSE grade C in 5 subjects including English<br>• MUET Band 3 / CEFR Low B1 / IELTS 4.0 / TOEFL 5.0<br><br>Opens the pathway to all FCOM degrees (Computer Science, Cyber Security, AI, 3D Animation, etc.)."
+      }
     },
     {
-      keywords: ["diploma", "diploma computer science", "cc101", "diploma sains komputer"],
-      answer: "<b>Diploma in Computer Science (CC101)</b><br>Tempoh: 2 tahun 4 bulan (90 jam kredit)<br>Sijil: Cisco & CompTIA<br><b>Yuran:</b> RM20,000 (jumlah keseluruhan tuition fee)<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• SPM sekurang-kurangnya 3 kepujian (termasuk Matematik atau setara)<br>• STPM Gred C (GP 2.00) dalam 2 subjek + kepujian Matematik SPM<br>• STAM gred Maqbul + kepujian Matematik SPM<br>• SKM Level 3 dalam bidang berkaitan<br>• Sijil (Level 3, MQF) dengan CGPA 2.00<br><br><b>Peluang kerjaya:</b> IT Assistant Project Manager, System Analyst, Computer Programmer, Software Engineer, Web Developer, Network/Database Administrator."
+      keywords: ["diploma", "diploma computer science", "cc101", "diploma sains komputer", "diploma computer science requirements", "diploma requirements"],
+      answer: {
+        ms: "<b>Diploma in Computer Science (CC101)</b><br>Tempoh: 2 tahun 4 bulan (90 jam kredit)<br>Sijil: Cisco & CompTIA<br><b>Yuran:</b> RM20,000 (jumlah keseluruhan tuition fee)<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• SPM sekurang-kurangnya 3 kepujian (termasuk Matematik atau setara)<br>• STPM Gred C (GP 2.00) dalam 2 subjek + kepujian Matematik SPM<br>• STAM gred Maqbul + kepujian Matematik SPM<br>• SKM Level 3 dalam bidang berkaitan<br>• Sijil (Level 3, MQF) dengan CGPA 2.00<br><br><b>Peluang kerjaya:</b> IT Assistant Project Manager, System Analyst, Computer Programmer, Software Engineer, Web Developer, Network/Database Administrator.",
+        en: "<b>Diploma in Computer Science (CC101)</b><br>Duration: 2 years 4 months (90 credit hours)<br>Certification: Cisco & CompTIA<br><b>Fee:</b> RM20,000 (total tuition fee)<br><br><b>Entry requirements</b> (any one):<br>• SPM with at least 3 credits (including Mathematics or equivalent)<br>• STPM Grade C (GP 2.00) in 2 subjects + SPM credit in Mathematics<br>• STAM grade Maqbul + SPM credit in Mathematics<br>• SKM Level 3 in a related field<br>• Certificate (Level 3, MQF) with CGPA 2.00<br><br><b>Career opportunities:</b> IT Assistant Project Manager, System Analyst, Computer Programmer, Software Engineer, Web Developer, Network/Database Administrator."
+      }
     },
     {
-      keywords: ["computer science", "bachelor computer science", "cc203", "sains komputer ijazah"],
-      answer: "<b>Bachelor in Computer Science (Hons) (CC203)</b><br>Tempoh: 3 tahun (120 jam kredit) | Bahasa: English<br>Sijil: Cisco & CompTIA<br><b>Yuran:</b> RM48,540 (jumlah keseluruhan tuition fee)<br><br>Menggabungkan matematik, pengaturcaraan, kejuruteraan untuk AI, Data Analytics & Digital Governance. Fokus algoritma, struktur data, computer graphics, cybersecurity & software development.<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• STPM Gred C (GP 2.00) dalam 2 subjek<br>• STAM gred Jayyid dalam 2 subjek<br>• Matrikulasi/Foundation CGPA 2.00<br>• Diploma Sains & Teknologi (Level 4, MQF) CGPA 2.75 + kepujian Matematik Tambahan SPM<br><br><b>Peluang kerjaya:</b> Software Engineer, Full-stack Developer, AI/ML Developer, IT Consultant, Cybersecurity Analyst, DevOps/Cloud Engineer, UI/UX Designer."
+      keywords: ["computer science", "bachelor computer science", "cc203", "sains komputer ijazah", "computer science requirements", "computer science degree"],
+      answer: {
+        ms: "<b>Bachelor in Computer Science (Hons) (CC203)</b><br>Tempoh: 3 tahun (120 jam kredit) | Bahasa: English<br>Sijil: Cisco & CompTIA<br><b>Yuran:</b> RM48,540 (jumlah keseluruhan tuition fee)<br><br>Menggabungkan matematik, pengaturcaraan, kejuruteraan untuk AI, Data Analytics & Digital Governance. Fokus algoritma, struktur data, computer graphics, cybersecurity & software development.<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• STPM Gred C (GP 2.00) dalam 2 subjek<br>• STAM gred Jayyid dalam 2 subjek<br>• Matrikulasi/Foundation CGPA 2.00<br>• Diploma Sains & Teknologi (Level 4, MQF) CGPA 2.75 + kepujian Matematik Tambahan SPM<br><br><b>Peluang kerjaya:</b> Software Engineer, Full-stack Developer, AI/ML Developer, IT Consultant, Cybersecurity Analyst, DevOps/Cloud Engineer, UI/UX Designer.",
+        en: "<b>Bachelor in Computer Science (Hons) (CC203)</b><br>Duration: 3 years (120 credit hours) | Medium: English<br>Certification: Cisco & CompTIA<br><b>Fee:</b> RM48,540 (total tuition fee)<br><br>Combines mathematics, programming & engineering for AI, Data Analytics & Digital Governance. Focuses on algorithms, data structures, computer graphics, cybersecurity & software development.<br><br><b>Entry requirements</b> (any one):<br>• STPM Grade C (GP 2.00) in 2 subjects<br>• STAM grade Jayyid in 2 subjects<br>• Matriculation/Foundation CGPA 2.00<br>• Diploma in Science & Technology (Level 4, MQF) CGPA 2.75 + SPM credit in Additional Mathematics<br><br><b>Career opportunities:</b> Software Engineer, Full-stack Developer, AI/ML Developer, IT Consultant, Cybersecurity Analyst, DevOps/Cloud Engineer, UI/UX Designer."
+      }
     },
     {
-      keywords: ["computer application development", "application development", "cad", "ct204", "aplikasi komputer"],
-      answer: "<b>Bachelor of IT (Hons) — Computer Application Development (CT204)</b><br>Tempoh: 3 tahun (120 jam kredit) | Bahasa: English<br>Sijil: Cisco, CompTIA & Red Hat Academy<br><b>Yuran:</b> RM38,700 (jumlah keseluruhan tuition fee)<br><br>Kepakaran teori & praktikal dalam software engineering & IT — advanced programming, mobile & enterprise development, software testing, data analytics.<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• STPM Gred C (GP 2.00) dalam 2 subjek<br>• Diploma bukan-computing CGPA 2.75 + kepujian Matematik SPM<br>• Diploma bidang Computing CGPA 2.50<br>• A-Level Gred D (GP 2.00) dalam 2 subjek termasuk Matematik<br>• UEC Gred B dalam 5 subjek termasuk Matematik<br><br><b>Peluang kerjaya:</b> Software Developer/Engineer, Web/Mobile Apps Developer, Full-stack Developer, Database Administrator, System Analyst, DevOps Engineer."
+      keywords: ["computer application development", "application development", "cad", "ct204", "aplikasi komputer", "computer application development requirements"],
+      answer: {
+        ms: "<b>Bachelor of IT (Hons) — Computer Application Development (CT204)</b><br>Tempoh: 3 tahun (120 jam kredit) | Bahasa: English<br>Sijil: Cisco, CompTIA & Red Hat Academy<br><b>Yuran:</b> RM38,700 (jumlah keseluruhan tuition fee)<br><br>Kepakaran teori & praktikal dalam software engineering & IT — advanced programming, mobile & enterprise development, software testing, data analytics.<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• STPM Gred C (GP 2.00) dalam 2 subjek<br>• Diploma bukan-computing CGPA 2.75 + kepujian Matematik SPM<br>• Diploma bidang Computing CGPA 2.50<br>• A-Level Gred D (GP 2.00) dalam 2 subjek termasuk Matematik<br>• UEC Gred B dalam 5 subjek termasuk Matematik<br><br><b>Peluang kerjaya:</b> Software Developer/Engineer, Web/Mobile Apps Developer, Full-stack Developer, Database Administrator, System Analyst, DevOps Engineer.",
+        en: "<b>Bachelor of IT (Hons) — Computer Application Development (CT204)</b><br>Duration: 3 years (120 credit hours) | Medium: English<br>Certification: Cisco, CompTIA & Red Hat Academy<br><b>Fee:</b> RM38,700 (total tuition fee)<br><br>Theoretical & practical expertise in software engineering & IT — advanced programming, mobile & enterprise development, software testing, data analytics.<br><br><b>Entry requirements</b> (any one):<br>• STPM Grade C (GP 2.00) in 2 subjects<br>• Non-computing Diploma CGPA 2.75 + SPM credit in Mathematics<br>• Diploma in Computing CGPA 2.50<br>• A-Level Grade D (GP 2.00) in 2 subjects including Mathematics<br>• UEC Grade B in 5 subjects including Mathematics<br><br><b>Career opportunities:</b> Software Developer/Engineer, Web/Mobile Apps Developer, Full-stack Developer, Database Administrator, System Analyst, DevOps Engineer."
+      }
     },
     {
-      keywords: ["cyber security", "cybersecurity", "security", "keselamatan siber", "ct206"],
-      answer: "<b>Bachelor of IT (Hons) — Cyber Security (CT206)</b><br>Tempoh: 3 tahun (120 jam kredit) | Bahasa: English<br>Sijil: Cisco, CompTIA & Red Hat Academy<br>Dilancarkan 2015, diakreditasi penuh MQA sejak 2018.<br><b>Yuran:</b> RM44,100 (jumlah keseluruhan tuition fee)<br><br>Meliputi cryptography, ethical hacking, digital forensics & network security.<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• STPM Gred C (GP 2.00) dalam 2 subjek<br>• Matrikulasi/Foundation CGPA 2.00<br>• Diploma (Level 4, MQF) CGPA 2.75 + kepujian Matematik SPM<br>• Diploma bidang Computing CGPA 2.50<br><br><b>Peluang kerjaya:</b> Security Engineer, Network/Information Security Engineer, Security Analyst, Cryptographer, Forensic Analyst, Incident Responder & Penetration Tester, IT Auditor."
+      keywords: ["cyber security", "cybersecurity", "security", "keselamatan siber", "ct206", "cyber security requirements", "cybersecurity degree"],
+      answer: {
+        ms: "<b>Bachelor of IT (Hons) — Cyber Security (CT206)</b><br>Tempoh: 3 tahun (120 jam kredit) | Bahasa: English<br>Sijil: Cisco, CompTIA & Red Hat Academy<br>Dilancarkan 2015, diakreditasi penuh MQA sejak 2018.<br><b>Yuran:</b> RM44,100 (jumlah keseluruhan tuition fee)<br><br>Meliputi cryptography, ethical hacking, digital forensics & network security.<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• STPM Gred C (GP 2.00) dalam 2 subjek<br>• Matrikulasi/Foundation CGPA 2.00<br>• Diploma (Level 4, MQF) CGPA 2.75 + kepujian Matematik SPM<br>• Diploma bidang Computing CGPA 2.50<br><br><b>Peluang kerjaya:</b> Security Engineer, Network/Information Security Engineer, Security Analyst, Cryptographer, Forensic Analyst, Incident Responder & Penetration Tester, IT Auditor.",
+        en: "<b>Bachelor of IT (Hons) — Cyber Security (CT206)</b><br>Duration: 3 years (120 credit hours) | Medium: English<br>Certification: Cisco, CompTIA & Red Hat Academy<br>Launched 2015, fully MQA-accredited since 2018.<br><b>Fee:</b> RM44,100 (total tuition fee)<br><br>Covers cryptography, ethical hacking, digital forensics & network security.<br><br><b>Entry requirements</b> (any one):<br>• STPM Grade C (GP 2.00) in 2 subjects<br>• Matriculation/Foundation CGPA 2.00<br>• Diploma (Level 4, MQF) CGPA 2.75 + SPM credit in Mathematics<br>• Diploma in Computing CGPA 2.50<br><br><b>Career opportunities:</b> Security Engineer, Network/Information Security Engineer, Security Analyst, Cryptographer, Forensic Analyst, Incident Responder & Penetration Tester, IT Auditor."
+      }
     },
     {
-      keywords: ["data analytics", "data analysis", "ct207", "analitik data"],
-      answer: "<b>Bachelor in IT (Hons) — Data Analytics (CT207)</b><br>Tempoh: 3 tahun (120 jam kredit) | Bahasa: English/Bahasa Melayu<br>Sijil: Cisco, CompTIA, Red Hat Academy & SAS<br>(Versi rebrand dari Bachelor of IT (Hons) in Business Computing, intake pertama Mei 2018; akreditasi penuh MQA 2021)<br><b>Yuran:</b> RM47,370 (jumlah keseluruhan tuition fee)<br><br>Gabungan asas IT (programming, database, networking) dengan analitik lanjutan (statistical analysis, machine learning, big data, data visualization).<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• STPM Gred C (GP 2.00) dalam 2 subjek<br>• Matrikulasi/Foundation CGPA 2.00<br>• Diploma (Level 4, MQF) CGPA 2.75<br><br><b>Peluang kerjaya:</b> Data Analyst, Business Intelligence Specialist, Data Scientist, Data Engineer, Business Consultant."
+      keywords: ["data analytics", "data analysis", "ct207", "analitik data", "data analytics requirements", "data analytics degree"],
+      answer: {
+        ms: "<b>Bachelor in IT (Hons) — Data Analytics (CT207)</b><br>Tempoh: 3 tahun (120 jam kredit) | Bahasa: English/Bahasa Melayu<br>Sijil: Cisco, CompTIA, Red Hat Academy & SAS<br>(Versi rebrand dari Bachelor of IT (Hons) in Business Computing, intake pertama Mei 2018; akreditasi penuh MQA 2021)<br><b>Yuran:</b> RM47,370 (jumlah keseluruhan tuition fee)<br><br>Gabungan asas IT (programming, database, networking) dengan analitik lanjutan (statistical analysis, machine learning, big data, data visualization).<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• STPM Gred C (GP 2.00) dalam 2 subjek<br>• Matrikulasi/Foundation CGPA 2.00<br>• Diploma (Level 4, MQF) CGPA 2.75<br><br><b>Peluang kerjaya:</b> Data Analyst, Business Intelligence Specialist, Data Scientist, Data Engineer, Business Consultant.",
+        en: "<b>Bachelor in IT (Hons) — Data Analytics (CT207)</b><br>Duration: 3 years (120 credit hours) | Medium: English/Bahasa Melayu<br>Certification: Cisco, CompTIA, Red Hat Academy & SAS<br>(Rebranded version of Bachelor of IT (Hons) in Business Computing, first intake May 2018; fully MQA-accredited 2021)<br><b>Fee:</b> RM47,370 (total tuition fee)<br><br>Combines core IT (programming, database, networking) with advanced analytics (statistical analysis, machine learning, big data, data visualization).<br><br><b>Entry requirements</b> (any one):<br>• STPM Grade C (GP 2.00) in 2 subjects<br>• Matriculation/Foundation CGPA 2.00<br>• Diploma (Level 4, MQF) CGPA 2.75<br><br><b>Career opportunities:</b> Data Analyst, Business Intelligence Specialist, Data Scientist, Data Engineer, Business Consultant."
+      }
     },
     {
-      keywords: ["artificial intelligence", "ai", "machine learning", "cc204", "kecerdasan buatan"],
-      answer: "<b>Bachelor in Artificial Intelligence (Hons) (CC204)</b><br>Tempoh: 3 tahun (120 jam kredit) | Bahasa: English<br>Sijil: CompTIA<br>Dibangunkan mengikut Programme Standards: Artificial Intelligence (PS:AI 2025) oleh MQA.<br><b>Yuran:</b> RM81,500 (jumlah keseluruhan tuition fee)<br><br>Meliputi AI fundamentals, machine learning, generative AI, reinforcement learning, computer vision, NLP.<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• STPM (Arts Stream) Gred C (GP 2.00) dalam 2 subjek + kepujian Matematik Tambahan SPM<br>• STPM (Science Stream) Gred C (GP 2.00) + 1 subjek Sains/ICT<br>• Matrikulasi/Foundation CGPA 2.00<br>• Diploma Sains & Teknologi (Level 4) CGPA 2.75<br><br><b>Peluang kerjaya:</b> AI Engineer, Machine Learning Engineer, Data Scientist, AI Systems Developer, Computer Vision Engineer, NLP Engineer, Robotics Engineer."
+      keywords: ["artificial intelligence", "ai", "machine learning", "cc204", "kecerdasan buatan", "artificial intelligence degree", "ai degree requirements"],
+      answer: {
+        ms: "<b>Bachelor in Artificial Intelligence (Hons) (CC204)</b><br>Tempoh: 3 tahun (120 jam kredit) | Bahasa: English<br>Sijil: CompTIA<br>Dibangunkan mengikut Programme Standards: Artificial Intelligence (PS:AI 2025) oleh MQA.<br><b>Yuran:</b> RM81,500 (jumlah keseluruhan tuition fee)<br><br>Meliputi AI fundamentals, machine learning, generative AI, reinforcement learning, computer vision, NLP.<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• STPM (Arts Stream) Gred C (GP 2.00) dalam 2 subjek + kepujian Matematik Tambahan SPM<br>• STPM (Science Stream) Gred C (GP 2.00) + 1 subjek Sains/ICT<br>• Matrikulasi/Foundation CGPA 2.00<br>• Diploma Sains & Teknologi (Level 4) CGPA 2.75<br><br><b>Peluang kerjaya:</b> AI Engineer, Machine Learning Engineer, Data Scientist, AI Systems Developer, Computer Vision Engineer, NLP Engineer, Robotics Engineer.",
+        en: "<b>Bachelor in Artificial Intelligence (Hons) (CC204)</b><br>Duration: 3 years (120 credit hours) | Medium: English<br>Certification: CompTIA<br>Developed following the Programme Standards: Artificial Intelligence (PS:AI 2025) by MQA.<br><b>Fee:</b> RM81,500 (total tuition fee)<br><br>Covers AI fundamentals, machine learning, generative AI, reinforcement learning, computer vision, NLP.<br><br><b>Entry requirements</b> (any one):<br>• STPM (Arts Stream) Grade C (GP 2.00) in 2 subjects + SPM credit in Additional Mathematics<br>• STPM (Science Stream) Grade C (GP 2.00) + 1 Science/ICT subject<br>• Matriculation/Foundation CGPA 2.00<br>• Diploma in Science & Technology (Level 4) CGPA 2.75<br><br><b>Career opportunities:</b> AI Engineer, Machine Learning Engineer, Data Scientist, AI Systems Developer, Computer Vision Engineer, NLP Engineer, Robotics Engineer."
+      }
     },
     {
-      keywords: ["animation", "3d", "digital media", "multimedia", "art", "cm201", "3d animation"],
-      answer: "<b>Bachelor of Arts in 3D Animation & Digital Media (Hons) (CM201)</b><br>Tempoh: 3 tahun (120 jam kredit) | Bahasa: English<br><b>Yuran:</b> RM55,100 (jumlah keseluruhan tuition fee)<br><br>Latihan hands-on 3D animation untuk filem, TV, VFX & permainan — character animation, production design, storyboard, lighting & rendering.<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• STPM Gred C (GP 2.00) dalam 2 subjek<br>• STAM gred Jayyid<br>• Matrikulasi/Foundation CGPA 2.00<br>• Diploma (Level 4/5, MQF) CGPA 2.00<br>• Lulus temuduga / hantar portfolio<br><br><b>Peluang kerjaya:</b> Animator, 3D Modeller, Character Animator, Concept Artist, Storyboard Artist, Lighting Artist, Background Painter & Graphic Designer.<br><br>🏆 Talentbank 5-Star Employer Choice untuk program ini."
+      keywords: ["animation", "3d", "digital media", "multimedia", "art", "cm201", "3d animation", "3d animation requirements", "animation degree"],
+      answer: {
+        ms: "<b>Bachelor of Arts in 3D Animation & Digital Media (Hons) (CM201)</b><br>Tempoh: 3 tahun (120 jam kredit) | Bahasa: English<br><b>Yuran:</b> RM55,100 (jumlah keseluruhan tuition fee)<br><br>Latihan hands-on 3D animation untuk filem, TV, VFX & permainan — character animation, production design, storyboard, lighting & rendering.<br><br><b>Syarat kelayakan</b> (mana-mana satu):<br>• STPM Gred C (GP 2.00) dalam 2 subjek<br>• STAM gred Jayyid<br>• Matrikulasi/Foundation CGPA 2.00<br>• Diploma (Level 4/5, MQF) CGPA 2.00<br>• Lulus temuduga / hantar portfolio<br><br><b>Peluang kerjaya:</b> Animator, 3D Modeller, Character Animator, Concept Artist, Storyboard Artist, Lighting Artist, Background Painter & Graphic Designer.<br><br>🏆 Talentbank 5-Star Employer Choice untuk program ini.",
+        en: "<b>Bachelor of Arts in 3D Animation & Digital Media (Hons) (CM201)</b><br>Duration: 3 years (120 credit hours) | Medium: English<br><b>Fee:</b> RM55,100 (total tuition fee)<br><br>Hands-on 3D animation training for film, TV, VFX & games — character animation, production design, storyboarding, lighting & rendering.<br><br><b>Entry requirements</b> (any one):<br>• STPM Grade C (GP 2.00) in 2 subjects<br>• STAM grade Jayyid<br>• Matriculation/Foundation CGPA 2.00<br>• Diploma (Level 4/5, MQF) CGPA 2.00<br>• Pass an interview / submit a portfolio<br><br><b>Career opportunities:</b> Animator, 3D Modeller, Character Animator, Concept Artist, Storyboard Artist, Lighting Artist, Background Painter & Graphic Designer.<br><br>🏆 Talentbank 5-Star Employer Choice for this programme."
+      }
     },
     {
-      keywords: ["yuran", "fee", "fees", "harga", "kos", "price"],
-      answer: "<b>Senarai Yuran Program FCOM</b> (tuition fee keseluruhan, tersusun rendah ke tinggi):<br>• Foundation in IT (FT001) — 1 tahun — <b>RM10,630</b><br>• Diploma in Computer Science (CC101) — 2 tahun 4 bulan — <b>RM20,000</b><br>• Computer Application Development (CT204) — 3 tahun — <b>RM38,700</b><br>• Cyber Security (CT206) — 3 tahun — <b>RM44,100</b><br>• Data Analytics (CT207) — 3 tahun — <b>RM47,370</b><br>• Computer Science (CC203) — 3 tahun — <b>RM48,540</b><br>• 3D Animation & Digital Media (CM201) — 3 tahun — <b>RM55,100</b><br>• Artificial Intelligence (CC204) — 3 tahun — <b>RM81,500</b><br><br>Tanya nama program spesifik untuk butiran penuh (syarat kelayakan, kerjaya, dll)."
+      keywords: ["yuran", "fee", "fees", "harga", "kos", "price", "tuition fee", "programme fees", "how much is the fee"],
+      answer: {
+        ms: "<b>Senarai Yuran Program FCOM</b> (tuition fee keseluruhan, tersusun rendah ke tinggi):<br>• Foundation in IT (FT001) — 1 tahun — <b>RM10,630</b><br>• Diploma in Computer Science (CC101) — 2 tahun 4 bulan — <b>RM20,000</b><br>• Computer Application Development (CT204) — 3 tahun — <b>RM38,700</b><br>• Cyber Security (CT206) — 3 tahun — <b>RM44,100</b><br>• Data Analytics (CT207) — 3 tahun — <b>RM47,370</b><br>• Computer Science (CC203) — 3 tahun — <b>RM48,540</b><br>• 3D Animation & Digital Media (CM201) — 3 tahun — <b>RM55,100</b><br>• Artificial Intelligence (CC204) — 3 tahun — <b>RM81,500</b><br><br>Tanya nama program spesifik untuk butiran penuh (syarat kelayakan, kerjaya, dll).",
+        en: "<b>FCOM Programme Fee List</b> (total tuition fee, lowest to highest):<br>• Foundation in IT (FT001) — 1 year — <b>RM10,630</b><br>• Diploma in Computer Science (CC101) — 2 years 4 months — <b>RM20,000</b><br>• Computer Application Development (CT204) — 3 years — <b>RM38,700</b><br>• Cyber Security (CT206) — 3 years — <b>RM44,100</b><br>• Data Analytics (CT207) — 3 years — <b>RM47,370</b><br>• Computer Science (CC203) — 3 years — <b>RM48,540</b><br>• 3D Animation & Digital Media (CM201) — 3 years — <b>RM55,100</b><br>• Artificial Intelligence (CC204) — 3 years — <b>RM81,500</b><br><br>Ask about a specific programme for full details (entry requirements, careers, etc.)."
+      }
     },
     {
-      keywords: ["kelayakan", "syarat", "entry requirement", "requirement", "masuk", "admission"],
-      answer: "Syarat kelayakan berbeza ikut program (SPM/STPM/Diploma/dll). Tanya nama program spesifik (contoh: \"Cyber Security\" atau \"Diploma Computer Science\") untuk syarat penuh, atau baca <a href=\"programme-booklet.html\" target=\"_blank\">buku program</a>."
+      keywords: ["kelayakan", "syarat", "entry requirement", "requirement", "masuk", "admission", "entry requirements", "what are the requirements"],
+      answer: {
+        ms: "Syarat kelayakan berbeza ikut program (SPM/STPM/Diploma/dll). Tanya nama program spesifik (contoh: \"Cyber Security\" atau \"Diploma Computer Science\") untuk syarat penuh, atau baca <a href=\"programme-booklet.html\" target=\"_blank\">buku program</a>.",
+        en: "Entry requirements differ by programme (SPM/STPM/Diploma/etc.). Ask about a specific programme (e.g. 'Cyber Security' or 'Diploma Computer Science') for full requirements, or read the <a href='programme-booklet.html' target='_blank'>programme booklet</a>."
+      }
     },
     {
-      keywords: ["hubungi", "contact", "alamat", "address", "phone", "telefon", "emel", "email"],
-      answer: "Anda boleh hubungi kami di:<br>📍 Jalan 6/91, Taman Shamelin Perkasa, 56100 Cheras, Kuala Lumpur<br>📞 +603 9206 9700 (am) / +603 9283 7186 (Marketing)<br>✉️ marketing@uptm.edu.my<br>Atau terus WhatsApp guna butang hijau di bawah."
+      keywords: ["hubungi", "contact", "alamat", "address", "phone", "telefon", "emel", "email", "how to contact", "contact number", "contact details"],
+      answer: {
+        ms: "Anda boleh hubungi kami di:<br>📍 Jalan 6/91, Taman Shamelin Perkasa, 56100 Cheras, Kuala Lumpur<br>📞 +603 9206 9700 (am) / +603 9283 7186 (Marketing)<br>✉️ marketing@uptm.edu.my<br>Atau terus WhatsApp guna butang hijau di bawah.",
+        en: "You can reach us at:<br>📍 Jalan 6/91, Taman Shamelin Perkasa, 56100 Cheras, Kuala Lumpur<br>📞 +603 9206 9700 (general) / +603 9283 7186 (Marketing)<br>✉️ marketing@uptm.edu.my<br>Or WhatsApp us directly using the green button below."
+      }
     },
     {
-      keywords: ["sijil", "certification", "ccna", "comptia", "red hat", "cisco", "sas"],
-      answer: "Sijil profesional dibina terus dalam kurikulum FCOM (bukan tambahan luar):<br>• <b>Cisco (CCNA)</b> — CCNA 1, 2 & 3 embedded dalam program berkaitan networking<br>• <b>CompTIA</b> — merentasi hampir semua program<br>• <b>Red Hat Academy</b> — untuk program IT/Cyber Security/Data Analytics<br>• <b>SAS</b> — untuk Data Analytics<br><br>100% pelajar & pensyarah FCOM memiliki Professional Cert sebagai salah satu daripada 6 Pillar FCOM."
+      keywords: ["sijil", "certification", "ccna", "comptia", "red hat", "cisco", "sas", "professional certification", "certifications offered"],
+      answer: {
+        ms: "Sijil profesional dibina terus dalam kurikulum FCOM (bukan tambahan luar):<br>• <b>Cisco (CCNA)</b> — CCNA 1, 2 & 3 embedded dalam program berkaitan networking<br>• <b>CompTIA</b> — merentasi hampir semua program<br>• <b>Red Hat Academy</b> — untuk program IT/Cyber Security/Data Analytics<br>• <b>SAS</b> — untuk Data Analytics<br><br>100% pelajar & pensyarah FCOM memiliki Professional Cert sebagai salah satu daripada 6 Pillar FCOM.",
+        en: "Professional certifications are built directly into the FCOM curriculum (not an external add-on):<br>• <b>Cisco (CCNA)</b> — CCNA 1, 2 & 3 embedded in relevant networking programmes<br>• <b>CompTIA</b> — across almost all programmes<br>• <b>Red Hat Academy</b> — for IT/Cyber Security/Data Analytics programmes<br>• <b>SAS</b> — for Data Analytics<br><br>100% of FCOM students & lecturers hold a Professional Certification, one of FCOM's 6 Pillars."
+      }
     },
     {
-      keywords: ["pensyarah", "lecturer", "staff", "phd", "penyelidik", "research", "dekan", "dean"],
-      answer: "<b>Kepimpinan Akademik FCOM:</b><br>• <b>Assoc. Prof. Dr. Saifuddin Bin Hj Mohtaram</b> — Dean, kepakaran AI, Machine Learning, Game-Based Learning<br>• <b>Assoc. Prof. Dr. Mariani Binti Mohd Dahlan</b> — Deputy Dean (Academic), kepakaran Educational Technology<br>• <b>Dr. Nasrah Binti Hassan Basri</b> — Deputy Dean (Research), kepakaran UI/UX & HCI<br>• <b>Zurina Binti Jusoh</b> — Deputy Dean (Student & Alumni)<br><br>50% tenaga akademik FCOM adalah pemegang PhD atau kandidat PhD. Lihat senarai penuh pensyarah di <a href=\"about.html\">halaman About Us</a>."
+      keywords: ["pensyarah", "lecturer", "staff", "phd", "penyelidik", "research", "dekan", "dean", "who is the dean", "faculty leadership", "academic staff"],
+      answer: {
+        ms: "<b>Kepimpinan Akademik FCOM:</b><br>• <b>Assoc. Prof. Dr. Saifuddin Bin Hj Mohtaram</b> — Dean, kepakaran AI, Machine Learning, Game-Based Learning<br>• <b>Assoc. Prof. Dr. Mariani Binti Mohd Dahlan</b> — Deputy Dean (Academic), kepakaran Educational Technology<br>• <b>Dr. Nasrah Binti Hassan Basri</b> — Deputy Dean (Research), kepakaran UI/UX & HCI<br>• <b>Zurina Binti Jusoh</b> — Deputy Dean (Student & Alumni)<br><br>50% tenaga akademik FCOM adalah pemegang PhD atau kandidat PhD. Lihat senarai penuh pensyarah di <a href=\"about.html\">halaman About Us</a>.",
+        en: "<b>FCOM Academic Leadership:</b><br>• <b>Assoc. Prof. Dr. Saifuddin Bin Hj Mohtaram</b> — Dean, expertise in AI, Machine Learning, Game-Based Learning<br>• <b>Assoc. Prof. Dr. Mariani Binti Mohd Dahlan</b> — Deputy Dean (Academic), expertise in Educational Technology<br>• <b>Dr. Nasrah Binti Hassan Basri</b> — Deputy Dean (Research), expertise in UI/UX & HCI<br>• <b>Zurina Binti Jusoh</b> — Deputy Dean (Student & Alumni)<br><br>50% of FCOM's academic staff hold or are pursuing a PhD. See the full lecturer list on the <a href='about.html'>About Us page</a>."
+      }
     },
     {
-      keywords: ["kerja", "employability", "job", "graduan", "graduate", "kebolehpasaran"],
-      answer: "📊 <b>97.2% Graduate Employability</b> — Diploma in Computer Science (2025)<br>⭐ <b>Talentbank 5-Star Employer Choice</b> — Bachelor of Arts in 3D Animation & Digital Media<br><br>Antara alumni FCOM: Data Scientist di AstraZeneca, IT Executive di IPSB Technology, Animator di Monsta Studio, pensyarah Game Development di UK."
+      keywords: ["kerja", "employability", "job", "graduan", "graduate", "kebolehpasaran", "career prospects", "job prospects"],
+      answer: {
+        ms: "📊 <b>97.2% Graduate Employability</b> — Diploma in Computer Science (2025)<br>⭐ <b>Talentbank 5-Star Employer Choice</b> — Bachelor of Arts in 3D Animation & Digital Media<br><br>Antara alumni FCOM: Data Scientist di AstraZeneca, IT Executive di IPSB Technology, Animator di Monsta Studio, pensyarah Game Development di UK.",
+        en: "📊 <b>97.2% Graduate Employability</b> — Diploma in Computer Science (2025)<br>⭐ <b>Talentbank 5-Star Employer Choice</b> — Bachelor of Arts in 3D Animation & Digital Media<br><br>Among FCOM alumni: Data Scientist at AstraZeneca, IT Executive at IPSB Technology, Animator at Monsta Studio, a Game Development lecturer in the UK."
+      }
     },
     {
-      keywords: ["fcom", "faculty", "fakulti", "tentang", "about"],
-      answer: "FCOM (Faculty of Computing & Multimedia), ditubuhkan 2013 di Universiti Poly-Tech Malaysia, menawarkan program dalam Computer Science, Information Technology & Multimedia. Fokus penyelidikan merangkumi AI, human-computer interaction & software systems engineering.<br><br>Rakan kerjasama industri termasuk Microsoft, IBM, ESET, MariaDB, Red Hat Academy, FWD Takaful. Baca lanjut di <a href=\"about.html\">halaman About Us</a>."
+      keywords: ["fcom", "faculty", "fakulti", "tentang", "about", "about fcom", "what is fcom"],
+      answer: {
+        ms: "FCOM (Faculty of Computing & Multimedia), ditubuhkan 2013 di Universiti Poly-Tech Malaysia, menawarkan program dalam Computer Science, Information Technology & Multimedia. Fokus penyelidikan merangkumi AI, human-computer interaction & software systems engineering.<br><br>Rakan kerjasama industri termasuk Microsoft, IBM, ESET, MariaDB, Red Hat Academy, FWD Takaful. Baca lanjut di <a href=\"about.html\">halaman About Us</a>.",
+        en: "FCOM (Faculty of Computing & Multimedia), established in 2013 at Universiti Poly-Tech Malaysia, offers programmes in Computer Science, Information Technology & Multimedia. Research focus areas include AI, human-computer interaction & software systems engineering.<br><br>Industry partners include Microsoft, IBM, ESET, MariaDB, Red Hat Academy, FWD Takaful. Read more on the <a href='about.html'>About Us page</a>."
+      }
     },
     {
-      keywords: ["uptm", "universiti poly-tech", "visi", "misi", "vision", "mission"],
-      answer: "<b>Universiti Poly-Tech Malaysia (UPTM)</b><br><b>Visi:</b> Menjadi universiti aplikasi yang diiktiraf global, membentuk profesional inklusif, inovatif, beretika & impaktif.<br><b>Misi:</b> Menyediakan pendidikan transformatif melalui kolaborasi interdisiplin & pengetahuan praktikal.<br><b>Nilai Teras:</b> Innovative • Inclusive • Integrity"
+      keywords: ["uptm", "universiti poly-tech", "visi", "misi", "vision", "mission", "vision and mission", "core values"],
+      answer: {
+        ms: "<b>Universiti Poly-Tech Malaysia (UPTM)</b><br><b>Visi:</b> Menjadi universiti aplikasi yang diiktiraf global, membentuk profesional inklusif, inovatif, beretika & impaktif.<br><b>Misi:</b> Menyediakan pendidikan transformatif melalui kolaborasi interdisiplin & pengetahuan praktikal.<br><b>Nilai Teras:</b> Innovative • Inclusive • Integrity",
+        en: "<b>Universiti Poly-Tech Malaysia (UPTM)</b><br><b>Vision:</b> To become a globally recognised applied university, shaping inclusive, innovative, ethical & impactful professionals.<br><b>Mission:</b> To deliver transformative education through interdisciplinary collaboration & practical knowledge.<br><b>Core Values:</b> Innovative • Inclusive • Integrity"
+      }
     },
     {
-      keywords: ["pengiktirafan", "recognition", "akreditasi", "accreditation", "setara", "acca", "myra", "aun-qa"],
-      answer: "FCOM/UPTM diiktiraf oleh:<br>• SETARA (Competitive rating)<br>• ACCA — Platinum Learning Partner<br>• MyRA ★★★ (Malaysia Research Assessment)<br>• Times Higher Education Impact Rankings<br>• AppliedHE<br>• AUN-QA (ASEAN University Network)<br>• Approved Learning & Training Institutions (ALTI)<br><br>Program-program FCOM diakreditasi Malaysian Qualifications Agency (MQA)."
+      keywords: ["pengiktirafan", "recognition", "akreditasi", "accreditation", "setara", "acca", "myra", "aun-qa", "is fcom accredited", "mqa accredited"],
+      answer: {
+        ms: "FCOM/UPTM diiktiraf oleh:<br>• SETARA (Competitive rating)<br>• ACCA — Platinum Learning Partner<br>• MyRA ★★★ (Malaysia Research Assessment)<br>• Times Higher Education Impact Rankings<br>• AppliedHE<br>• AUN-QA (ASEAN University Network)<br>• Approved Learning & Training Institutions (ALTI)<br><br>Program-program FCOM diakreditasi Malaysian Qualifications Agency (MQA).",
+        en: "FCOM/UPTM is recognised by:<br>• SETARA (Competitive rating)<br>• ACCA — Platinum Learning Partner<br>• MyRA ★★★ (Malaysia Research Assessment)<br>• Times Higher Education Impact Rankings<br>• AppliedHE<br>• AUN-QA (ASEAN University Network)<br>• Approved Learning & Training Institutions (ALTI)<br><br>FCOM's programmes are accredited by the Malaysian Qualifications Agency (MQA)."
+      }
     },
     {
-      keywords: ["antarabangsa", "international", "kolaborasi", "collaboration", "negara", "exchange"],
-      answer: "FCOM/UPTM mempunyai kolaborasi antarabangsa merentasi <b>21 negara</b> termasuk UK, China, Hong Kong, South Korea, Japan, Thailand, Philippines, Indonesia, Australia, New Zealand, Canada, Ireland, Germany, USA, Mexico & lain-lain — meliputi guest lecture, dual-degree & program pertukaran pelajar."
+      keywords: ["antarabangsa", "international", "kolaborasi", "collaboration", "negara", "exchange", "international collaboration", "student exchange"],
+      answer: {
+        ms: "FCOM/UPTM mempunyai kolaborasi antarabangsa merentasi <b>21 negara</b> termasuk UK, China, Hong Kong, South Korea, Japan, Thailand, Philippines, Indonesia, Australia, New Zealand, Canada, Ireland, Germany, USA, Mexico & lain-lain — meliputi guest lecture, dual-degree & program pertukaran pelajar.",
+        en: "FCOM/UPTM has international collaborations across <b>21 countries</b> including the UK, China, Hong Kong, South Korea, Japan, Thailand, the Philippines, Indonesia, Australia, New Zealand, Canada, Ireland, Germany, USA, Mexico & others — covering guest lectures, dual-degree & student exchange programmes."
+      }
     },
     {
-      keywords: ["industrial training", "latihan industri", "internship"],
-      answer: "Semua program FCOM (Diploma & Ijazah) menggabungkan <b>Industrial Training</b> dalam semester akhir pengajian bagi memberi pelajar pengalaman praktikal dunia sebenar sebelum bergraduat."
-    }
+      keywords: ["industrial training", "latihan industri", "internship", "what is industrial training"],
+      answer: {
+        ms: "Semua program FCOM (Diploma & Ijazah) menggabungkan <b>Industrial Training</b> dalam semester akhir pengajian bagi memberi pelajar pengalaman praktikal dunia sebenar sebelum bergraduat.",
+        en: "All FCOM programmes (Diploma & Degree) incorporate <b>Industrial Training</b> in the final semester of study, giving students real-world practical experience before graduating."
+      }
+    },
+    {
+      keywords: ["future planning", "6 pillars", "pillar", "fcom future", "visi fcom", "matlamat fcom", "hala tuju", "fcom vision 2030", "six pillars", "strategic plan"],
+      answer: {
+        ms: "<b>FCOM Future Planning — 6 Pillars</b><br>Visi: Menjadi fakulti computing & multimedia terkemuka.<br>Misi: Menyampaikan pendidikan berkualiti, membangunkan kecemerlangan profesional & penyelidikan.<br><br>Enam Pillar:<br>1️⃣ Certification — 100% pelajar & pensyarah ada Professional Cert<br>2️⃣ PhD Holder — 50% ahli fakulti PhD holder/kandidat<br>3️⃣ Certification Academy — sekurang-kurangnya 6 training academy<br>4️⃣ Number of Student Enrolment — FCOM sumbang 20% enrolmen UPTM (1,900 pelajar)<br>5️⃣ Program — 13 program (1 Foundation, 1 Diploma, 7 Degree, 1 YTP Foundation, 2 Dual Degree, 1 ODL)<br>6️⃣ Academic Excellence Initiatives — sumbang 15% aktiviti antarabangsa & penerbitan akademik UPTM",
+        en: "<b>FCOM Future Planning — 6 Pillars</b><br>Vision: To become a leading computing & multimedia faculty.<br>Mission: To deliver quality education, developing professional excellence & research.<br><br>Six Pillars:<br>1️⃣ Certification — 100% of students & lecturers hold a Professional Certification<br>2️⃣ PhD Holder — 50% of faculty members are PhD holders/candidates<br>3️⃣ Certification Academy — at least 6 training academies<br>4️⃣ Number of Student Enrolment — FCOM contributes 20% of UPTM's enrolment (1,900 students)<br>5️⃣ Programme — 13 programmes (1 Foundation, 1 Diploma, 7 Degree, 1 YTP Foundation, 2 Dual Degree, 1 ODL)<br>6️⃣ Academic Excellence Initiatives — contributes 15% of UPTM's international activities & academic publications"
+      }
+    },
+    {
+      keywords: ["award", "anugerah", "recognition achievement", "achieving excellence", "bisa", "bifa", "glotender", "awards won", "achievements"],
+      answer: {
+        ms: "FCOM/UPTM meraih pelbagai anugerah dan pengiktirafan, antaranya:<br>• Graduates' Choice Award 2022/23<br>• ACCA Approved Learning Partner (Platinum)<br>• Malaysia Records — Builders Industry Award 2026<br>• ASEAN Business Awards 2023 — Certificate of Excellence<br>• BISA (Bisnes Star Awards)<br>• Glotender Outstanding Entrepreneurship Award 2024<br>• BIFA 2026 — Builders Outstanding Leaders<br>• Leadership Excellence Award 2025<br><br>Pengiktirafan ni menunjukkan komitmen FCOM/UPTM kepada kualiti, inovasi & impak dalam pendidikan.",
+        en: "FCOM/UPTM has received numerous awards and recognitions, including:<br>• Graduates' Choice Award 2022/23<br>• ACCA Approved Learning Partner (Platinum)<br>• Malaysia Records — Builders Industry Award 2026<br>• ASEAN Business Awards 2023 — Certificate of Excellence<br>• BISA (Bisnes Star Awards)<br>• Glotender Outstanding Entrepreneurship Award 2024<br>• BIFA 2026 — Builders Outstanding Leaders<br>• Leadership Excellence Award 2025<br><br>These recognitions reflect FCOM/UPTM's commitment to quality, innovation & impact in education."
+      }
+    },
+    {
+      keywords: ["hackdemy", "cyberheals", "ctf", "cyber range", "capture the flag", "hackathon", "what is hackdemy", "cybersecurity training platform"],
+      answer: {
+        ms: "<b>Hackdemy</b> (dikuasakan oleh CyberHeals) ialah platform Cyber Range generasi baharu — Malaysia's Premier Cybersecurity CTF Platform — yang memberi latihan cybersecurity hands-on secara real-world untuk menutup jurang kemahiran industri.<br><br>Apa yang Hackdemy buat:<br>• Virtual Cloud-Based Cyber Range<br>• Mengendalikan Hackathon/CTF Challenges<br>• Membantu universiti dengan structured learning paths<br>• Interactive gamified learning platform<br>• Realistic simulation oleh Zero Day Researchers<br><br>Sesuai untuk sekolah, kolej & profesional yang bekerja.",
+        en: "<b>Hackdemy</b> (powered by CyberHeals) is a next-generation Cyber Range platform — Malaysia's Premier Cybersecurity CTF Platform — offering hands-on, real-world cybersecurity training to close the industry skills gap.<br><br>What Hackdemy offers:<br>• Virtual Cloud-Based Cyber Range<br>• Runs Hackathon/CTF Challenges<br>• Helps universities with structured learning paths<br>• Interactive gamified learning platform<br>• Realistic simulations by Zero Day Researchers<br><br>Suitable for schools, colleges & working professionals."
+      }
+    },
+    {
+      keywords: ["cisco academy", "ccna", "networking academy", "cisco certified", "cisco networking academy", "ccna course"],
+      answer: {
+        ms: "Melalui kursus CCNA 1, CCNA 2 & CCNA 3 yang embedded dalam program-program berkaitan (Diploma Computer Science, Computer Science, Cyber Security, dll), pelajar FCOM didedahkan kepada pembelajaran komprehensif dalam computer networking — konfigurasi rangkaian, switching & routing, IP addressing, wireless networking, keselamatan asas & pengurusan rangkaian enterprise.<br><br>Ia sebahagian daripada komitmen FCOM menghasilkan graduan yang certification-ready dan bersedia untuk industri networking & digital yang terus berkembang.",
+        en: "Through CCNA 1, CCNA 2 & CCNA 3 courses embedded in relevant programmes (Diploma in Computer Science, Computer Science, Cyber Security, etc.), FCOM students gain comprehensive exposure to computer networking — network configuration, switching & routing, IP addressing, wireless networking, basic security & enterprise network management.<br><br>This is part of FCOM's commitment to producing certification-ready graduates prepared for the ever-growing networking & digital industry."
+      }
+    },
+    {
+      keywords: ["alumni", "success story", "kisah kejayaan", "graduan berjaya", "astrazeneca", "monsta", "ipsb", "alumni stories", "notable alumni"],
+      answer: {
+        ms: "Antara kisah kejayaan alumni FCOM:<br>• <b>Ainur Azra</b> (3D Animation) — 3D Layout Artist & Animator, Monsta Studio<br>• <b>Amirul Arif</b> (3D Animation) — Games Development Lecturer, Abingdon & Witney College, UK<br>• <b>Ariiqman Naufal</b> (Computer Application Development) — Data Scientist, AstraZeneca Malaysia<br>• <b>Nurazlya Natasha</b> (Cyber Security) — IT Executive, IPSB Technology<br><br>Graduan FCOM kini berkhidmat di syarikat global merentasi bidang data science, animation, cybersecurity & IT enterprise.",
+        en: "Among FCOM's alumni success stories:<br>• <b>Ainur Azra</b> (3D Animation) — 3D Layout Artist & Animator, Monsta Studio<br>• <b>Amirul Arif</b> (3D Animation) — Games Development Lecturer, Abingdon & Witney College, UK<br>• <b>Ariiqman Naufal</b> (Computer Application Development) — Data Scientist, AstraZeneca Malaysia<br>• <b>Nurazlya Natasha</b> (Cyber Security) — IT Executive, IPSB Technology<br><br>FCOM graduates now work at global companies across data science, animation, cybersecurity & IT enterprise."
+      }
+    },
+
+    {
+      keywords: ["peraturan akademik", "academic regulation", "academic regulations", "buku peraturan", "student handbook akademik", "rules and regulations", "peraturan pelajar", "academic rules"],
+      answer: {
+        ms: "UPTM ada <b>Academic Regulations (First Edition)</b> yang diluluskan Senat pada 29 Julai 2025 — meliputi kemasukan, pendaftaran, kehadiran, penilaian & gred, peperiksaan, rayuan akademik, salah laku akademik & pengijazahan. Ia terpakai untuk semua pelajar Undergraduate & Professional selepas tarikh kelulusan.<br><br>Tanya soalan spesifik (contoh: \"kelayakan kredit transfer\", \"cara kira CGPA\", \"status DIS\") atau muat turun <a href=\"documents/uptm-academic-regulations.pdf\" target=\"_blank\">Peraturan Akademik penuh (PDF)</a>.",
+        en: "UPTM has the <b>Academic Regulations (First Edition)</b>, approved by the Senate on 29 July 2025 — covering admission, registration, attendance, evaluation & grading, examinations, academic appeals, academic misconduct & conferment. It applies to all Undergraduate and Professional students after the endorsement date.<br><br>Ask a specific question (e.g. \"credit transfer requirements\", \"how to calculate CGPA\", \"DIS status\") or download the <a href=\"documents/uptm-academic-regulations.pdf\" target=\"_blank\">full Academic Regulations (PDF)</a>."
+      }
+    },
+    {
+      keywords: ["credit exemption", "pengecualian kredit", "credit transfer", "pemindahan kredit", "kredit transfer", "exempt kredit", "exempt credit"],
+      answer: {
+        ms: "<b>Pengecualian Kredit:</b> diberi berdasarkan kelayakan akademik dari IPT diiktiraf, tapi TIDAK memberi kredit — pelajar perlu daftar kursus tambahan untuk cukupkan jumlah kredit bergraduat.<br><br><b>Pemindahan Kredit:</b> berdasarkan pemetaan kursus-ke-kursus.<br>• 1–30% pemindahan → min gred C<br>• 31–50% pemindahan → min gred B<br>• Nilai kredit kursus setara mesti sama atau lebih<br>• Kandungan silibus mesti ≥80% sepadan<br>• Mohon dalam 2 minggu dari pendaftaran, yuran <b>RM50</b>/permohonan<br><br><b>Had pemindahan menegak (vertical):</b> Sijil→Diploma maks 30%, Diploma→Ijazah maks 50%, Advanced Diploma→Ijazah maks 2 tahun.",
+        en: "<b>Credit Exemption:</b> granted based on qualifications from a recognised HEI, but does NOT award credit — students must register additional course(s) to fulfil the total credit hours for graduation.<br><br><b>Credit Transfer:</b> based on course-to-course mapping.<br>• 1–30% transfer → min Grade C<br>• 31–50% transfer → min Grade B<br>• Equivalent course's credit value must be equal or greater<br>• Course content must be ≥80% similar<br>• Apply within 2 weeks of registration, fee <b>RM50</b>/application<br><br><b>Vertical transfer caps:</b> Certificate→Diploma max 30%, Diploma→Bachelor's max 50%, Advanced Diploma→Bachelor's max 2 years."
+      }
+    },
+    {
+      keywords: ["add drop", "tambah gugur", "course registration", "pendaftaran kursus", "add and drop week", "minggu tambah gugur"],
+      answer: {
+        ms: "Pelajar boleh <b>tambah/gugur kursus</b> dalam tempoh Add & Drop:<br>• Semester panjang: <b>4 minggu</b> dari permulaan semester<br>• Semester pendek: <b>2 minggu</b><br><br>Pendaftaran lewat (returning student) dikenakan yuran pemprosesan <b>RM30</b>. Pelajar yang gagal kursus prasyarat wajib gugur & daftar semula kursus berkaitan.",
+        en: "Students may <b>add/drop courses</b> during the Add & Drop period:<br>• Long semester: <b>4 weeks</b> from the start of semester<br>• Short semester: <b>2 weeks</b><br><br>Late registration (returning students) incurs a <b>RM30</b> processing fee. Students who fail prerequisite courses must drop and re-register the relevant course(s)."
+      }
+    },
+    {
+      keywords: ["full time part time", "sepenuh masa separuh masa", "credit hours limit", "jam kredit", "min max credit"],
+      answer: {
+        ms: "<b>Had Jam Kredit Semester:</b><br>Sepenuh Masa: min 12 / maks 20 (semester panjang), min 6 / maks 10 (semester pendek)<br>Separuh Masa: min 6 / maks 11 (semester panjang), min 3 / maks 5 (semester pendek)<br><br>Pelajar status <b>Warning (WAR)</b> ada had berbeza. Perubahan mod belajar (FT↔PT) hanya dibenarkan SEKALI sepanjang pengajian.",
+        en: "<b>Semester Credit Hour Limits:</b><br>Full-Time: min 12 / max 20 (long semester), min 6 / max 10 (short semester)<br>Part-Time: min 6 / max 11 (long semester), min 3 / max 5 (short semester)<br><br>Students on <b>Warning (WAR)</b> status have different limits. Changing study mode (FT↔PT) is only allowed ONCE throughout the duration of study."
+      }
+    },
+    {
+      keywords: ["tempoh pengajian maksimum", "maximum study duration", "max duration", "tempoh maksimum pengajian", "how many years", "berapa tahun nak siapkan", "years to complete degree", "maximum years to graduate", "berapa lama nak habiskan ijazah"],
+      answer: {
+        ms: "<b>Tempoh Maksimum Pengajian Sepenuh Masa:</b><br>• Asasi/Foundation — 2 tahun<br>• Diploma — 5 tahun<br>• Ijazah Sarjana Muda — 6 tahun<br><br>Jika melebihi tempoh ini, pelajar perlu hantar surat rayuan kepada Dekan, tertakluk kelulusan Senat Universiti.",
+        en: "<b>Maximum Duration of Full-Time Study:</b><br>• Foundation — 2 years<br>• Diploma — 5 years<br>• Bachelor's Degree — 6 years<br><br>If exceeded, the student must submit an appeal letter to the Dean, subject to approval by the University Senate."
+      }
+    },
+    {
+      keywords: ["defer", "penangguhan pengajian", "deferment", "tangguh semester", "onl status"],
+      answer: {
+        ms: "<b>Penangguhan Pengajian (Deferment):</b> boleh dimohon sebelum Minggu 12 (semester panjang) / Minggu 6 (semester pendek) atas sebab kesihatan/lain yang munasabah, tertakluk kelulusan DVCAI.<br>• Mohon sebelum Minggu 5 (panjang)/Minggu 3 (pendek) → yuran tuisyen TIDAK dikenakan<br>• Mohon selepas itu → yuran tuisyen PENUH dikenakan<br>• Yuran pemprosesan tak boleh refund: <b>RM100</b> (semester panjang)<br>• Status pelajar semasa tangguh: <b>On Leave (ONL)</b><br>• Tangguh 3 semester atau lebih perlu kelulusan Jawatankuasa Akademik.",
+        en: "<b>Deferment of Study:</b> may be applied before Week 12 (long semester) / Week 6 (short semester) for health or other acceptable reasons, subject to DVCAI approval.<br>• Applied before Week 5 (long)/Week 3 (short) → tuition fee NOT charged<br>• Applied after that → FULL tuition fee charged<br>• Non-refundable processing fee: <b>RM100</b> (long semester)<br>• Status during deferment: <b>On Leave (ONL)</b><br>• Deferring for 3 or more semesters requires Academic Committee approval."
+      }
+    },
+    {
+      keywords: ["kehadiran kelas", "class attendance", "attendance requirement", "kehadiran minimum", "bar status", "surat amaran kehadiran"],
+      answer: {
+        ms: "<b>Kehadiran Kelas:</b> minimum <b>80%</b> untuk kuliah/tutorial/makmal/dll. Gagal penuhi syarat ini → tidak dibenarkan duduk penilaian akhir.<br><br>Surat amaran ikut % ketidakhadiran:<br>• 7–13% → Amaran Pertama<br>• 14–20% → Amaran Kedua<br>• 21%+ → Surat BAR (dihalang dari penilaian akhir, gred 0.00, status 'BAR')<br><br>Sijil sakit/dokumen sokongan mesti dihantar dalam 3 hari. Pelajar boleh rayu ke SADC (Minggu 6 semester pendek / Minggu 12 semester panjang).",
+        en: "<b>Class Attendance:</b> minimum <b>80%</b> for lectures/tutorials/labs/etc. Failing this bars the student from the final assessment.<br><br>Warning letters by absenteeism %:<br>• 7–13% → First Warning<br>• 14–20% → Second Warning<br>• 21%+ → Bar Letter (barred from final assessment, grade point 0.00, 'BAR' status)<br><br>Medical certificate/supporting documents must be submitted within 3 days. Students may appeal to SADC (Week 6 short semester / Week 12 long semester)."
+      }
+    },
+    {
+      keywords: ["gred markah", "grading scale", "grade table", "skema markah", "jadual gred", "passing mark"],
+      answer: {
+        ms: "<b>Skema Gred (Foundation/Diploma/Ijazah):</b><br>A+/A (80–100) = 4.00 Excellent<br>A- (75–79) = 3.67<br>B+ (70–74) = 3.33<br>B (65–69) = 3.00<br>B- (60–64) = 2.67<br>C+ (55–59) = 2.33<br>C (50–54) = 2.00<br>C- (45–49) = 1.67<br>D (40–44) = 1.00<br>F (0–39) = 0.00 Fail<br><br>Markah lulus minimum: Continuous Assessment 40/100, Final Assessment 30/100, Keseluruhan 40/100.",
+        en: "<b>Grading Scale (Foundation/Diploma/Bachelor's):</b><br>A+/A (80–100) = 4.00 Excellent<br>A- (75–79) = 3.67<br>B+ (70–74) = 3.33<br>B (65–69) = 3.00<br>B- (60–64) = 2.67<br>C+ (55–59) = 2.33<br>C (50–54) = 2.00<br>C- (45–49) = 1.67<br>D (40–44) = 1.00<br>F (0–39) = 0.00 Fail<br><br>Minimum passing marks: Continuous Assessment 40/100, Final Assessment 30/100, Overall 40/100."
+      }
+    },
+    {
+      keywords: ["kira gpa", "kira cgpa", "calculate gpa", "calculate cgpa", "formula gpa cgpa", "how to calculate gpa"],
+      answer: {
+        ms: "<b>GPA</b> = Jumlah Nilai Kredit (semester) ÷ Jumlah Kredit (semester)<br><b>CGPA</b> = Jumlah Nilai Kredit (semua semester) ÷ Jumlah Kredit Kumulatif (semua semester)<br><br>Nilai Kredit = Nilai Gred × Unit Kredit kursus. Contoh: gred A (4.00) untuk kursus 3 kredit = Nilai Kredit 12.00.",
+        en: "<b>GPA</b> = Total Credit Values (semester) ÷ Total Credit Hours (semester)<br><b>CGPA</b> = Total Credit Values (all semesters) ÷ Cumulative Credit Hours (all semesters)<br><br>Credit Value = Grade Value × Course Credit Unit. Example: Grade A (4.00) for a 3-credit course = Credit Value 12.00."
+      }
+    },
+    {
+      keywords: ["status kursus", "course result status", "pac abx aby bar inc", "apa itu pac", "what does pac mean", "status peperiksaan course"],
+      answer: {
+        ms: "<b>Status Keputusan Kursus:</b><br>PAC — Lulus kursus<br>ABX — Tak hadir final tanpa kebenaran / gagal hantar assignment<br>ABY — Tak hadir final DENGAN kebenaran (sakit/dll)<br>BAR — Dihalang dari penilaian akhir (kehadiran <80%)<br>INC — Belum lengkap (masih industrial training/practicum)<br>F — Gagal kursus<br>FE — Gagal penilaian akhir<br>FC — Gagal penilaian berterusan<br><br>Status FC/FE bersifat sementara & akan bertukar ke gred sebenar selepas peperiksaan supplementari.",
+        en: "<b>Course Result Status:</b><br>PAC — Pass the course<br>ABX — Absent from final without permission / failed to submit assignment<br>ABY — Absent from final WITH permission (medical/etc.)<br>BAR — Barred from final assessment (attendance <80%)<br>INC — Incomplete (still on industrial training/practicum)<br>F — Failed the course<br>FE — Failed final assessment<br>FC — Failed continuous assessment<br><br>FC/FE statuses are temporary and convert to the actual grade after the supplementary examination."
+      }
+    },
+    {
+      keywords: ["ulang kursus", "repeat course", "ulang subjek", "repeating a course", "improve grade"],
+      answer: {
+        ms: "<b>Ulang Kursus Gagal:</b> wajib diulang semester berikutnya/bila ditawarkan, tertakluk tempoh maksimum pengajian. Gred akan dikira dalam CGPA.<br><br><b>Ulang Kursus Lulus</b> (nak improve gred): dibenarkan untuk gred C- ke bawah, SEKALI sahaja setiap kursus, tertakluk kelulusan fakulti. Gred TERTINGGI akan digunakan dalam GPA/CGPA.",
+        en: "<b>Repeating a Failed Course:</b> compulsory in the following semester/when offered, subject to the maximum study duration. The grade is included in the CGPA.<br><br><b>Repeating a Passed Course</b> (to improve a grade): allowed for grade C- or below, ONCE per course, subject to faculty approval. The HIGHEST grade obtained is used in GPA/CGPA."
+      }
+    },
+    {
+      keywords: ["status akademik", "academic status", "apa itu dis", "apa itu war", "what does dis mean", "what is war status", "dismissed status", "warning status", "dis status", "status dis", "war status", "status war", "tfu status", "status tfu", "proceed status", "status proceed", "dis1", "dis2", "dis3", "war1", "war2", "what is dis", "what is tfu"],
+      answer: {
+        ms: "<b>Status Akademik (berdasarkan CGPA):</b><br>PROCEED — CGPA min 2.00, teruskan semester depan<br>WAR1 — CGPA 1.67–1.99 (sem 1) atau <2.00 (sem 2+)<br>WAR2 — CGPA <2.00 selepas WAR1<br>DIS1 — CGPA <1.67 (sem pertama)<br>DIS2 — CGPA <2.00 selepas WAR2 (ditamatkan program)<br>DIS3 — lulus semua kursus tapi CGPA <2.00, ATAU gagal siap dalam tempoh maksimum<br>GRADUATE — lulus semua kursus, CGPA min 2.00<br>WTD — Penarikan diri<br>INCOMPLETE — ada status INC/ABY<br><br>Pelajar DIS/INA/TFU boleh rayu (Klausa 7.2).",
+        en: "<b>Academic Status (based on CGPA):</b><br>PROCEED — CGPA min 2.00, continue to next semester<br>WAR1 — CGPA 1.67–1.99 (sem 1) or <2.00 (sem 2+)<br>WAR2 — CGPA <2.00 after WAR1<br>DIS1 — CGPA <1.67 (first semester)<br>DIS2 — CGPA <2.00 after WAR2 (terminated from programme)<br>DIS3 — passed all courses but CGPA <2.00, OR failed to complete within max duration<br>GRADUATE — passed all courses, CGPA min 2.00<br>WTD — Withdrawal<br>INCOMPLETE — has INC/ABY status<br><br>Students with DIS/INA/TFU status may appeal (Clause 7.2)."
+      }
+    },
+    {
+      keywords: ["dean's list", "senarai dekan", "senate award", "anugerah senat", "dnl status", "snt status"],
+      answer: {
+        ms: "<b>Dean's List (DNL):</b> GPA ≥3.67, min 12 jam kredit (sem panjang), tak ulang kursus, tiada kes disiplin, tak dalam industrial training.<br><b>Senate Award (SNT):</b> sama syarat tapi GPA <b>4.00</b> penuh.",
+        en: "<b>Dean's List (DNL):</b> GPA ≥3.67, min 12 credit hours (long semester), not repeating any course, no disciplinary case, not undergoing industrial training.<br><b>Senate Award (SNT):</b> same conditions but a perfect GPA of <b>4.00</b>."
+      }
+    },
+    {
+      keywords: ["peperiksaan akhir", "final examination", "eligibility final assessment", "tidak hadir exam sebab sakit", "aby status", "special consideration exam"],
+      answer: {
+        ms: "Pelajar berdaftar kursus WAJIB duduk penilaian akhir (gagal = ABX, gred 0.00). Slip peperiksaan mesti dicetak (perlu siapkan SIE dulu) & ditunjukkan di dewan peperiksaan.<br><br><b>Tak hadir DENGAN kebenaran (ABY)</b> — sebab sakit (sijil dari hospital kerajaan/klinik dilantik), bencana alam, atau kecemasan diluluskan Dekan:<br>• Maklum Unit Peperiksaan & Ketua Program dlm 24 jam<br>• Hantar borang & bukti dlm 3 hari bekerja<br><br>Pelajar dilarang bercuti peribadi (termasuk umrah/lawatan) semasa Minggu Peperiksaan Akhir.",
+        en: "Registered students MUST sit the final assessment (failure to do so = ABX, grade point 0.00). The exam slip must be printed (after completing SIE) and shown at the exam hall.<br><br><b>Absence WITH permission (ABY)</b> — for medical reasons (certificate from a government hospital/appointed clinic), natural disaster, or Dean-approved emergency:<br>• Notify the Examination Unit & Head of Programme within 24 hours<br>• Submit the form & evidence within 3 working days<br><br>Students are prohibited from personal leave (including Umrah/leisure travel) during Final Examination Week."
+      }
+    },
+    {
+      keywords: ["peperiksaan ganti", "supplementary examination", "resit", "re sit", "resit exam", "re sit exam", "ulang periksa", "yuran resit", "resit fee", "fee resit exam", "fees for re sit"],
+      answer: {
+        ms: "<b>Peperiksaan Supplementari</b> dibenarkan jika:<br>• Status ABY (perlu borang lulus Dekan), ATAU<br>• Gagal Final Examination (FE) — perlu borang Re-Sit lulus Dekan + yuran <b>RM300</b>/kursus<br><br>Gred maksimum yang boleh diperoleh ialah <b>C</b>, walau markah sebenar lebih tinggi. Pelajar dengan ABX atau sabit salah laku akademik TIDAK layak mohon.",
+        en: "<b>Supplementary Examination</b> is allowed if:<br>• ABY status (needs Dean-approved form), OR<br>• Failed Final Examination (FE) — needs a Dean-approved Re-Sit form + <b>RM300</b> fee/course<br><br>The maximum grade obtainable is <b>C</b>, regardless of the actual score. Students with ABX status or convicted of academic misconduct are NOT eligible to apply."
+      }
+    },
+    {
+      keywords: ["rayuan akademik", "academic appeal", "appeal review peperiksaan", "appeal continuation of study", "rayuan sambung belajar", "appeal dismissed inactive"],
+      answer: {
+        ms: "<b>Rayuan Semakan Peperiksaan Akhir:</b> dalam 5 hari bekerja dari tarikh keputusan, yuran <b>RM50</b>/kursus (tak refund). Gred lebih baik akan digunakan.<br><br><b>Rayuan Sambung Pengajian</b> (untuk status Dismissed/Inactive/TFU): hantar dalam 5 hari bekerja, diputuskan oleh SADC.<br>• Dismissed (DIS) — RM50<br>• Inactive (INA) — RM400<br>• Terminated from University (TFU) — RM100<br><br>Jika rayuan gagal → status TMT (tak boleh rayu lagi).",
+        en: "<b>Appeal for Review of Final Examination:</b> within 5 working days of the result announcement, fee <b>RM50</b>/course (non-refundable). The better grade obtained is used.<br><br><b>Appeal for Continuation of Study</b> (for Dismissed/Inactive/TFU status): submitted within 5 working days, decided by SADC.<br>• Dismissed (DIS) — RM50<br>• Inactive (INA) — RM400<br>• Terminated from University (TFU) — RM100<br><br>If the appeal fails → TMT status (no further appeal allowed)."
+      }
+    },
+    {
+      keywords: ["academic misconduct", "salah laku akademik", "cheating exam", "meniru exam", "plagiarism", "plagiat", "guna ai buat assignment", "generative ai academic", "sadc sadac", "guna ai", "guna chatgpt", "pakai ai", "use ai", "using ai", "ai untuk assignment", "chatgpt assignment", "ai tanpa atribusi", "ai without attribution", "boleh guna ai", "can i use ai", "plagiarize", "plagiarise"],
+      answer: {
+        ms: "<b>Salah Laku Akademik</b> merangkumi:<br>• <b>Menipu/cuba menipu</b> semasa peperiksaan akhir (termasuk bawa bahan tanpa kebenaran)<br>• <b>Plagiarisme</b> — termasuk guna alat <b>Generative AI</b> tanpa atribusi wajar (dianggap plagiarisme & DILARANG SAMA SEKALI)<br>• <b>Penipuan dokumen</b> (cth. palsu sijil sakit/akademik)<br><br><b>Hukuman</b> boleh termasuk denda maks <b>RM500</b>, gagal kursus, gantung 1 semester, atau penamatan — atau gabungan mana-mana.<br><br>Kes dibicarakan oleh <b>SADC</b>; boleh dirayu ke <b>SADAC</b> (keputusan SADAC muktamad).",
+        en: "<b>Academic Misconduct</b> covers:<br>• <b>Cheating/attempting to cheat</b> during final examinations (including bringing unauthorised materials)<br>• <b>Plagiarism</b> — including using <b>Generative AI</b> tools without proper attribution (considered plagiarism and STRICTLY PROHIBITED)<br>• <b>Document fraud</b> (e.g. falsified medical/academic certificates)<br><br><b>Penalties</b> may include a fine up to <b>RM500</b>, failing the course, suspension for 1 semester, or termination — or any combination.<br><br>Cases are heard by the <b>SADC</b>; may be appealed to the <b>SADAC</b> (SADAC's decision is final)."
+      }
+    },
+    {
+      keywords: ["syarat bergraduat", "graduation requirement", "kelas ijazah", "degree classification", "first class", "anugerah naib canselor", "vice chancellor award", "pro chancellor award", "chancellor award", "cgpa minimum graduate", "cgpa untuk graduate", "cgpa to graduate", "minimum cgpa to graduate", "graduate requirement cgpa", "cgpa minimum", "minimum cgpa"],
+      answer: {
+        ms: "<b>Syarat Bergraduat:</b> CGPA min 2.00, lulus semua kursus wajib, penuhi semua syarat universiti, & diperakui Senat.<br><br><b>Kelas Ijazah (Bachelor's):</b><br>First Class — CGPA 3.67–4.00<br>Second Class Upper — 3.00–3.66<br>Second Class Lower — 2.00–2.99<br><br><b>Anugerah:</b> Naib Canselor (GPA ≥3.67 tiap semester), Pro-Canselor (CGPA ≥3.90 + kepimpinan), Canselor (terbaik keseluruhan — 1 dari Diploma, 1 dari Ijazah), & Anugerah Ko-kurikulum (pencapaian sekurang-kurangnya peringkat negeri).",
+        en: "<b>Graduation Requirements:</b> minimum CGPA 2.00, pass all required courses, fulfil all university conditions, & endorsed by the Senate.<br><br><b>Bachelor's Degree Classification:</b><br>First Class — CGPA 3.67–4.00<br>Second Class Upper — 3.00–3.66<br>Second Class Lower — 2.00–2.99<br><br><b>Awards:</b> Vice Chancellor Award (GPA ≥3.67 every semester), Pro-Chancellor Award (CGPA ≥3.90 + leadership), Chancellor Award (overall best — 1 from Diploma, 1 from Degree), & Extra-Curricular Special Award (at least state-level achievement)."
+      }
+    },
+    {
+      keywords: ["senarai penalti", "list of penalty", "processing fee peraturan", "denda peraturan akademik", "fine list regulation", "yuran proses akademik"],
+      answer: {
+        ms: "<b>Senarai Yuran/Penalti Akademik (ringkasan):</b><br>• Pendaftaran kursus lewat — RM30<br>• Permohonan pemindahan kredit — RM50<br>• Permintaan silibus — RM10/kursus (maks RM100)<br>• Permohonan penangguhan (sem panjang) — RM100<br>• Peperiksaan Re-Sit — RM300/kursus<br>• Rayuan semakan peperiksaan — RM50/kursus<br>• Rayuan sambung belajar (DIS/INA/TFU) — RM50/RM400/RM100<br>• Denda maksimum salah laku akademik — RM500<br>• Ambil transkrip/skrol lewat 3 bulan — RM100<br>• Surat Pengesahan Penganugerahan — RM50<br>• Salinan transkrip akademik — RM50",
+        en: "<b>Academic Fees/Penalties (summary):</b><br>• Late course registration — RM30<br>• Credit transfer application — RM50<br>• Syllabus request — RM10/course (max RM100)<br>• Deferment application (long semester) — RM100<br>• Re-sit examination — RM300/course<br>• Appeal for review of exam — RM50/course<br>• Appeal for continuation of study (DIS/INA/TFU) — RM50/RM400/RM100<br>• Maximum fine for academic misconduct — RM500<br>• Collecting transcript/scroll after 3 months — RM100<br>• Letter of Conferment Verification — RM50<br>• Copy of academic transcript — RM50"
+      }
+    },
+    {
+      keywords: ["abbreviation list", "singkatan peraturan", "apa itu dvcai", "apa maksud sadc", "what does sadc mean", "apa itu apel", "glossary peraturan"],
+      answer: {
+        ms: "<b>Singkatan Penting:</b><br>CGPA — Cumulative GPA | DVCAI — Timb. Naib Canselor Akademik & Antarabangsa | HEI — Institusi Pengajian Tinggi | ODL — Open & Distance Learning | SADC — Jawatankuasa Disiplin Akademik Pelajar | SADAC — Jawatankuasa Rayuan Disiplin Akademik Pelajar | SPN — Digantung Pengajian | TFU — Ditamatkan dari Universiti | TMT — Ditamatkan | VC — Naib Canselor | WAR — Amaran | WTD — Penarikan Diri | INA — Tidak Aktif | DIS — Dibuang | APEL — Accreditation of Prior Experiential Learning.",
+        en: "<b>Key Abbreviations:</b><br>CGPA — Cumulative Grade Point Average | DVCAI — Deputy VC Academic & Internationalization | HEI — Higher Education Institution | ODL — Open & Distance Learning | SADC — Student Academic Disciplinary Committee | SADAC — Student Academic Disciplinary Appeal Committee | SPN — Suspension of Study | TFU — Terminated from University | TMT — Terminated | VC — Vice Chancellor | WAR — Warning | WTD — Withdrawal | INA — Inactive | DIS — Dismissed | APEL — Accreditation of Prior Experiential Learning."
+      }
+    },
   ];
 
-  const FALLBACK_ANSWER = "Maaf, saya tak jumpa jawapan tepat untuk soalan tu dalam buku program. Boleh cuba tanya dengan cara lain, semak terus <a href=\"programme-booklet.html\" target=\"_blank\">buku program</a>, atau WhatsApp kami terus guna butang hijau di bawah.";
+  const FALLBACK_ANSWER = {
+    ms: "Maaf, saya tak jumpa jawapan tepat untuk soalan tu. Cuba tanya dengan cara lain, semak <a href=\"programme-booklet.html\" target=\"_blank\">buku program</a> / <a href=\"documents/uptm-academic-regulations.pdf\" target=\"_blank\">Peraturan Akademik UPTM</a>, atau WhatsApp kami terus guna butang hijau di bawah.",
+    en: "Sorry, I couldn't find an exact answer to that. Try rephrasing, check the <a href=\"programme-booklet.html\" target=\"_blank\">programme booklet</a> / <a href=\"documents/uptm-academic-regulations.pdf\" target=\"_blank\">UPTM Academic Regulations</a>, or WhatsApp us directly using the green button below."
+  };
+
+  const MS_MARKERS = ["apa","bagaimana","berapa","bila","kenapa","macam","mana","yang","boleh","saya","adakah","ialah","untuk","dgn","dengan","daripada","kalau","jika","tak","tidak","nak","kena","perlu","syarat","yuran","kelayakan","semester","pelajar","peraturan","gred","markah","lulus","gagal","rayuan","pengajian","pendaftaran","kehadiran","kursus"];
+  const EN_MARKERS = ["what","how","when","where","why","which","can","could","does","is","are","the","for","fee","fees","credit","grade","grading","attendance","exam","examination","appeal","pass","fail","requirement","requirements","semester","student","rule","rules","regulation","regulations","transfer","exemption","deferment","suspension","misconduct","plagiarism","cheating","graduate","graduation","course"];
 
   function normalizeText(s) {
     return s.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
   }
 
+  function detectLang(query) {
+    const words = normalizeText(query).split(' ');
+    let ms = 0, en = 0;
+    words.forEach(w => {
+      if (MS_MARKERS.includes(w)) ms++;
+      if (EN_MARKERS.includes(w)) en++;
+    });
+    return en > ms ? 'en' : 'ms';
+  }
+
+  function resolveAnswer(answer, lang) {
+    if (typeof answer === 'string') return answer;
+    return answer[lang] || answer.ms || answer.en || '';
+  }
+
   function findAnswer(query) {
     const q = normalizeText(query);
+    const lang = detectLang(query);
     let best = null, bestScore = 0;
     FCOM_KB.forEach(entry => {
       let score = 0;
@@ -581,7 +840,7 @@
       });
       if (score > bestScore) { bestScore = score; best = entry; }
     });
-    return best ? best.answer : FALLBACK_ANSWER;
+    return best ? resolveAnswer(best.answer, lang) : resolveAnswer(FALLBACK_ANSWER, lang);
   }
 
   const chatToggle = document.getElementById('chatToggle');
@@ -604,7 +863,7 @@
   chatToggle.addEventListener('click', () => {
     chatPanel.classList.toggle('open');
     if (chatPanel.classList.contains('open') && !greeted) {
-      addMsg("Hai! Saya FCOM Assistant. Tanya saya pasal program, yuran, kelayakan atau cara nak hubungi kami — jawapan diambil dari buku program FCOM.", 'bot');
+      addMsg("Hai! Saya FCOM Assistant. Tanya saya pasal program, yuran, kelayakan, Peraturan Akademik UPTM (gred, CGPA, rayuan, dll) atau cara nak hubungi kami. / Hi! I'm the FCOM Assistant — ask me about programmes, fees, entry requirements, UPTM Academic Regulations (grading, CGPA, appeals, etc.) or how to contact us.", 'bot');
       greeted = true;
     }
   });
