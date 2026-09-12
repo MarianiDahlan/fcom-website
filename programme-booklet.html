@@ -105,27 +105,34 @@
     const pctEl = document.getElementById('loadingPct');
     const fillEl = document.getElementById('progressFill');
 
-    // Load first page fully, then reveal reader; remaining pages preload in background
+    // Determine starting page from ?page=N in the URL (1-indexed), default to page 1
+    const params = new URLSearchParams(window.location.search);
+    let startPage = parseInt(params.get('page'), 10);
+    if (!Number.isFinite(startPage) || startPage < 1 || startPage > TOTAL_PAGES) startPage = 1;
+    const startIndex = startPage - 1;
+
+    // Load the starting page fully, then reveal reader; remaining pages preload in background
     const firstImg = new Image();
     firstImg.onload = () => {
       loadedCount = 1;
       updateProgress(pctEl, fillEl);
       document.getElementById('loading').style.display = 'none';
       document.getElementById('pageWrap').style.display = 'block';
-      showPage(0, { instant: true });
+      showPage(startIndex, { instant: true });
 
       const hint = document.getElementById('hint');
       hint.style.display = 'block';
       setTimeout(() => { hint.style.display = 'none'; }, 3500);
 
-      // background preload the rest
-      for (let i = 2; i <= TOTAL_PAGES; i++) {
+      // background preload the rest (skip the one already loaded)
+      for (let i = 1; i <= TOTAL_PAGES; i++) {
+        if (i === startPage) continue;
         const img = new Image();
         img.onload = () => { loadedCount++; updateProgress(pctEl, fillEl); };
         img.src = pageSrc(i);
       }
     };
-    firstImg.src = pageSrc(1);
+    firstImg.src = pageSrc(startPage);
   }
 
   function updateProgress(pctEl, fillEl) {
