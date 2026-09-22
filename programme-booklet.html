@@ -98,8 +98,9 @@
 
   var zoom = 1;
   var current = 0;
-  var attempt = 0;
   var startPage = 1;
+  var isFirstLoad = true;
+  var navAttempt = 0;
 
   function getStartPage() {
     var params = new URLSearchParams(window.location.search);
@@ -124,31 +125,45 @@
     }
   }
 
-  function loadFirstPage() {
-    var img = document.getElementById('pageImg');
-
+  // Single handler used for every page load (first load AND every next/prev navigation).
+  // It never resets `current` itself — `current` is always set by the caller (showPage)
+  // BEFORE the image starts loading, so this only reacts to success/failure of that request.
+  function attachImageHandlers(img) {
     img.onload = function () {
-      document.getElementById('loading').style.display = 'none';
-      document.getElementById('pageWrap').style.display = 'block';
-      current = startPage - 1;
+      navAttempt = 0;
+      if (isFirstLoad) {
+        isFirstLoad = false;
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('pageWrap').style.display = 'block';
+        var hint = document.getElementById('hint');
+        hint.style.display = 'block';
+        setTimeout(function () { hint.style.display = 'none'; }, 3500);
+      }
       updateIndicator();
-
-      var hint = document.getElementById('hint');
-      hint.style.display = 'block';
-      setTimeout(function () { hint.style.display = 'none'; }, 3500);
     };
 
     img.onerror = function () {
-      attempt++;
-      if (attempt < 3) {
-        setTimeout(function () {
-          img.src = pageSrc(startPage) + '?retry=' + attempt;
-        }, 1000);
-      } else {
-        showFailureMessage(startPage);
+      var pageNum = current + 1;
+      if (isFirstLoad) {
+        navAttempt++;
+        if (navAttempt < 3) {
+          setTimeout(function () {
+            img.src = pageSrc(pageNum) + '?retry=' + navAttempt;
+          }, 1000);
+        } else {
+          showFailureMessage(pageNum);
+        }
       }
+      // For navigation after the first successful load, a failed fetch just leaves
+      // the previous page's image showing rather than corrupting state; the browser
+      // will typically succeed on the next click/retry.
     };
+  }
 
+  function loadFirstPage() {
+    current = startPage - 1;
+    var img = document.getElementById('pageImg');
+    attachImageHandlers(img);
     img.src = pageSrc(startPage);
   }
 
