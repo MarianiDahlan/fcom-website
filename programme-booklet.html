@@ -26,7 +26,7 @@
   .stage-inner{padding:24px 18px 40px;min-height:100%;}
 
   .page-wrap{position:relative;width:var(--page-width, 800px);max-width:98%;margin:0 auto;}
-  .page-wrap img{display:block;width:100%;height:auto;background:#fff;box-shadow:0 25px 60px rgba(0,0,0,0.55);border-radius:2px;transition:opacity 0.18s ease;}
+  .page-wrap img{display:block;width:100%;height:auto;background:#fff;box-shadow:0 25px 60px rgba(0,0,0,0.55);border-radius:2px;}
 
   .navzone{position:absolute;top:0;bottom:0;width:18%;cursor:pointer;z-index:3;}
   .navzone.left{left:0;}
@@ -38,9 +38,6 @@
   .spinner{width:48px;height:48px;border:4px solid rgba(255,255,255,0.2);border-top-color:var(--red);border-radius:50%;animation:spin 0.9s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
   .loading p{color:#C7CBE0;font-size:0.92rem;margin:0;text-align:center;padding:0 30px;}
-  .loading .pct{color:#fff;font-weight:700;font-size:1.1rem;}
-  .progress-track{width:220px;height:6px;background:rgba(255,255,255,0.15);border-radius:4px;overflow:hidden;}
-  .progress-fill{height:100%;width:0%;background:var(--red);transition:width 0.2s ease;}
 
   .bottombar{position:fixed;bottom:0;left:0;right:0;height:64px;background:var(--ink-2);display:flex;align-items:center;justify-content:center;gap:22px;z-index:50;}
   .bottombar button{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;width:42px;height:42px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;}
@@ -92,76 +89,107 @@
   </div>
 
 <script>
-  const TOTAL_PAGES = 55;
-  const pageSrc = (i) => 'images-programme-2026/page-' + String(i).padStart(2,'0') + '.jpg';
-
-  let zoom = 1;
-  let current = 0;
-  const preloaded = {}; // cache of Image objects already fetched, keyed by page number
-
-  // Fetch a single page in the background (skips ones already cached)
-  function warm(pageNum) {
-    if (pageNum < 1 || pageNum > TOTAL_PAGES) return;
-    if (preloaded[pageNum]) return;
-    const img = new Image();
-    img.src = pageSrc(pageNum);
-    preloaded[pageNum] = img;
+  var TOTAL_PAGES = 55;
+  function pageSrc(i) {
+    var n = String(i);
+    while (n.length < 2) { n = '0' + n; }
+    return 'images-programme-2026/page-' + n + '.jpg';
   }
 
-  // Preload a small window around the given page so Prev/Next feel instant,
-  // without downloading the whole book up front.
-  function warmAround(pageNum) {
-    for (let d = -2; d <= 2; d++) warm(pageNum + d);
+  var zoom = 1;
+  var current = 0;
+  var attempt = 0;
+  var startPage = 1;
+
+  function getStartPage() {
+    var params = new URLSearchParams(window.location.search);
+    var p = parseInt(params.get('page'), 10);
+    if (!p || p < 1 || p > TOTAL_PAGES) { p = 1; }
+    return p;
   }
 
-  function preload() {
-    // Determine starting page from ?page=N in the URL (1-indexed), default to page 1
-    const params = new URLSearchParams(window.location.search);
-    let startPage = parseInt(params.get('page'), 10);
-    if (!Number.isFinite(startPage) || startPage < 1 || startPage > TOTAL_PAGES) startPage = 1;
-    const startIndex = startPage - 1;
-
-    loadFirstPage(startPage, startIndex, 0);
+  function showFailureMessage(pageNum) {
+    var spinner = document.getElementById('loadingSpinner');
+    var text = document.getElementById('loadingText');
+    if (spinner) { spinner.style.display = 'none'; }
+    if (text) {
+      text.innerHTML = 'Could not load page ' + pageNum + ' of the e-book.<br>' +
+        'Expected file: <code>' + pageSrc(pageNum) + '</code><br>' +
+        'Please check that the <code>images-programme-2026</code> folder (with all 55 page images) ' +
+        'was uploaded to the server in the same folder as this page.';
+      text.style.color = '#FFD9DB';
+      text.style.padding = '0 24px';
+      text.style.textAlign = 'center';
+      text.style.lineHeight = '1.6';
+    }
   }
 
-  // Tries to load the starting page; if the image 404s or the request stalls,
-  // shows a clear diagnostic instead of spinning forever, and retries a couple of times.
-  function loadFirstPage(startPage, startIndex, attempt) {
-    const src = pageSrc(startPage);
-    const firstImg = new Image();
-    let settled = false;
+  function loadFirstPage() {
+    var img = document.getElementById('pageImg');
 
-    const timeoutId = setTimeout(() => {
-      if (settled) return;
-      settled = true;
-      handleFirstPageFailure(startPage, startIndex, attempt, 'timeout');
-    }, 8000);
-
-    firstImg.onload = () => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(timeoutId);
-      preloaded[startPage] = firstImg;
+    img.onload = function () {
       document.getElementById('loading').style.display = 'none';
       document.getElementById('pageWrap').style.display = 'block';
-      showPage(startIndex, { instant: true });
+      current = startPage - 1;
+      updateIndicator();
 
-      const hint = document.getElementById('hint');
+      var hint = document.getElementById('hint');
       hint.style.display = 'block';
-      setTimeout(() => { hint.style.display = 'none'; }, 3500);
-
-      // quietly warm the next couple of pages so turning feels instant
-      warmAround(startPage);
+      setTimeout(function () { hint.style.display = 'none'; }, 3500);
     };
 
-    firstImg.onerror = () => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(timeoutId);
-      handleFirstPageFailure(startPage, startIndex, attempt, 'error');
+    img.onerror = function () {
+      attempt++;
+      if (attempt < 3) {
+        setTimeout(function () {
+          img.src = pageSrc(startPage) + '?retry=' + attempt;
+        }, 1000);
+      } else {
+        showFailureMessage(startPage);
+      }
     };
 
-    firstImg.src = src;
+    img.src = pageSrc(startPage);
   }
 
-  function
+  function showPage(index) {
+    if (index < 0 || index >= TOTAL_PAGES) { return; }
+    current = index;
+    var img = document.getElementById('pageImg');
+    img.src = pageSrc(current + 1);
+    document.getElementById('stage').scrollTo({ top: 0, behavior: 'auto' });
+    updateIndicator();
+  }
+
+  function updateIndicator() {
+    document.getElementById('pageIndicator').textContent = (current + 1) + ' / ' + TOTAL_PAGES;
+    document.getElementById('prevBtn').disabled = (current <= 0);
+    document.getElementById('nextBtn').disabled = (current >= TOTAL_PAGES - 1);
+  }
+
+  function nextPage() { if (current < TOTAL_PAGES - 1) { showPage(current + 1); } }
+  function prevPage() { if (current > 0) { showPage(current - 1); } }
+
+  document.getElementById('nextBtn').onclick = nextPage;
+  document.getElementById('prevBtn').onclick = prevPage;
+  document.getElementById('navRight').onclick = nextPage;
+  document.getElementById('navLeft').onclick = prevPage;
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { prevPage(); }
+    if (e.key === 'ArrowRight') { nextPage(); }
+  });
+
+  var BASE_WIDTH = 800;
+  function applyZoom() {
+    var w = Math.round(BASE_WIDTH * zoom);
+    document.getElementById('pageWrap').style.setProperty('--page-width', w + 'px');
+  }
+  document.getElementById('zoomInBtn').onclick = function () { zoom = Math.min(zoom + 0.25, 3.0); applyZoom(); };
+  document.getElementById('zoomOutBtn').onclick = function () { zoom = Math.max(zoom - 0.25, 0.5); applyZoom(); };
+
+  startPage = getStartPage();
+  loadFirstPage();
+</script>
+</body>
+</html>
