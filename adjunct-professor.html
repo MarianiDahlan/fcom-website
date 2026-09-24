@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Us — FCOM, Faculty of Computing & Multimedia, UPTM</title>
+<title>Adjunct Professor — FCOM, Faculty of Computing & Multimedia, UPTM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -326,6 +326,39 @@
   .chat-send:hover{background:var(--red-deep);}
   @media (max-width:480px){.chat-panel{right:16px;left:16px;width:auto;bottom:88px;}}
 
+  /* ---------- CONGRATULATIONS BANNER ---------- */
+  .congrats-banner{background:var(--white);border:1px solid var(--line);border-top:5px solid var(--red);border-radius:10px;overflow:hidden;display:grid;grid-template-columns:260px 1fr;align-items:end;position:relative;box-shadow:0 30px 60px -36px rgba(11,26,69,0.35);}
+  .congrats-photo{align-self:end;line-height:0;background:linear-gradient(180deg,#EEF0F9 0%,#E4E6F5 100%);}
+  .congrats-photo img{width:100%;height:auto;display:block;object-fit:contain;}
+  .congrats-copy{padding:44px 40px 40px 8px;color:var(--ink);}
+  .congrats-script{width:min(340px,80%);height:auto;margin-bottom:10px;}
+  .congrats-line{font-size:1.05rem;color:var(--slate);margin:0 0 2px;}
+  .congrats-title{font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0 0 4px;background:linear-gradient(100deg,var(--red) 0%,var(--purple) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .congrats-sub{font-size:1rem;color:var(--slate);margin:0 0 14px;}
+  .congrats-name{font-family:'Archivo',sans-serif;font-weight:700;font-size:1.15rem;color:var(--ink);margin:0;padding-top:14px;border-top:1px solid var(--line);display:inline-block;}
+  @media (max-width:760px){
+    .congrats-banner{grid-template-columns:1fr;}
+    .congrats-photo{max-width:220px;margin:0 auto;}
+    .congrats-copy{padding:8px 24px 40px;text-align:center;}
+    .congrats-name{border-top:none;padding-top:0;}
+  }
+
+  /* ---------- ADJUNCT BIO ---------- */
+  .bio-layout{display:grid;grid-template-columns:1fr 320px;gap:44px;align-items:start;}
+  .bio-copy p{color:var(--slate);font-size:1.02rem;margin-bottom:20px;}
+  .bio-card{background:var(--white);border:1px solid var(--line);border-radius:8px;padding:26px;position:sticky;top:100px;}
+  .bio-card h4{font-family:'Archivo',sans-serif;font-weight:800;font-size:1.02rem;margin-bottom:16px;}
+  .bio-facts{display:flex;flex-direction:column;gap:16px;}
+  .bio-facts li{display:flex;gap:12px;align-items:flex-start;font-size:0.88rem;color:var(--slate);line-height:1.5;}
+  .bio-facts .ic{width:30px;height:30px;flex:none;border-radius:8px;background:#FDECEC;color:var(--red);display:flex;align-items:center;justify-content:center;}
+  .bio-facts .ic svg{width:16px;height:16px;}
+  .bio-facts li:nth-child(2) .ic,.bio-facts li:nth-child(5) .ic{background:#EDE7F6;color:var(--purple);}
+  .bio-facts li:nth-child(3) .ic,.bio-facts li:nth-child(6) .ic{background:#E9EDFB;color:var(--ink-2);}
+  @media (max-width:900px){
+    .bio-layout{grid-template-columns:1fr;}
+    .bio-card{position:static;}
+  }
+
 </style>
 </head>
 <body>
@@ -348,8 +381,8 @@
     </button>
     <div class="nav-links" id="navLinks">
       <a href="index.html">Home</a>
-      <a href="about.html" class="active">About Us</a>
-      <a href="adjunct-professor.html">Adjunct Professor</a>
+      <a href="about.html">About Us</a>
+      <a href="adjunct-professor.html" class="active">Adjunct Professor</a>
       <a href="academics.html">Programmes</a>
       <a href="research.html">Research</a>
       <a href="index.html#news">News & Events</a>
@@ -360,527 +393,58 @@
 </header>
 
 <main id="top">
+<main id="top">
 
-<section id="about">
-    <div class="wrap">
-      <div class="section-head" style="max-width:760px;">
-        <span class="eyebrow-sm">ABOUT FCOM</span>
-        <h2>Where computing meets impact</h2>
+<section id="adjunct" style="padding:56px 0 8px;">
+  <div class="wrap">
+    <div class="congrats-banner">
+      <div class="congrats-photo">
+        <img src="images/adam-brimo-portrait.png" alt="Adam Brimo">
       </div>
-      <p style="color:var(--slate);font-size:1.05rem;max-width:74ch;">Established in 2013, the Faculty of Computing & Multimedia (FCOM) at Universiti Poly-Tech Malaysia offers a dynamic academic environment for students pursuing majors in Computer Science, Information Technology and Multimedia. Today FCOM runs 13 programmes from Foundation through to PhD, teaches roughly a fifth of UPTM's entire student body, and is built around a faculty where half of our lecturers are PhD holders or PhD candidates — so every programme stays grounded in active research as well as industry practice.</p>
-    </div>
-  </section>
-
-  <!-- DEAN MESSAGE -->
-<section class="dean">
-    <div class="wrap dean-grid">
-      <div style="text-align:center;">
-        <div class="dean-avatar">
-          <a href="expert-profile-assoc-prof-dr-saifuddin.html">
-          <img src="images/dean-faculty-of-computing-multimedia.png" alt="Dean, Faculty of Computing & Multimedia" style="width:100%;height:auto;object-fit:contain;object-position:bottom center;filter:drop-shadow(0 18px 30px rgba(11,26,69,0.35));"></a>
-        </div>
-        <h4><a href="expert-profile-assoc-prof-dr-saifuddin.html" style="color:inherit;text-decoration:none;">Assoc. Prof. Dr. Saifuddin bin Haji Mohtaram</a></h4>
-        <p class="role">Dean, Faculty of Computing & Multimedia</p>
-        <p class="role" style="margin-top:4px;"><a href="mailto:saifuddin@uptm.edu.my" style="color:inherit;">saifuddin@uptm.edu.my</a></p>
-      </div>
-      <div class="dean-copy">
-        <span class="eyebrow-sm">MESSAGE FROM THE DEAN</span>
-        <h2 style="margin-bottom:18px;">A warm welcome to future leaders</h2>
-        <p>Welcome to the Faculty of Computing & Multimedia. In a world driven by technology and innovation, you are now part of a community that empowers minds and shapes futures.</p>
-        <p>Here, you will be inspired to learn, encouraged to explore, and supported to innovate — together, let's create, transform, and make a meaningful impact in the digital world.</p>
-        <p style="color:var(--slate);font-size:0.95rem;"><strong style="color:var(--ink);">Expertise:</strong> AI, machine learning, game-based learning, multimedia technology, dyslexia research & assistive technology.</p>
+      <div class="congrats-copy">
+        <img class="congrats-script" src="images/congratulations-calligraphy.png" alt="Congratulations">
+        <p class="congrats-line">on the appointment as</p>
+        <h1 class="congrats-title">Adjunct Professor</h1>
+        <p class="congrats-sub">at Universiti Poly-Tech Malaysia</p>
+        <p class="congrats-name">Adam Brimo</p>
       </div>
     </div>
-    <div class="wrap" style="margin-top:52px;padding-top:40px;border-top:1px solid var(--line);">
-      <div class="leadership-grid">
-        <div class="lead-card">
-    <div class="lead-photo-frame">
-          <a href="expert-profile-assoc-prof-dr-mariani.html"><img class="lead-photo" src="images/assoc-prof-dr-mariani-binti-mohd-dahl.png" alt="Assoc. Prof. Dr. Mariani Binti Mohd Dahlan"></a>
-    </div>
-          <h4><a href="expert-profile-assoc-prof-dr-mariani.html" style="color:inherit;text-decoration:none;">Assoc. Prof. Dr. Mariani Binti Mohd Dahlan</a></h4>
-          <p class="lead-role">Deputy Dean (Academic)</p>
-          <p class="lead-exp">Expertise: Educational technology and digital learning innovation.</p>
-          <p class="lead-exp"><a href="mailto:mariani@uptm.edu.my" style="color:inherit;">mariani@uptm.edu.my</a></p>
-        </div>
-        <div class="lead-card">
-    <div class="lead-photo-frame">
-          <a href="expert-profile-dr-nasrah.html"><img class="lead-photo" src="images/dr-nasrah-binti-hassan-basri.png" alt="Dr. Nasrah Binti Hassan Basri"></a>
-    </div>
-          <h4><a href="expert-profile-dr-nasrah.html" style="color:inherit;text-decoration:none;">Dr. Nasrah Binti Hassan Basri</a></h4>
-          <p class="lead-role">Deputy Dean (Research)</p>
-          <p class="lead-exp">Expertise: UI/UX, human-computer interaction, e-participation.</p>
-          <p class="lead-exp"><a href="mailto:nasrah@uptm.edu.my" style="color:inherit;">nasrah@uptm.edu.my</a></p>
-        </div>
-        <div class="lead-card">
-    <div class="lead-photo-frame">
-          <a href="expert-profile-zurina.html"><img class="lead-photo" src="images/zurina-binti-jusoh.png" alt="Zurina Binti Jusoh"></a>
-    </div>
-          <h4><a href="expert-profile-zurina.html" style="color:inherit;text-decoration:none;">Zurina Binti Jusoh</a></h4>
-          <p class="lead-role">Deputy Dean (Student & Alumni)</p>
-          <p class="lead-exp">Expertise: Systems analysis and design, web and mobile app development, project management.</p>
-          <p class="lead-exp"><a href="mailto:zurina@uptm.edu.my" style="color:inherit;">zurina@uptm.edu.my</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HEAD OF PROGRAMMES -->
-<section class="hop-section">
-    <div class="wrap">
-      <div class="section-head" style="margin-bottom:32px;">
-        <span class="eyebrow-sm">HEAD OF PROGRAMMES</span>
-        <h2>Leading Each Programme Forward</h2>
-      </div>
-      <div class="hop-grid">
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-nor-azura.html"><img class="hop-photo" src="images/nor-azura-binti-salleh-omar.png" alt="Nor Azura binti Salleh @ Omar"></a>
-          </div>
-          <h4><a href="expert-profile-nor-azura.html" style="color:inherit;text-decoration:none;">Nor Azura binti Salleh @ Omar</a></h4>
-          <p class="hop-role">Head of Programme</p>
-          <p class="hop-program">Foundation in Information Technology<br><span style="color:var(--slate);font-weight:500;">FT001 / FT001-YTP</span></p>
-          <p class="hop-email"><a href="mailto:norazura@uptm.edu.my">norazura@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-wan-nor-asnida.html"><img class="hop-photo" src="images/wan-nor-asnida-binti-wan-jusoh.png" alt="Wan Nor Asnida binti Wan Jusoh"></a>
-          </div>
-          <h4><a href="expert-profile-wan-nor-asnida.html" style="color:inherit;text-decoration:none;">Wan Nor Asnida binti Wan Jusoh</a></h4>
-          <p class="hop-role">Head of Programme</p>
-          <p class="hop-program">Diploma in Computer Science<br><span style="color:var(--slate);font-weight:500;">CC101</span></p>
-          <p class="hop-email"><a href="mailto:wnasnida@uptm.edu.my">wnasnida@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-ab-arif-sanusi.html"><img class="hop-photo" src="images/ab-arif-sanusi-bin-arifin.png" alt="Ab Arif Sanusi bin Arifin"></a>
-          </div>
-          <h4><a href="expert-profile-ab-arif-sanusi.html" style="color:inherit;text-decoration:none;">Ab Arif Sanusi bin Arifin</a></h4>
-          <p class="hop-role">Head of Programme</p>
-          <p class="hop-program">Bachelor in Computer Science (Hons)<br><span style="color:var(--slate);font-weight:500;">CC203</span></p>
-          <p class="hop-email"><a href="mailto:sanusi@uptm.edu.my">sanusi@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-raznida.html"><img class="hop-photo" src="images/raznida-binti-isa.png" alt="Raznida binti Isa"></a>
-          </div>
-          <h4><a href="expert-profile-raznida.html" style="color:inherit;text-decoration:none;">Raznida binti Isa</a></h4>
-          <p class="hop-role">Head of Programme</p>
-          <p class="hop-program">Bachelor of IT (Hons) Data Analytics<br><span style="color:var(--slate);font-weight:500;">CT207</span></p>
-          <p class="hop-email"><a href="mailto:raznida@uptm.edu.my">raznida@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-noornajwa.html"><img class="hop-photo" src="images/noornajwa-binti-md-amin.png" alt="Noornajwa binti Md Amin"></a>
-          </div>
-          <h4><a href="expert-profile-noornajwa.html" style="color:inherit;text-decoration:none;">Noornajwa binti Md Amin</a></h4>
-          <p class="hop-role">Head of Programme</p>
-          <p class="hop-program">Bachelor of IT (Hons) Computer Application Development<br><span style="color:var(--slate);font-weight:500;">CT204</span></p>
-          <p class="hop-email"><a href="mailto:n_najwa@uptm.edu.my">n_najwa@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-dr-nadiah-yusof.html"><img class="hop-photo" src="images/dr-nadiah-binti-yusof.png" alt="Dr. Nadiah binti Yusof"></a>
-          </div>
-          <h4><a href="expert-profile-dr-nadiah-yusof.html" style="color:inherit;text-decoration:none;">Dr. Nadiah binti Yusof</a></h4>
-          <p class="hop-role">Head of Programme</p>
-          <p class="hop-program">Bachelor in Artificial Intelligence (Hons)<br><span style="color:var(--slate);font-weight:500;">CC204</span></p>
-          <p class="hop-email"><a href="mailto:nadiah_y@uptm.edu.my">nadiah_y@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-mohd-fitry.html"><img class="hop-photo" src="images/mohd-fitry-bin-yahya.png" alt="Mohd Fitry bin Yahya"></a>
-          </div>
-          <h4><a href="expert-profile-mohd-fitry.html" style="color:inherit;text-decoration:none;">Mohd Fitry bin Yahya</a></h4>
-          <p class="hop-role">Head of Programme</p>
-          <p class="hop-program">Bachelor of Arts in 3D Animation and Digital Media (Hons)<br><span style="color:var(--slate);font-weight:500;">CM201</span></p>
-          <p class="hop-email"><a href="mailto:fitry@uptm.edu.my">fitry@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-farah-farzana.html"><img class="hop-photo" src="images/farah-farzana-binti-abdul-aziz.png" alt="Farah Farzana binti Abdul Aziz"></a>
-          </div>
-          <h4><a href="expert-profile-farah-farzana.html" style="color:inherit;text-decoration:none;">Farah Farzana binti Abdul Aziz</a></h4>
-          <p class="hop-role">Head of Programme</p>
-          <p class="hop-program">Bachelor of IT (Hons) in Cyber Security<br><span style="color:var(--slate);font-weight:500;">CT206</span></p>
-          <p class="hop-email"><a href="mailto:farah_aziz@uptm.edu.my">farah_aziz@uptm.edu.my</a></p>
-        </div>
-      </div>
-    </div>
+  </div>
 </section>
 
-  <!-- COORDINATORS -->
-<section class="hop-section" style="border-top:1px solid var(--line);">
-    <div class="wrap">
-      <div class="section-head" style="margin-bottom:32px;">
-        <span class="eyebrow-sm">COORDINATORS</span>
-        <h2>Keeping Key Initiatives on Track</h2>
-      </div>
-      <div class="hop-grid coord-grid">
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-noraliza.html"><img class="hop-photo" src="images/noraliza-binti-azizan.png" alt="Noraliza binti Azizan"></a>
-          </div>
-          <h4><a href="expert-profile-noraliza.html" style="color:inherit;text-decoration:none;">Noraliza binti Azizan</a></h4>
-          <p class="hop-role">Coordinator</p>
-          <p class="hop-program">Final Year Project</p>
-          <p class="hop-email"><a href="mailto:noraliza@uptm.edu.my">noraliza@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-fatanah-syazana-zuraine.html"><img class="hop-photo" src="images/fatanah-syazana-zuraine-binti-ahmad.png" alt="Fatanah Syazana Zuraine binti Ahmad"></a>
-          </div>
-          <h4><a href="expert-profile-fatanah-syazana-zuraine.html" style="color:inherit;text-decoration:none;">Fatanah Syazana Zuraine binti Ahmad</a></h4>
-          <p class="hop-role">Coordinator</p>
-          <p class="hop-program">Final Year Project (Multimedia)</p>
-          <p class="hop-email"><a href="mailto:fatanah@uptm.edu.my">fatanah@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-ifftitah.html"><img class="hop-photo" src="images/mohd-ifftitah-bin-jamil.png" alt="Mohd Ifftitah bin Jamil"></a>
-          </div>
-          <h4><a href="expert-profile-ifftitah.html" style="color:inherit;text-decoration:none;">Mohd Ifftitah bin Jamil</a></h4>
-          <p class="hop-role">Coordinator</p>
-          <p class="hop-program">Industrial Training</p>
-          <p class="hop-email"><a href="mailto:iftitah@uptm.edu.my">iftitah@uptm.edu.my</a></p>
-        </div>
-      </div>
+<section id="adjunct-bio" style="padding-top:32px;">
+  <div class="wrap">
+    <div class="section-head" style="max-width:760px;">
+      <span class="eyebrow-sm">ADJUNCT PROFESSOR</span>
+      <h2>Adam Brimo</h2>
     </div>
-</section>
 
-  <!-- OTHER KEY ROLES -->
-<section class="hop-section" style="border-top:1px solid var(--line);">
-    <div class="wrap">
-      <div class="section-head" style="margin-bottom:32px;">
-        <span class="eyebrow-sm">OTHER KEY ROLES</span>
-        <h2>Supporting FCOM Behind the Scenes</h2>
-      </div>
-      <div class="hop-grid coord-grid" style="grid-template-columns:repeat(3,1fr);max-width:900px;">
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-dr-hasyatun.html"><img class="hop-photo" src="images/dr-hasyatun-binti-che-nan.png" alt="Dr. Hasyatun binti Che Nan"></a>
-          </div>
-          <h4><a href="expert-profile-dr-hasyatun.html" style="color:inherit;text-decoration:none;">Dr. Hasyatun binti Che Nan</a></h4>
-          <p class="hop-role">Head of Mentor</p>
-          <p class="hop-email"><a href="mailto:hasyatun@uptm.edu.my">hasyatun@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-amir-aarief.html"><img class="hop-photo" src="images/amir-aarief-bin-amir-hussin.png" alt="Amir Aarief bin Amir Hussin"></a>
-          </div>
-          <h4><a href="expert-profile-amir-aarief.html" style="color:inherit;text-decoration:none;">Amir Aarief bin Amir Hussin</a></h4>
-          <p class="hop-role">Internal Auditor</p>
-          <p class="hop-email"><a href="mailto:amir@uptm.edu.my">amir@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-hazrina.html"><img class="hop-photo" src="images/hazrina-binti-tajudin.png" alt="Hazrina binti Tajudin"></a>
-          </div>
-          <h4><a href="expert-profile-hazrina.html" style="color:inherit;text-decoration:none;">Hazrina binti Tajudin</a></h4>
-          <p class="hop-role">Document Officer</p>
-          <p class="hop-email"><a href="mailto:hazrina@uptm.edu.my">hazrina@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-nur-afra.html"><img class="hop-photo" src="images/nur-afra-binti-taidin.png" alt="Nur Afra binti Taidin"></a>
-          </div>
-          <h4><a href="expert-profile-nur-afra.html" style="color:inherit;text-decoration:none;">Nur Afra binti Taidin</a></h4>
-          <p class="hop-role">Head of Marketing</p>
-          <p class="hop-email"><a href="mailto:afra@uptm.edu.my">afra@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-noor-suhaida.html"><img class="hop-photo" src="images/noor-suhaida-binti-kamarudin.png" alt="Noor Suhaida binti Kamarudin"></a>
-          </div>
-          <h4><a href="expert-profile-noor-suhaida.html" style="color:inherit;text-decoration:none;">Noor Suhaida binti Kamarudin</a></h4>
-          <p class="hop-role">Head of SPK</p>
-          <p class="hop-email"><a href="mailto:suhaida@uptm.edu.my">suhaida@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-nur-afini-natrah.html"><img class="hop-photo" src="images/nur-afini-natrah-binti-mohd-ashril.png" alt="Nur Afini Natrah binti Mohd Ashril"></a>
-          </div>
-          <h4><a href="expert-profile-nur-afini-natrah.html" style="color:inherit;text-decoration:none;">Nur Afini Natrah binti Mohd Ashril</a></h4>
-          <p class="hop-role">Bendahari</p>
-          <p class="hop-email"><a href="mailto:nurafini@uptm.edu.my">nurafini@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-dr-nursyahida.html"><img class="hop-photo" src="images/dr-nursyahida-binti-mokhtar.png" alt="Dr. Nursyahida binti Mokhtar"></a>
-          </div>
-          <h4><a href="expert-profile-dr-nursyahida.html" style="color:inherit;text-decoration:none;">Dr. Nursyahida binti Mokhtar</a></h4>
-          <p class="hop-role">Director of Innovation</p>
-          <p class="hop-email"><a href="mailto:nursyahida@uptm.edu.my">nursyahida@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-aina-nadhirah.html"><img class="hop-photo" src="images/aina-nadhirah-binti-mohd-khairi.png" alt="Aina Nadhirah binti Mohd Khairi"></a>
-          </div>
-          <h4><a href="expert-profile-aina-nadhirah.html" style="color:inherit;text-decoration:none;">Aina Nadhirah binti Mohd Khairi</a></h4>
-          <p class="hop-role">Executive Officer</p>
-          <p class="hop-email"><a href="mailto:aina_nadhirah@uptm.edu.my">aina_nadhirah@uptm.edu.my</a></p>
-        </div>
-        <div class="hop-card">
-          <div class="hop-photo-frame">
-            <a href="expert-profile-suzalina.html"><img class="hop-photo" src="images/suzalina-binti-mat-esa.png" alt="Suzalina binti Mat Esa"></a>
-          </div>
-          <h4><a href="expert-profile-suzalina.html" style="color:inherit;text-decoration:none;">Suzalina binti Mat Esa</a></h4>
-          <p class="hop-role">Clerk</p>
-          <p class="hop-email"><a href="mailto:suzalina@uptm.edu.my">suzalina@uptm.edu.my</a></p>
-        </div>
-      </div>
-    </div>
-</section>
+    <div class="bio-layout">
+      <div class="bio-copy">
+        <p>Adam holds a Bachelor of Engineering (Software) and a Bachelor of Arts (Politics) from UNSW (University of New South Wales), is the 2011 Choice Magazine Consumer Activist of the Year, and is a recipient of the 2011 UNSW Alumni Graduand Award. Adam completed his honours thesis at UNSW in partnership with National ICT Australia (NICTA).</p>
 
-  <!-- OUR LECTURERS -->
-<section class="hop-section" style="border-top:1px solid var(--line);">
-    <div class="wrap">
-      <div class="section-head" style="margin-bottom:28px;">
-        <span class="eyebrow-sm">OUR LECTURERS</span>
-        <h2>Meet Our Academic Team by Field</h2>
+        <p>Adam previously worked at Macquarie Bank as a Software Engineer in the Fixed Income, Currencies and Commodities Group, and at Westpac Institutional Bank as a Senior Software Engineer.</p>
+
+        <p>In 2010–2011, Adam led the successful Vodafail consumer activist campaign, which resulted in nationwide media coverage, an ACMA inquiry, and a $1 billion network upgrade for Vodafone's Australian business.</p>
+
+        <p>In 2012, Adam joined world-renowned UNSW Professor Richard Buckland and David Collien to found OpenLearning.com, a social learning platform. Over one million students have joined courses on the platform, including the first massive open online courses (MOOCs) from Australia and Malaysia, where it is the national MOOC platform for public universities and polytechnics. OpenLearning now employs 65 people and is headquartered in Sydney, with its Southeast Asia head office in Kuala Lumpur.</p>
+
+        <p>In recognition of the impact OpenLearning has had on the education sector in Asia, Adam was named one of the Forbes 30 Under 30 Asia in the Consumer Technology category in early 2017.</p>
       </div>
-      <div class="field-tabs">
-        <button class="field-tab active" data-field="network">Cyber Security | Network</button>
-        <button class="field-tab" data-field="swe">Software Engineering</button>
-        <button class="field-tab" data-field="it">Information Technology | Information System</button>
-        <button class="field-tab" data-field="ai">Artificial Intelligence</button>
-        <button class="field-tab" data-field="mm">Animation | Multimedia</button>
-        <button class="field-tab" data-field="math">Mathematic | Statistic</button>
-      </div>
-      <div class="field-panel active" data-panel="network">
-        <div class="lect-grid">
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-mohd-akmal.html"><img class="lect-photo" src="images/mohd-akmal-bin-mohd-azmer.png" alt="Mohd Akmal bin Mohd Azmer"></a></div>
-            <h4><a href="expert-profile-mohd-akmal.html" style="color:inherit;text-decoration:none;">Mohd Akmal bin Mohd Azmer</a></h4>
-            <p><a href="mailto:mohd_akmal@uptm.edu.my">mohd_akmal@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-syafiq.html"><img class="lect-photo" src="images/muhamad-syafiq-bin-mohd-yasin.png" alt="Muhamad Syafiq bin Mohd Yasin"></a></div>
-            <h4><a href="expert-profile-syafiq.html" style="color:inherit;text-decoration:none;">Muhamad Syafiq bin Mohd Yasin</a></h4>
-            <p><a href="mailto:syafiq@uptm.edu.my">syafiq@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-nor-hafiza-abd-samad.html"><img class="lect-photo" src="images/nor-hafiza-binti-abd-samad.png" alt="Nor Hafiza binti Abd Samad"></a></div>
-            <h4><a href="expert-profile-nor-hafiza-abd-samad.html" style="color:inherit;text-decoration:none;">Nor Hafiza binti Abd Samad</a></h4>
-            <p><a href="mailto:hafiza@uptm.edu.my">hafiza@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-nur-farahin-farhanah.html"><img class="lect-photo" src="images/nur-farahin-farhanah-binti-mohd-fahrazi.png" alt="Nur Farahin Farhanah binti Mohd Fahrazi"></a></div>
-            <h4><a href="expert-profile-nur-farahin-farhanah.html" style="color:inherit;text-decoration:none;">Nur Farahin Farhanah binti Mohd Fahrazi</a></h4>
-            <p><a href="mailto:nurfarahin@uptm.edu.my">nurfarahin@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-nur-syahirah-syazwani.html"><img class="lect-photo" src="images/nur-syahirah-syazwani-binti-murad.png" alt="Nur Syahirah Syazwani binti Murad"></a></div>
-            <h4><a href="expert-profile-nur-syahirah-syazwani.html" style="color:inherit;text-decoration:none;">Nur Syahirah Syazwani binti Murad</a></h4>
-            <p><a href="mailto:nur_syahirah@uptm.edu.my">nur_syahirah@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-rukhiyah.html"><img class="lect-photo" src="images/rukhiyah-binti-adnan.png" alt="Rukhiyah binti Adnan"></a></div>
-            <h4><a href="expert-profile-rukhiyah.html" style="color:inherit;text-decoration:none;">Rukhiyah binti Adnan</a></h4>
-            <p><a href="mailto:rukhiyah@uptm.edu.my">rukhiyah@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-siti-fajar.html"><img class="lect-photo" src="images/siti-fajar-binti-jalal.png" alt="Siti Fajar binti Jalal"></a></div>
-            <h4><a href="expert-profile-siti-fajar.html" style="color:inherit;text-decoration:none;">Siti Fajar binti Jalal</a></h4>
-            <p><a href="mailto:siti_fajar@uptm.edu.my">siti_fajar@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-ts-ainul-hazmin.html"><img class="lect-photo" src="images/ts-ainul-hazmin-bin-a-hamid.png" alt="Ts. Ainul Hazmin bin A Hamid"></a></div>
-            <h4><a href="expert-profile-ts-ainul-hazmin.html" style="color:inherit;text-decoration:none;">Ts. Ainul Hazmin bin A Hamid</a></h4>
-            <p><a href="mailto:ainul@uptm.edu.my">ainul@uptm.edu.my</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="field-panel" data-panel="swe">
-        <div class="lect-grid">
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-nurain-nabila.html"><img class="lect-photo" src="images/nurain-nabila-binti-baharom.png" alt="Nurain Nabila Binti Baharom"></a></div>
-            <h4><a href="expert-profile-nurain-nabila.html" style="color:inherit;text-decoration:none;">Nurain Nabila Binti Baharom</a></h4>
-            <p><a href="mailto:nurain_nabila@uptm.edu.my">nurain_nabila@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-aiza-najiihah.html"><img class="lect-photo" src="images/aiza-najiihah-binti-razaman.png" alt="Aiza Najiihah binti Razaman"></a></div>
-            <h4><a href="expert-profile-aiza-najiihah.html" style="color:inherit;text-decoration:none;">Aiza Najiihah binti Razaman</a></h4>
-            <p><a href="mailto:aiza@uptm.edu.my">aiza@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-nor-aliza.html"><img class="lect-photo" src="images/nor-aliza-binti-mohd-amin.png" alt="Nor Aliza binti Mohd Amin"></a></div>
-            <h4><a href="expert-profile-nor-aliza.html" style="color:inherit;text-decoration:none;">Nor Aliza binti Mohd Amin</a></h4>
-            <p><a href="mailto:nor_aliza@uptm.edu.my">nor_aliza@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-norhasiah.html"><img class="lect-photo" src="images/norhasiah-binti-mohd-akhir.png" alt="Norhasiah binti Mohd Akhir"></a></div>
-            <h4><a href="expert-profile-norhasiah.html" style="color:inherit;text-decoration:none;">Norhasiah binti Mohd Akhir</a></h4>
-            <p><a href="mailto:norhasiah@uptm.edu.my">norhasiah@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-nurul-azlin-liyana.html"><img class="lect-photo" src="images/nurul-azlin-liyana-binti-mohamad-redzuan.png" alt="Nurul Azlin Liyana binti Mohamad Redzuan"></a></div>
-            <h4><a href="expert-profile-nurul-azlin-liyana.html" style="color:inherit;text-decoration:none;">Nurul Azlin Liyana binti Mohamad Redzuan</a></h4>
-            <p><a href="mailto:azlin@uptm.edu.my">azlin@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-sherylaidah-samsuddin.html"><img class="lect-photo" src="images/sherylaidah-binti-samsuddin.png" alt="Sherylaidah binti Samsuddin"></a></div>
-            <h4><a href="expert-profile-sherylaidah-samsuddin.html" style="color:inherit;text-decoration:none;">Sherylaidah binti Samsuddin</a></h4>
-            <p><a href="mailto:sherylaidah@uptm.edu.my">sherylaidah@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-shuhadah.html"><img class="lect-photo" src="images/shuhadah-binti-othman.png" alt="Shuhadah binti Othman"></a></div>
-            <h4><a href="expert-profile-shuhadah.html" style="color:inherit;text-decoration:none;">Shuhadah binti Othman</a></h4>
-            <p><a href="mailto:shuhadah@uptm.edu.my">shuhadah@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-siti-robaya-jantan.html"><img class="lect-photo" src="images/siti-robaya-binti-jantan.png" alt="Siti Robaya binti Jantan"></a></div>
-            <h4><a href="expert-profile-siti-robaya-jantan.html" style="color:inherit;text-decoration:none;">Siti Robaya binti Jantan</a></h4>
-            <p><a href="mailto:robaya@uptm.edu.my">robaya@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-ts-muhd-faizal.html"><img class="lect-photo" src="images/ts-muhd-faizal-bin-ahmad.png" alt="Ts. Muhd Faizal bin Ahmad"></a></div>
-            <h4><a href="expert-profile-ts-muhd-faizal.html" style="color:inherit;text-decoration:none;">Ts. Muhd Faizal bin Ahmad</a></h4>
-            <p><a href="mailto:muhd_faizal@uptm.edu.my">muhd_faizal@uptm.edu.my</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="field-panel" data-panel="it">
-        <div class="lect-grid">
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-aslimariah.html"><img class="lect-photo" src="images/aslimariah-binti-ahmad.png" alt="Aslimariah binti Ahmad"></a></div>
-            <h4><a href="expert-profile-aslimariah.html" style="color:inherit;text-decoration:none;">Aslimariah binti Ahmad</a></h4>
-            <p><a href="mailto:aslimariah@uptm.edu.my">aslimariah@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-dr-noor-maizatulshima.html"><img class="lect-photo" src="images/dr-noor-maizatulshima-binti-muhammad-sa.png" alt="Dr. Noor Maizatulshima binti Muhammad Sabri"></a></div>
-            <h4><a href="expert-profile-dr-noor-maizatulshima.html" style="color:inherit;text-decoration:none;">Dr. Noor Maizatulshima binti Muhammad Sabri</a></h4>
-            <p><a href="mailto:shimasabri@uptm.edu.my">shimasabri@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-harlinawati.html"><img class="lect-photo" src="images/harlinawati-binti-abdul-kadir.png" alt="Harlinawati binti Abdul Kadir"></a></div>
-            <h4><a href="expert-profile-harlinawati.html" style="color:inherit;text-decoration:none;">Harlinawati binti Abdul Kadir</a></h4>
-            <p><a href="mailto:harlinawati@uptm.edu.my">harlinawati@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-jihadah.html"><img class="lect-photo" src="images/jihadah-binti-ahmad.png" alt="Jihadah binti Ahmad"></a></div>
-            <h4><a href="expert-profile-jihadah.html" style="color:inherit;text-decoration:none;">Jihadah binti Ahmad</a></h4>
-            <p><a href="mailto:jihadah@uptm.edu.my">jihadah@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-muhammad-amin.html"><img class="lect-photo" src="images/muhammad-amin-bin-mustapa.png" alt="Muhammad Amin bin Mustapa"></a></div>
-            <h4><a href="expert-profile-muhammad-amin.html" style="color:inherit;text-decoration:none;">Muhammad Amin bin Mustapa</a></h4>
-            <p><a href="mailto:muhammad_amin@uptm.edu.my">muhammad_amin@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-norfazlina.html"><img class="lect-photo" src="images/norfazlina-binti-johar.png" alt="Norfazlina binti Johar"></a></div>
-            <h4><a href="expert-profile-norfazlina.html" style="color:inherit;text-decoration:none;">Norfazlina binti Johar</a></h4>
-            <p><a href="mailto:norfazlina@uptm.edu.my">norfazlina@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-nur-dhania-kamalia.html"><img class="lect-photo" src="images/nur-dhania-kamalia-binti-kamarol.png" alt="Nur Dhania Kamalia binti Kamarol"></a></div>
-            <h4><a href="expert-profile-nur-dhania-kamalia.html" style="color:inherit;text-decoration:none;">Nur Dhania Kamalia binti Kamarol</a></h4>
-            <p><a href="mailto:dhania@uptm.edu.my">dhania@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-nur-faizah.html"><img class="lect-photo" src="images/nur-faizah-binti-ab-aziz.png" alt="Nur Faizah binti Ab Aziz"></a></div>
-            <h4><a href="expert-profile-nur-faizah.html" style="color:inherit;text-decoration:none;">Nur Faizah binti Ab Aziz</a></h4>
-            <p><a href="mailto:nur_faizah@uptm.edu.my">nur_faizah@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-nuri-surina.html"><img class="lect-photo" src="images/nuri-surina-binti-abdul-halim.png" alt="Nuri Surina binti Abdul Halim"></a></div>
-            <h4><a href="expert-profile-nuri-surina.html" style="color:inherit;text-decoration:none;">Nuri Surina binti Abdul Halim</a></h4>
-            <p><a href="mailto:nuri@uptm.edu.my">nuri@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-sharifah-nadia-syed-khastudin.html"><img class="lect-photo" src="images/sharifah-nadia-binti-syed-khastudin.png" alt="Sharifah Nadia binti Syed Khastudin"></a></div>
-            <h4><a href="expert-profile-sharifah-nadia-syed-khastudin.html" style="color:inherit;text-decoration:none;">Sharifah Nadia binti Syed Khastudin</a></h4>
-            <p><a href="mailto:sh_nadia@uptm.edu.my">sh_nadia@uptm.edu.my</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="field-panel" data-panel="ai">
-        <div class="lect-grid">
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-khairatul-alyani.html"><img class="lect-photo" src="images/khairatul-alyani-binti-badari.png" alt="Khairatul Alyani binti Badari"></a></div>
-            <h4><a href="expert-profile-khairatul-alyani.html" style="color:inherit;text-decoration:none;">Khairatul Alyani binti Badari</a></h4>
-            <p><a href="mailto:khairatul_a@uptm.edu.my">khairatul_a@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-sri-rahayu.html"><img class="lect-photo" src="images/sri-rahayu-binti-muhammad.png" alt="Sri Rahayu binti Muhammad"></a></div>
-            <h4><a href="expert-profile-sri-rahayu.html" style="color:inherit;text-decoration:none;">Sri Rahayu binti Muhammad</a></h4>
-            <p><a href="mailto:sri_rahayu@uptm.edu.my">sri_rahayu@uptm.edu.my</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="field-panel" data-panel="mm">
-        <div class="lect-grid">
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-hafizz-al-amirrul.html"><img class="lect-photo" src="images/hafizz-al.png" alt="Hafizz Al-Amirrul bin Mohd Zanial"></a></div>
-            <h4><a href="expert-profile-hafizz-al-amirrul.html" style="color:inherit;text-decoration:none;">Hafizz Al-Amirrul bin Mohd Zanial</a></h4>
-            <p><a href="mailto:hafizz@uptm.edu.my">hafizz@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-muhammad-ali-reza.html"><img class="lect-photo" src="images/muhammad-ali-reza-bin-ahmad.png" alt="Muhammad Ali Reza bin Ahmad"></a></div>
-            <h4><a href="expert-profile-muhammad-ali-reza.html" style="color:inherit;text-decoration:none;">Muhammad Ali Reza bin Ahmad</a></h4>
-            <p><a href="mailto:ali_reza@uptm.edu.my">ali_reza@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-nurhanisah.html"><img class="lect-photo" src="images/nurhanisah-binti-surdi.png" alt="Nurhanisah binti Surdi"></a></div>
-            <h4><a href="expert-profile-nurhanisah.html" style="color:inherit;text-decoration:none;">Nurhanisah binti Surdi</a></h4>
-            <p><a href="mailto:nurhanisah@uptm.edu.my">nurhanisah@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-khairu-nisa.html"><img class="lect-photo" src="images/khairu-nisa-binti-wazir.png" alt="Khairu Nisa binti Wazir"></a></div>
-            <h4><a href="expert-profile-khairu-nisa.html" style="color:inherit;text-decoration:none;">Khairu Nisa binti Wazir</a></h4>
-            <p><a href="mailto:khairu_nisa@uptm.edu.my">khairu_nisa@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-nur-rahatina.html"><img class="lect-photo" src="images/nur-rahatina-binti-abd-rahman.png" alt="Nur Rahatina binti Abd Rahman"></a></div>
-            <h4><a href="expert-profile-nur-rahatina.html" style="color:inherit;text-decoration:none;">Nur Rahatina binti Abd Rahman</a></h4>
-            <p><a href="mailto:nur_rahatina@uptm.edu.my">nur_rahatina@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-nurul-asikin.html"><img class="lect-photo" src="images/nurul-asikin-binti-roslan.png" alt="Nurul Asikin binti Roslan"></a></div>
-            <h4><a href="expert-profile-nurul-asikin.html" style="color:inherit;text-decoration:none;">Nurul Asikin binti Roslan</a></h4>
-            <p><a href="mailto:nurul_asikin@uptm.edu.my">nurul_asikin@uptm.edu.my</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="field-panel" data-panel="math">
-        <div class="lect-grid">
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-siti-salmiah.html"><img class="lect-photo" src="images/siti-salmiah-binti-yatim-mohd-mansor.png" alt="Siti Salmiah Binti Yatim @ Mohd Mansor"></a></div>
-            <h4><a href="expert-profile-siti-salmiah.html" style="color:inherit;text-decoration:none;">Siti Salmiah Binti Yatim @ Mohd Mansor</a></h4>
-            <p><a href="mailto:siti_salmiah@uptm.edu.my">siti_salmiah@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-afiqah-sofiya.html"><img class="lect-photo" src="images/afiqah-sofiya-binti-zaid.png" alt="Afiqah Sofiya Binti Zaid"></a></div>
-            <h4><a href="expert-profile-afiqah-sofiya.html" style="color:inherit;text-decoration:none;">Afiqah Sofiya Binti Zaid</a></h4>
-            <p><a href="mailto:afiqah_sofiya@uptm.edu.my">afiqah_sofiya@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-emi-amielda-ahmad-mokhtar.html"><img class="lect-photo" src="images/emi-amielda-binti-ahmad-mokhtar.png" alt="Emi Amielda binti Ahmad Mokhtar"></a></div>
-            <h4><a href="expert-profile-emi-amielda-ahmad-mokhtar.html" style="color:inherit;text-decoration:none;">Emi Amielda binti Ahmad Mokhtar</a></h4>
-            <p><a href="mailto:amielda@uptm.edu.my">amielda@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-jaaz-suhaiza.html"><img class="lect-photo" src="images/jaaz-suhaiza-binti-jaafar.png" alt="Jaaz Suhaiza binti Jaafar"></a></div>
-            <h4><a href="expert-profile-jaaz-suhaiza.html" style="color:inherit;text-decoration:none;">Jaaz Suhaiza binti Jaafar</a></h4>
-            <p><a href="mailto:jaaz@uptm.edu.my">jaaz@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-maizon.html"><img class="lect-photo" src="images/maizon-binti-mohd-darus.png" alt="Maizon binti Mohd Darus"></a></div>
-            <h4><a href="expert-profile-maizon.html" style="color:inherit;text-decoration:none;">Maizon binti Mohd Darus</a></h4>
-            <p><a href="mailto:maizon@uptm.edu.my">maizon@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-nik-nur-syazreen.html"><img class="lect-photo" src="images/nik-nur-syazreen-binti-nik-rohaimi.png" alt="Nik Nur Syazreen binti Nik Rohaimi"></a></div>
-            <h4><a href="expert-profile-nik-nur-syazreen.html" style="color:inherit;text-decoration:none;">Nik Nur Syazreen binti Nik Rohaimi</a></h4>
-            <p><a href="mailto:nursyazreen@uptm.edu.my">nursyazreen@uptm.edu.my</a></p>
-          </div>
-          <div class="lect-card has-photo">
-            <div class="lect-photo-frame"><a href="expert-profile-noor-farah-wahida.html"><img class="lect-photo" src="images/noor-farah-wahida-binti-abdul-rashid.png" alt="Noor Farah Wahida binti Abdul Rashid"></a></div>
-            <h4><a href="expert-profile-noor-farah-wahida.html" style="color:inherit;text-decoration:none;">Noor Farah Wahida binti Abdul Rashid</a></h4>
-            <p><a href="mailto:noor_farah@uptm.edu.my">noor_farah@uptm.edu.my</a></p>
-          </div>
-        </div>
-      </div>
+
+      <aside class="bio-card">
+        <h4>Quick Facts</h4>
+        <ul class="bio-facts">
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></span>Bachelor of Engineering (Software) &amp; Bachelor of Arts (Politics), UNSW</li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M8.2 13.5L6 22l6-3 6 3-2.2-8.5"/></svg></span>2011 Choice Magazine Consumer Activist of the Year</li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15a4 4 0 100-8 4 4 0 000 8z"/><path d="M8.2 13.5L6 22l6-3 6 3-2.2-8.5"/></svg></span>2011 UNSW Alumni Graduand Award</li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/></svg></span>Led the 2010–2011 Vodafail campaign — nationwide media coverage, ACMA inquiry &amp; a $1bn Vodafone network upgrade</li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20V10M18 20V4M6 20v-6"/></svg></span>Co-founder, OpenLearning.com — 1M+ learners, national MOOC platform for Malaysian public universities &amp; polytechnics</li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.9 6.6L22 9.3l-5 4.9 1.2 7-6.2-3.4L5.8 21l1.2-7-5-4.9 7.1-.7L12 2z"/></svg></span>Forbes 30 Under 30 Asia 2017 — Consumer Technology</li>
+        </ul>
+      </aside>
     </div>
+  </div>
 </section>
 
 </main>
