@@ -327,21 +327,8 @@
   @media (max-width:480px){.chat-panel{right:16px;left:16px;width:auto;bottom:88px;}}
 
   /* ---------- CONGRATULATIONS BANNER ---------- */
-  .congrats-banner{background:var(--white);border:1px solid var(--line);border-top:5px solid var(--red);border-radius:10px;overflow:hidden;display:grid;grid-template-columns:260px 1fr;align-items:end;position:relative;box-shadow:0 30px 60px -36px rgba(11,26,69,0.35);}
-  .congrats-photo{align-self:end;line-height:0;background:linear-gradient(180deg,#EEF0F9 0%,#E4E6F5 100%);}
-  .congrats-photo img{width:100%;height:auto;display:block;object-fit:contain;}
-  .congrats-copy{padding:44px 40px 40px 8px;color:var(--ink);}
-  .congrats-script{width:min(340px,80%);height:auto;margin-bottom:10px;}
-  .congrats-line{font-size:1.05rem;color:var(--slate);margin:0 0 2px;}
-  .congrats-title{font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0 0 4px;background:linear-gradient(100deg,var(--red) 0%,var(--purple) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
-  .congrats-sub{font-size:1rem;color:var(--slate);margin:0 0 14px;}
-  .congrats-name{font-family:'Archivo',sans-serif;font-weight:700;font-size:1.15rem;color:var(--ink);margin:0;padding-top:14px;border-top:1px solid var(--line);display:inline-block;}
-  @media (max-width:760px){
-    .congrats-banner{grid-template-columns:1fr;}
-    .congrats-photo{max-width:220px;margin:0 auto;}
-    .congrats-copy{padding:8px 24px 40px;text-align:center;}
-    .congrats-name{border-top:none;padding-top:0;}
-  }
+  .congrats-banner{border-radius:10px;overflow:hidden;box-shadow:0 30px 60px -36px rgba(11,26,69,0.35);}
+  .congrats-banner img{width:100%;height:auto;display:block;}
 
   /* ---------- ADJUNCT BIO ---------- */
   .bio-layout{display:grid;grid-template-columns:1fr 320px;gap:44px;align-items:start;}
@@ -398,16 +385,7 @@
 <section id="adjunct" style="padding:56px 0 8px;">
   <div class="wrap">
     <div class="congrats-banner">
-      <div class="congrats-photo">
-        <img src="images/adam-brimo-portrait.png" alt="Adam Brimo">
-      </div>
-      <div class="congrats-copy">
-        <img class="congrats-script" src="images/congratulations-calligraphy.png" alt="Congratulations">
-        <p class="congrats-line">on the appointment as</p>
-        <h1 class="congrats-title">Adjunct Professor</h1>
-        <p class="congrats-sub">at Universiti Poly-Tech Malaysia</p>
-        <p class="congrats-name">Adam Brimo</p>
-      </div>
+      <img src="images/adjunct-professor-congrats-banner.jpg" alt="Congratulations on the appointment as Adjunct Professor at Universiti Poly-Tech Malaysia — Adam Brimo">
     </div>
   </div>
 </section>
