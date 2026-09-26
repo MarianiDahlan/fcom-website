@@ -114,26 +114,8 @@
 
   /* ---------- ABOUT + STAFF DASHBOARD ---------- */
   .about-grid{display:grid;grid-template-columns:1fr 360px;gap:44px;align-items:start;}
-  .staff-dashboard{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:26px 24px;box-shadow:0 20px 45px -30px rgba(11,26,69,0.35);position:sticky;top:96px;}
-  .staff-dashboard .eyebrow-sm{margin-bottom:4px;}
-  .staff-dashboard h3{font-family:'Archivo',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:18px;}
-  .staff-total{display:flex;align-items:baseline;gap:10px;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--line);}
-  .staff-total .num{font-family:'Archivo',sans-serif;font-weight:900;font-size:2.6rem;line-height:1;background:linear-gradient(100deg,var(--red) 0%,var(--purple) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
-  .staff-total .lbl{color:var(--slate);font-size:0.85rem;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;}
-  .staff-stats{list-style:none;margin:0 0 18px;padding:0;display:flex;flex-direction:column;gap:10px;}
-  .staff-stats li{display:flex;align-items:center;justify-content:space-between;font-size:0.88rem;color:var(--ink);}
-  .staff-stats li span:first-child{color:var(--slate);}
-  .staff-stats li span:last-child{font-weight:800;background:#F5F6FB;border-radius:20px;padding:2px 11px;font-variant-numeric:tabular-nums;}
-  .staff-block-title{font-size:0.72rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:0.04em;margin:18px 0 10px;padding-top:16px;border-top:1px solid var(--line);}
-  .staff-field-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
-  .staff-field-list li{display:flex;align-items:center;gap:10px;font-size:0.85rem;}
-  .staff-field-list .dot{width:9px;height:9px;border-radius:50%;flex:none;}
-  .staff-field-list .field-name{flex:1;color:var(--ink);}
-  .staff-field-list .field-count{font-weight:800;color:var(--slate);font-variant-numeric:tabular-nums;}
-  .staff-leader-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
-  .staff-leader-list li{font-size:0.85rem;}
-  .staff-leader-list .leader-name{color:var(--ink);font-weight:700;display:block;}
-  .staff-leader-list .leader-field{color:var(--red);font-weight:700;font-size:0.78rem;display:block;margin-top:2px;}
+  .staff-dashboard.stats-box{position:sticky;top:96px;}
+  .staff-dashboard .stats-eyebrow:not(:first-child){display:block;margin-top:4px;}
   @media (max-width:960px){
     .about-grid{grid-template-columns:1fr;}
     .staff-dashboard{position:static;max-width:460px;}
@@ -402,38 +384,58 @@
         </div>
 
         <!-- STAFF DASHBOARD -->
-        <div class="staff-dashboard">
-          <span class="eyebrow-sm">FCOM AT A GLANCE</span>
-          <h3>Faculty Staff Snapshot</h3>
-          <div class="staff-total">
-            <span class="num">66</span>
-            <span class="lbl">Total Staff</span>
+        <div class="staff-dashboard stats-box">
+          <span class="stats-eyebrow">FCOM AT A GLANCE</span>
+          <div class="stat-line">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div><div class="num">66</div><div class="lbl">Total Staff</div></div>
           </div>
-          <ul class="staff-stats">
-            <li><span>Leadership (Dean & Deputy Deans)</span><span>4</span></li>
-            <li><span>Lecturers</span><span>42</span></li>
-            <li><span>Head of Programme</span><span>8</span></li>
-            <li><span>Coordinators</span><span>3</span></li>
-            <li><span>Administrative & Support Staff</span><span>9</span></li>
-          </ul>
+          <div class="stat-line">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l9 4.5-9 4.5-9-4.5L12 2z"/><path d="M3 6.5v6c0 2 4 4.5 9 4.5s9-2.5 9-4.5v-6"/></svg></div>
+            <div><div class="num">4</div><div class="lbl">Leadership (Dean & Deputy Deans)</div></div>
+          </div>
+          <div class="stat-line">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></div>
+            <div><div class="num">42</div><div class="lbl">Lecturers</div></div>
+          </div>
+          <div class="stat-line">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
+            <div><div class="num">8</div><div class="lbl">Head of Programme</div></div>
+          </div>
+          <div class="stat-line">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+            <div><div class="num">3</div><div class="lbl">Coordinators</div></div>
+          </div>
+          <div class="stat-line">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+            <div><div class="num">9</div><div class="lbl">Administrative & Support Staff</div></div>
+          </div>
 
-          <div class="staff-block-title">Staff by Field</div>
-          <ul class="staff-field-list">
-            <li><span class="dot" style="background:var(--ink-2);"></span><span class="field-name">Cyber Security | Network</span><span class="field-count">11</span></li>
-            <li><span class="dot" style="background:var(--purple);"></span><span class="field-name">Software Engineering</span><span class="field-count">13</span></li>
-            <li><span class="dot" style="background:var(--red);"></span><span class="field-name">Information Technology | Information System</span><span class="field-count">13</span></li>
-            <li><span class="dot" style="background:#4B6FE0;"></span><span class="field-name">Artificial Intelligence</span><span class="field-count">4</span></li>
-            <li><span class="dot" style="background:#E08A2E;"></span><span class="field-name">Animation | Multimedia</span><span class="field-count">14</span></li>
-            <li><span class="dot" style="background:#2FA36B;"></span><span class="field-name">Mathematic | Statistic</span><span class="field-count">9</span></li>
-          </ul>
-
-          <div class="staff-block-title">Leadership by Field</div>
-          <ul class="staff-leader-list">
-            <li><span class="leader-name">Dean</span><span class="leader-field">Cyber Security | Network</span></li>
-            <li><span class="leader-name">Dr. Mariani</span><span class="leader-field">Information Technology | Information System</span></li>
-            <li><span class="leader-name">Dr. Nasrah</span><span class="leader-field">Animation | Multimedia</span></li>
-            <li><span class="leader-name">Zurina</span><span class="leader-field">Software Engineering</span></li>
-          </ul>
+          <span class="stats-eyebrow" style="margin-top:6px;">STAFF BY FIELD</span>
+          <div class="stat-line" style="border-top:none;padding-top:0;">
+            <div class="ic" style="background:var(--ink-2);"><span style="width:10px;height:10px;border-radius:50%;background:#fff;display:block;"></span></div>
+            <div><div class="num">11</div><div class="lbl">Cyber Security | Network</div></div>
+          </div>
+          <div class="stat-line">
+            <div class="ic" style="background:var(--purple);"><span style="width:10px;height:10px;border-radius:50%;background:#fff;display:block;"></span></div>
+            <div><div class="num">13</div><div class="lbl">Software Engineering</div></div>
+          </div>
+          <div class="stat-line">
+            <div class="ic" style="background:var(--red);"><span style="width:10px;height:10px;border-radius:50%;background:#fff;display:block;"></span></div>
+            <div><div class="num">13</div><div class="lbl">Information Technology | Information System</div></div>
+          </div>
+          <div class="stat-line">
+            <div class="ic" style="background:#4B6FE0;"><span style="width:10px;height:10px;border-radius:50%;background:#fff;display:block;"></span></div>
+            <div><div class="num">4</div><div class="lbl">Artificial Intelligence</div></div>
+          </div>
+          <div class="stat-line">
+            <div class="ic" style="background:#E08A2E;"><span style="width:10px;height:10px;border-radius:50%;background:#fff;display:block;"></span></div>
+            <div><div class="num">14</div><div class="lbl">Animation | Multimedia</div></div>
+          </div>
+          <div class="stat-line">
+            <div class="ic" style="background:#2FA36B;"><span style="width:10px;height:10px;border-radius:50%;background:#fff;display:block;"></span></div>
+            <div><div class="num">9</div><div class="lbl">Mathematic | Statistic</div></div>
+          </div>
         </div>
       </div>
     </div>
