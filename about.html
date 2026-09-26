@@ -111,6 +111,33 @@
   section{padding:88px 0;}
   .section-head{max-width:640px;margin-bottom:44px;}
   .eyebrow-sm{color:var(--red);font-weight:700;font-size:0.82rem;letter-spacing:0.04em;display:block;margin-bottom:10px;}
+
+  /* ---------- ABOUT + STAFF DASHBOARD ---------- */
+  .about-grid{display:grid;grid-template-columns:1fr 360px;gap:44px;align-items:start;}
+  .staff-dashboard{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:26px 24px;box-shadow:0 20px 45px -30px rgba(11,26,69,0.35);position:sticky;top:96px;}
+  .staff-dashboard .eyebrow-sm{margin-bottom:4px;}
+  .staff-dashboard h3{font-family:'Archivo',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:18px;}
+  .staff-total{display:flex;align-items:baseline;gap:10px;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--line);}
+  .staff-total .num{font-family:'Archivo',sans-serif;font-weight:900;font-size:2.6rem;line-height:1;background:linear-gradient(100deg,var(--red) 0%,var(--purple) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .staff-total .lbl{color:var(--slate);font-size:0.85rem;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;}
+  .staff-stats{list-style:none;margin:0 0 18px;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .staff-stats li{display:flex;align-items:center;justify-content:space-between;font-size:0.88rem;color:var(--ink);}
+  .staff-stats li span:first-child{color:var(--slate);}
+  .staff-stats li span:last-child{font-weight:800;background:#F5F6FB;border-radius:20px;padding:2px 11px;font-variant-numeric:tabular-nums;}
+  .staff-block-title{font-size:0.72rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:0.04em;margin:18px 0 10px;padding-top:16px;border-top:1px solid var(--line);}
+  .staff-field-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+  .staff-field-list li{display:flex;align-items:center;gap:10px;font-size:0.85rem;}
+  .staff-field-list .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .staff-field-list .field-name{flex:1;color:var(--ink);}
+  .staff-field-list .field-count{font-weight:800;color:var(--slate);font-variant-numeric:tabular-nums;}
+  .staff-leader-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;}
+  .staff-leader-list li{font-size:0.85rem;}
+  .staff-leader-list .leader-name{color:var(--ink);font-weight:700;display:block;}
+  .staff-leader-list .leader-field{color:var(--red);font-weight:700;font-size:0.78rem;display:block;margin-top:2px;}
+  @media (max-width:960px){
+    .about-grid{grid-template-columns:1fr;}
+    .staff-dashboard{position:static;max-width:460px;}
+  }
   .section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);}
   .head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;}
   .link-arrow{font-weight:600;font-size:0.92rem;color:var(--ink);display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
@@ -363,13 +390,52 @@
 
 <section id="about">
     <div class="wrap">
-      <div class="section-head" style="max-width:760px;">
-        <span class="eyebrow-sm">ABOUT FCOM</span>
-        <h2>Where computing meets impact</h2>
+      <div class="about-grid">
+        <div class="about-copy">
+          <div class="section-head" style="max-width:760px;">
+            <span class="eyebrow-sm">ABOUT FCOM</span>
+            <h2>Where computing meets impact</h2>
+          </div>
+          <p style="color:var(--slate);font-size:1.05rem;max-width:74ch;text-align:justify;margin-bottom:16px;">The Faculty of Computing & Multimedia, established in 2013, offers a dynamic academic environment for students pursuing majors in Computer Science, Information Technology, and Multimedia. Since its inception, the faculty has been committed to providing high-quality education, equipping students with the skills and knowledge needed to excel in the rapidly evolving fields of technology and multimedia.</p>
+          <p style="color:var(--slate);font-size:1.05rem;max-width:74ch;text-align:justify;margin-bottom:16px;">The faculty's programs are designed to foster critical thinking, problem-solving, and innovation, preparing graduates for various roles in the tech industry, from software development to multimedia design and IT management.</p>
+          <p style="color:var(--slate);font-size:1.05rem;max-width:74ch;text-align:justify;">In addition to its academic offerings, the faculty is deeply engaged in research across a range of cutting-edge areas. These research initiatives include exploring the fundamentals of computer science, IT/IS applications, and networking. The faculty is also involved in advanced fields such as artificial intelligence, human-computer interaction, and software systems engineering. By actively contributing to these areas, the faculty not only enhances the academic experience for its students but also contributes to the broader advancement of technology and its applications in society.</p>
+        </div>
+
+        <!-- STAFF DASHBOARD -->
+        <div class="staff-dashboard">
+          <span class="eyebrow-sm">FCOM AT A GLANCE</span>
+          <h3>Faculty Staff Snapshot</h3>
+          <div class="staff-total">
+            <span class="num">66</span>
+            <span class="lbl">Total Staff</span>
+          </div>
+          <ul class="staff-stats">
+            <li><span>Leadership (Dean & Deputy Deans)</span><span>4</span></li>
+            <li><span>Lecturers</span><span>42</span></li>
+            <li><span>Head of Programme</span><span>8</span></li>
+            <li><span>Coordinators</span><span>3</span></li>
+            <li><span>Administrative & Support Staff</span><span>9</span></li>
+          </ul>
+
+          <div class="staff-block-title">Staff by Field</div>
+          <ul class="staff-field-list">
+            <li><span class="dot" style="background:var(--ink-2);"></span><span class="field-name">Cyber Security | Network</span><span class="field-count">11</span></li>
+            <li><span class="dot" style="background:var(--purple);"></span><span class="field-name">Software Engineering</span><span class="field-count">13</span></li>
+            <li><span class="dot" style="background:var(--red);"></span><span class="field-name">Information Technology | Information System</span><span class="field-count">13</span></li>
+            <li><span class="dot" style="background:#4B6FE0;"></span><span class="field-name">Artificial Intelligence</span><span class="field-count">4</span></li>
+            <li><span class="dot" style="background:#E08A2E;"></span><span class="field-name">Animation | Multimedia</span><span class="field-count">14</span></li>
+            <li><span class="dot" style="background:#2FA36B;"></span><span class="field-name">Mathematic | Statistic</span><span class="field-count">9</span></li>
+          </ul>
+
+          <div class="staff-block-title">Leadership by Field</div>
+          <ul class="staff-leader-list">
+            <li><span class="leader-name">Dean</span><span class="leader-field">Cyber Security | Network</span></li>
+            <li><span class="leader-name">Dr. Mariani</span><span class="leader-field">Information Technology | Information System</span></li>
+            <li><span class="leader-name">Dr. Nasrah</span><span class="leader-field">Animation | Multimedia</span></li>
+            <li><span class="leader-name">Zurina</span><span class="leader-field">Software Engineering</span></li>
+          </ul>
+        </div>
       </div>
-      <p style="color:var(--slate);font-size:1.05rem;max-width:74ch;text-align:justify;margin-bottom:16px;">The Faculty of Computing & Multimedia, established in 2013, offers a dynamic academic environment for students pursuing majors in Computer Science, Information Technology, and Multimedia. Since its inception, the faculty has been committed to providing high-quality education, equipping students with the skills and knowledge needed to excel in the rapidly evolving fields of technology and multimedia.</p>
-      <p style="color:var(--slate);font-size:1.05rem;max-width:74ch;text-align:justify;margin-bottom:16px;">The faculty's programs are designed to foster critical thinking, problem-solving, and innovation, preparing graduates for various roles in the tech industry, from software development to multimedia design and IT management.</p>
-      <p style="color:var(--slate);font-size:1.05rem;max-width:74ch;text-align:justify;">In addition to its academic offerings, the faculty is deeply engaged in research across a range of cutting-edge areas. These research initiatives include exploring the fundamentals of computer science, IT/IS applications, and networking. The faculty is also involved in advanced fields such as artificial intelligence, human-computer interaction, and software systems engineering. By actively contributing to these areas, the faculty not only enhances the academic experience for its students but also contributes to the broader advancement of technology and its applications in society.</p>
     </div>
   </section>
 
@@ -384,6 +450,7 @@
         <h4><a href="expert-profile-assoc-prof-dr-saifuddin.html" style="color:inherit;text-decoration:none;">Assoc. Prof. Dr. Saifuddin bin Haji Mohtaram</a></h4>
         <p class="role">Dean, Faculty of Computing & Multimedia</p>
         <p class="role" style="margin-top:4px;"><a href="mailto:saifuddin@uptm.edu.my" style="color:inherit;">saifuddin@uptm.edu.my</a></p>
+        <p class="role" style="margin-top:4px;">Field: Cyber Security | Network</p>
       </div>
       <div class="dean-copy">
         <span class="eyebrow-sm">MESSAGE FROM THE DEAN</span>
@@ -403,6 +470,7 @@
           <p class="lead-role">Deputy Dean (Academic)</p>
           <p class="lead-exp">Expertise: Educational technology and digital learning innovation.</p>
           <p class="lead-exp"><a href="mailto:mariani@uptm.edu.my" style="color:inherit;">mariani@uptm.edu.my</a></p>
+          <p class="lead-exp">Field: Information Technology | Information System</p>
         </div>
         <div class="lead-card">
     <div class="lead-photo-frame">
@@ -412,6 +480,7 @@
           <p class="lead-role">Deputy Dean (Research)</p>
           <p class="lead-exp">Expertise: UI/UX, human-computer interaction, e-participation.</p>
           <p class="lead-exp"><a href="mailto:nasrah@uptm.edu.my" style="color:inherit;">nasrah@uptm.edu.my</a></p>
+          <p class="lead-exp">Field: Animation | Multimedia</p>
         </div>
         <div class="lead-card">
     <div class="lead-photo-frame">
@@ -421,6 +490,7 @@
           <p class="lead-role">Deputy Dean (Student & Alumni)</p>
           <p class="lead-exp">Expertise: Systems analysis and design, web and mobile app development, project management.</p>
           <p class="lead-exp"><a href="mailto:zurina@uptm.edu.my" style="color:inherit;">zurina@uptm.edu.my</a></p>
+          <p class="lead-exp">Field: Software Engineering</p>
         </div>
       </div>
     </div>
@@ -442,6 +512,7 @@
           <p class="hop-role">Head of Programme</p>
           <p class="hop-program">Foundation in Information Technology<br><span style="color:var(--slate);font-weight:500;">FT001 / FT001-YTP</span></p>
           <p class="hop-email"><a href="mailto:norazura@uptm.edu.my">norazura@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Information Technology | Information System</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -451,6 +522,7 @@
           <p class="hop-role">Head of Programme</p>
           <p class="hop-program">Diploma in Computer Science<br><span style="color:var(--slate);font-weight:500;">CC101</span></p>
           <p class="hop-email"><a href="mailto:wnasnida@uptm.edu.my">wnasnida@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Software Engineering</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -460,6 +532,7 @@
           <p class="hop-role">Head of Programme</p>
           <p class="hop-program">Bachelor in Computer Science (Hons)<br><span style="color:var(--slate);font-weight:500;">CC203</span></p>
           <p class="hop-email"><a href="mailto:sanusi@uptm.edu.my">sanusi@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Cyber Security | Network</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -469,6 +542,7 @@
           <p class="hop-role">Head of Programme</p>
           <p class="hop-program">Bachelor of IT (Hons) Data Analytics<br><span style="color:var(--slate);font-weight:500;">CT207</span></p>
           <p class="hop-email"><a href="mailto:raznida@uptm.edu.my">raznida@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Information Technology | Information System</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -478,6 +552,7 @@
           <p class="hop-role">Head of Programme</p>
           <p class="hop-program">Bachelor of IT (Hons) Computer Application Development<br><span style="color:var(--slate);font-weight:500;">CT204</span></p>
           <p class="hop-email"><a href="mailto:n_najwa@uptm.edu.my">n_najwa@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Software Engineering</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -487,6 +562,7 @@
           <p class="hop-role">Head of Programme</p>
           <p class="hop-program">Bachelor in Artificial Intelligence (Hons)<br><span style="color:var(--slate);font-weight:500;">CC204</span></p>
           <p class="hop-email"><a href="mailto:nadiah_y@uptm.edu.my">nadiah_y@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Artificial Intelligence</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -496,6 +572,7 @@
           <p class="hop-role">Head of Programme</p>
           <p class="hop-program">Bachelor of Arts in 3D Animation and Digital Media (Hons)<br><span style="color:var(--slate);font-weight:500;">CM201</span></p>
           <p class="hop-email"><a href="mailto:fitry@uptm.edu.my">fitry@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Animation | Multimedia</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -505,6 +582,7 @@
           <p class="hop-role">Head of Programme</p>
           <p class="hop-program">Bachelor of IT (Hons) in Cyber Security<br><span style="color:var(--slate);font-weight:500;">CT206</span></p>
           <p class="hop-email"><a href="mailto:farah_aziz@uptm.edu.my">farah_aziz@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Software Engineering</p>
         </div>
       </div>
     </div>
@@ -526,6 +604,7 @@
           <p class="hop-role">Coordinator</p>
           <p class="hop-program">Final Year Project</p>
           <p class="hop-email"><a href="mailto:noraliza@uptm.edu.my">noraliza@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Cyber Security | Network</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -535,6 +614,7 @@
           <p class="hop-role">Coordinator</p>
           <p class="hop-program">Final Year Project (Multimedia)</p>
           <p class="hop-email"><a href="mailto:fatanah@uptm.edu.my">fatanah@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Animation | Multimedia</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -544,6 +624,7 @@
           <p class="hop-role">Coordinator</p>
           <p class="hop-program">Industrial Training</p>
           <p class="hop-email"><a href="mailto:iftitah@uptm.edu.my">iftitah@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Animation | Multimedia</p>
         </div>
       </div>
     </div>
@@ -564,6 +645,7 @@
           <h4><a href="expert-profile-dr-hasyatun.html" style="color:inherit;text-decoration:none;">Dr. Hasyatun binti Che Nan</a></h4>
           <p class="hop-role">Head of Mentor</p>
           <p class="hop-email"><a href="mailto:hasyatun@uptm.edu.my">hasyatun@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Mathematic | Statistic</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -572,6 +654,7 @@
           <h4><a href="expert-profile-amir-aarief.html" style="color:inherit;text-decoration:none;">Amir Aarief bin Amir Hussin</a></h4>
           <p class="hop-role">Internal Auditor</p>
           <p class="hop-email"><a href="mailto:amir@uptm.edu.my">amir@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Animation | Multimedia</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -580,6 +663,7 @@
           <h4><a href="expert-profile-hazrina.html" style="color:inherit;text-decoration:none;">Hazrina binti Tajudin</a></h4>
           <p class="hop-role">Document Officer</p>
           <p class="hop-email"><a href="mailto:hazrina@uptm.edu.my">hazrina@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Mathematic | Statistic</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -588,6 +672,7 @@
           <h4><a href="expert-profile-nur-afra.html" style="color:inherit;text-decoration:none;">Nur Afra binti Taidin</a></h4>
           <p class="hop-role">Head of Marketing</p>
           <p class="hop-email"><a href="mailto:afra@uptm.edu.my">afra@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Animation | Multimedia</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -596,6 +681,7 @@
           <h4><a href="expert-profile-noor-suhaida.html" style="color:inherit;text-decoration:none;">Noor Suhaida binti Kamarudin</a></h4>
           <p class="hop-role">Head of SPK</p>
           <p class="hop-email"><a href="mailto:suhaida@uptm.edu.my">suhaida@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Animation | Multimedia</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -604,6 +690,7 @@
           <h4><a href="expert-profile-nur-afini-natrah.html" style="color:inherit;text-decoration:none;">Nur Afini Natrah binti Mohd Ashril</a></h4>
           <p class="hop-role">Bendahari</p>
           <p class="hop-email"><a href="mailto:nurafini@uptm.edu.my">nurafini@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Artificial Intelligence</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
@@ -612,6 +699,7 @@
           <h4><a href="expert-profile-dr-nursyahida.html" style="color:inherit;text-decoration:none;">Dr. Nursyahida binti Mokhtar</a></h4>
           <p class="hop-role">Director of Innovation</p>
           <p class="hop-email"><a href="mailto:nursyahida@uptm.edu.my">nursyahida@uptm.edu.my</a></p>
+          <p class="hop-role" style="color:var(--slate);font-weight:600;text-transform:none;letter-spacing:normal;margin-top:2px;">Field: Animation | Multimedia</p>
         </div>
         <div class="hop-card">
           <div class="hop-photo-frame">
