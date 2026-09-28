@@ -52,6 +52,22 @@
     .topbar .back span.txt{display:none;}
     .navzone{width:26%;}
   }
+
+  .fee-callout{position:fixed;top:80px;right:16px;width:250px;background:#fff;color:var(--ink);border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,0.45);z-index:45;overflow:hidden;display:none;border:1px solid rgba(11,26,69,0.08);}
+  .fee-callout .fc-head{background:var(--red);color:#fff;font-size:0.72rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;padding:9px 32px 9px 14px;position:relative;}
+  .fee-callout .fc-close{position:absolute;top:0;right:0;width:32px;height:100%;background:transparent;border:none;color:#fff;cursor:pointer;font-size:1.05rem;line-height:1;display:flex;align-items:center;justify-content:center;opacity:0.9;}
+  .fee-callout .fc-close:hover{opacity:1;}
+  .fee-callout .fc-body{padding:12px 14px 14px;}
+  .fee-callout .fc-prog{font-size:0.86rem;font-weight:700;margin:0 0 8px;line-height:1.3;}
+  .fee-callout .fc-row{display:flex;justify-content:space-between;align-items:baseline;font-size:0.78rem;color:#5B6472;padding:4px 0;border-top:1px dashed #E4E7EE;}
+  .fee-callout .fc-row:first-of-type{border-top:none;}
+  .fee-callout .fc-row b{color:var(--ink);font-size:0.86rem;}
+  .fee-callout .fc-row.total b{color:var(--red);}
+  .fee-callout .fc-note{font-size:0.66rem;color:#9AA1B4;margin:8px 0 0;line-height:1.4;}
+
+  @media (max-width:760px){
+    .fee-callout{top:auto;bottom:76px;right:10px;left:10px;width:auto;}
+  }
 </style>
 </head>
 <body>
@@ -81,6 +97,18 @@
   </div>
 
   <div class="hint" id="hint">Click the left or right edge of the page — or use the arrows below — to turn the page.</div>
+
+  <div class="fee-callout" id="feeCallout">
+    <div class="fc-head">Yuran Pengajian
+      <button class="fc-close" id="feeCloseBtn" aria-label="Close">&times;</button>
+    </div>
+    <div class="fc-body">
+      <p class="fc-prog" id="feeProgName">—</p>
+      <div class="fc-row"><span>Yuran Pengajian</span><b id="feeTuition">—</b></div>
+      <div class="fc-row total"><span>Jumlah Keseluruhan</span><b id="feeTotal">—</b></div>
+      <p class="fc-note">*Sesi Kemasukan 2026. Tidak termasuk yuran pengesahan tawaran &amp; penginapan.</p>
+    </div>
+  </div>
 
   <div class="bottombar">
     <button id="prevBtn" title="Previous page" aria-label="Previous page"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button>
@@ -180,7 +208,51 @@
     document.getElementById('pageIndicator').textContent = (current + 1) + ' / ' + TOTAL_PAGES;
     document.getElementById('prevBtn').disabled = (current <= 0);
     document.getElementById('nextBtn').disabled = (current >= TOTAL_PAGES - 1);
+    updateFeeCallout();
   }
+
+  // Yuran Pengajian per program (Sesi Kemasukan 2026) — same source as the FCOM Assistant chatbot's
+  // fee data, keyed by the booklet page each programme's "Learn More" link opens to.
+  var PROGRAM_FEES = [
+    { page: 16, name: 'Foundation in Information Technology', tuition: 'RM10,630', total: 'RM11,925' },
+    { page: 19, name: 'Diploma in Computer Science', tuition: 'RM20,000', total: 'RM22,175' },
+    { page: 23, name: 'Bachelor of Art (Hons) — 3D Animation and Digital Media', tuition: 'RM55,100', total: 'RM58,000' },
+    { page: 27, name: 'Bachelor in Computer Science (Hons)', tuition: 'RM48,540', total: 'RM52,190' },
+    { page: 31, name: 'Bachelor of IT (Hons) — Computer Application Development', tuition: 'RM38,700', total: 'RM42,350' },
+    { page: 35, name: 'Bachelor of IT (Hons) — Cyber Security', tuition: 'RM50,210', total: 'RM53,860' },
+    { page: 39, name: 'Bachelor of IT (Hons) — Data Analytics', tuition: 'RM47,370', total: 'RM51,020' },
+    { page: 43, name: 'Bachelor in Artificial Intelligence (Hons)', tuition: 'RM81,500', total: 'RM85,900' }
+  ];
+  // Sorted ascending by page — used to find which programme "chapter" the current page falls in.
+  var PROGRAM_FEES_SORTED = PROGRAM_FEES.slice().sort(function (a, b) { return a.page - b.page; });
+
+  var feeClosedForKey = null; // page-range key the user has manually closed, so it stays hidden until they turn to a different programme's pages
+
+  function findProgramForPage(pageNum) {
+    var match = null;
+    for (var i = 0; i < PROGRAM_FEES_SORTED.length; i++) {
+      if (pageNum >= PROGRAM_FEES_SORTED[i].page) { match = PROGRAM_FEES_SORTED[i]; }
+      else { break; }
+    }
+    return match;
+  }
+
+  function updateFeeCallout() {
+    var box = document.getElementById('feeCallout');
+    var prog = findProgramForPage(current + 1);
+    if (!prog) { box.style.display = 'none'; return; }
+    if (feeClosedForKey === prog.page) { box.style.display = 'none'; return; }
+    document.getElementById('feeProgName').textContent = prog.name;
+    document.getElementById('feeTuition').textContent = prog.tuition;
+    document.getElementById('feeTotal').textContent = prog.total;
+    box.style.display = 'block';
+  }
+
+  document.getElementById('feeCloseBtn').onclick = function () {
+    var prog = findProgramForPage(current + 1);
+    feeClosedForKey = prog ? prog.page : null;
+    document.getElementById('feeCallout').style.display = 'none';
+  };
 
   function nextPage() { if (current < TOTAL_PAGES - 1) { showPage(current + 1); } }
   function prevPage() { if (current > 0) { showPage(current - 1); } }
