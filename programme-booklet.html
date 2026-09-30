@@ -47,6 +47,9 @@
 
   .hint{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(11,26,69,0.94);color:#fff;padding:16px 22px;border-radius:10px;font-size:0.9rem;z-index:40;display:none;text-align:center;max-width:280px;box-shadow:0 10px 30px rgba(0,0,0,0.4);pointer-events:none;}
 
+  .page-loading{position:absolute;top:0;left:0;right:0;bottom:0;display:none;align-items:center;justify-content:center;z-index:4;background:rgba(11,26,69,0.15);border-radius:2px;}
+  .page-loading .mini-spinner{width:34px;height:34px;border:3px solid rgba(255,255,255,0.3);border-top-color:var(--red);border-radius:50%;animation:spin 0.8s linear infinite;}
+
   @media (max-width:760px){
     .topbar .title{font-size:0.78rem;}
     .topbar .back span.txt{display:none;}
@@ -92,6 +95,7 @@
         <div class="navzone left" id="navLeft" title="Previous page"></div>
         <img id="pageImg" alt="Book page">
         <div class="navzone right" id="navRight" title="Next page"></div>
+        <div class="page-loading" id="pageLoading"><div class="mini-spinner"></div></div>
       </div>
     </div>
   </div>
@@ -99,14 +103,14 @@
   <div class="hint" id="hint">Click the left or right edge of the page — or use the arrows below — to turn the page.</div>
 
   <div class="fee-callout" id="feeCallout">
-    <div class="fc-head">Yuran Pengajian
+    <div class="fc-head">Tuition Fee
       <button class="fc-close" id="feeCloseBtn" aria-label="Close">&times;</button>
     </div>
     <div class="fc-body">
       <p class="fc-prog" id="feeProgName">—</p>
-      <div class="fc-row"><span>Yuran Pengajian</span><b id="feeTuition">—</b></div>
-      <div class="fc-row total"><span>Jumlah Keseluruhan</span><b id="feeTotal">—</b></div>
-      <p class="fc-note">*Sesi Kemasukan 2026. Tidak termasuk yuran pengesahan tawaran &amp; penginapan.</p>
+      <div class="fc-row"><span>Tuition Fee</span><b id="feeTuition">—</b></div>
+      <div class="fc-row total"><span>Grand Total</span><b id="feeTotal">—</b></div>
+      <p class="fc-note">*2026 Intake. Excludes offer-acceptance fee &amp; accommodation.</p>
     </div>
   </div>
 
@@ -153,12 +157,36 @@
     }
   }
 
+  // Preload cache: fetches nearby pages into the browser's own HTTP cache ahead of
+  // time (via a throwaway Image object) so that when the reader actually clicks
+  // Next/Prev, the big page JPG is usually already downloaded and the swap feels
+  // instant instead of the page-number ticking ahead of the picture.
+  var preloaded = {}; // pageNum -> true once a preload has been kicked off
+  function preloadPage(pageNum) {
+    if (pageNum < 1 || pageNum > TOTAL_PAGES || preloaded[pageNum]) { return; }
+    preloaded[pageNum] = true;
+    var im = new Image();
+    im.src = pageSrc(pageNum);
+  }
+  function preloadAround(pageNum) {
+    // Readers go forward far more often than back, so look further ahead than behind.
+    preloadPage(pageNum + 1);
+    preloadPage(pageNum + 2);
+    preloadPage(pageNum - 1);
+  }
+
+  function showPageLoading(on) {
+    var el = document.getElementById('pageLoading');
+    if (el) { el.style.display = on ? 'flex' : 'none'; }
+  }
+
   // Single handler used for every page load (first load AND every next/prev navigation).
   // It never resets `current` itself — `current` is always set by the caller (showPage)
   // BEFORE the image starts loading, so this only reacts to success/failure of that request.
   function attachImageHandlers(img) {
     img.onload = function () {
       navAttempt = 0;
+      showPageLoading(false);
       if (isFirstLoad) {
         isFirstLoad = false;
         document.getElementById('loading').style.display = 'none';
@@ -168,6 +196,7 @@
         setTimeout(function () { hint.style.display = 'none'; }, 3500);
       }
       updateIndicator();
+      preloadAround(current + 1);
     };
 
     img.onerror = function () {
@@ -181,6 +210,8 @@
         } else {
           showFailureMessage(pageNum);
         }
+      } else {
+        showPageLoading(false);
       }
       // For navigation after the first successful load, a failed fetch just leaves
       // the previous page's image showing rather than corrupting state; the browser
@@ -192,6 +223,7 @@
     current = startPage - 1;
     var img = document.getElementById('pageImg');
     attachImageHandlers(img);
+    preloaded[startPage] = true;
     img.src = pageSrc(startPage);
   }
 
@@ -199,6 +231,10 @@
     if (index < 0 || index >= TOTAL_PAGES) { return; }
     current = index;
     var img = document.getElementById('pageImg');
+    // If this page was already preloaded, the browser's cache makes the swap
+    // effectively instant and this spinner will barely (if ever) be visible —
+    // it only becomes noticeable if the reader jumps ahead of what was preloaded.
+    showPageLoading(true);
     img.src = pageSrc(current + 1);
     document.getElementById('stage').scrollTo({ top: 0, behavior: 'auto' });
     updateIndicator();
@@ -216,12 +252,12 @@
   var PROGRAM_FEES = [
     { page: 16, name: 'Foundation in Information Technology', tuition: 'RM10,630', total: 'RM11,925' },
     { page: 19, name: 'Diploma in Computer Science', tuition: 'RM20,000', total: 'RM22,175' },
-    { page: 23, name: 'Bachelor of Art (Hons) — 3D Animation and Digital Media', tuition: 'RM55,100', total: 'RM58,000' },
-    { page: 27, name: 'Bachelor in Computer Science (Hons)', tuition: 'RM48,540', total: 'RM52,190' },
-    { page: 31, name: 'Bachelor of IT (Hons) — Computer Application Development', tuition: 'RM38,700', total: 'RM42,350' },
-    { page: 35, name: 'Bachelor of IT (Hons) — Cyber Security', tuition: 'RM50,210', total: 'RM53,860' },
-    { page: 39, name: 'Bachelor of IT (Hons) — Data Analytics', tuition: 'RM47,370', total: 'RM51,020' },
-    { page: 43, name: 'Bachelor in Artificial Intelligence (Hons)', tuition: 'RM81,500', total: 'RM85,900' }
+    { page: 23, name: 'Bachelor of Art (Honours) — 3D Animation and Digital Media', tuition: 'RM55,100', total: 'RM58,000' },
+    { page: 27, name: 'Bachelor in Computer Science (Honours)', tuition: 'RM48,540', total: 'RM52,190' },
+    { page: 31, name: 'Bachelor of IT (Honours) — Computer Application Development', tuition: 'RM38,700', total: 'RM42,350' },
+    { page: 35, name: 'Bachelor of IT (Honours) — Cyber Security', tuition: 'RM50,210', total: 'RM53,860' },
+    { page: 39, name: 'Bachelor of IT (Honours) — Data Analytics', tuition: 'RM47,370', total: 'RM51,020' },
+    { page: 43, name: 'Bachelor in Artificial Intelligence (Honours)', tuition: 'RM81,500', total: 'RM85,900' }
   ];
   // Sorted ascending by page — used to find which programme "chapter" the current page falls in.
   var PROGRAM_FEES_SORTED = PROGRAM_FEES.slice().sort(function (a, b) { return a.page - b.page; });
