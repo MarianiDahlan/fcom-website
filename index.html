@@ -1476,6 +1476,11 @@
       intro.remove();
       return;
     }
+    // Mark it as seen immediately — the moment Home is opened — rather than only
+    // once the animation finishes. That way, coming back to Home later from any
+    // other page in the same tab never replays it, even if someone navigated away
+    // before the intro had a chance to auto-dismiss or before Skip was clicked.
+    sessionStorage.setItem('fcomIntroSeen', '1');
 
     document.body.classList.add('intro-lock');
 
