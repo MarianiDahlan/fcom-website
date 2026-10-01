@@ -323,9 +323,7 @@
   .juicer-card .embed-head{display:flex;align-items:center;gap:10px;padding:15px 18px;border-bottom:1px solid var(--line);font-family:'Archivo',sans-serif;font-weight:700;font-size:0.92rem;}
   .juicer-card .embed-head svg{width:19px;height:19px;flex:none;}
   .juicer-card .juicer-body{padding:18px;}
-  .fb-row{text-align:center;line-height:0;}
-  .fb-col{display:inline-block;vertical-align:top;margin:0 6px;max-width:100%;line-height:normal;}
-  .fb-col .fb-page,.fb-col span,.fb-col iframe{max-width:100%;}
+  .sk-instagram-feed{width:100%;}
 
   /* ---------- INTRO SPLASH (staff photo wall) ---------- */
   body.intro-lock{overflow:hidden;height:100vh;}
@@ -369,8 +367,6 @@
 </style>
 </head>
 <body>
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0"></script>
 
 <div class="fcom-intro" id="fcomIntro" aria-hidden="true">
   <div class="intro-grid" id="introGrid">
@@ -653,23 +649,15 @@
         </div>
       </div>
 
-      <!-- SOCIAL EMBED (Facebook Page Plugin — FCOM + UPTM Official pages, side by side) -->
+      <!-- SOCIAL EMBED (SociableKit Instagram Feed — free, full-width responsive) -->
       <div class="juicer-card">
         <div class="embed-head">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg>
           FCOM Social Wall
         </div>
-        <div class="juicer-body fb-row">
-          <div class="fb-col">
-            <div class="fb-page" data-href="https://www.facebook.com/fcomuptm" data-tabs="timeline" data-width="500" data-height="420" data-small-header="true" data-hide-cover="false" data-show-facepile="false">
-              <blockquote cite="https://www.facebook.com/fcomuptm" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/fcomuptm" target="_blank" rel="noopener">FCOM UPTM</a></blockquote>
-            </div>
-          </div>
-          <div class="fb-col">
-            <div class="fb-page" data-href="https://www.facebook.com/uptm.official" data-tabs="timeline" data-width="500" data-height="420" data-small-header="true" data-hide-cover="false" data-show-facepile="false">
-              <blockquote cite="https://www.facebook.com/uptm.official" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/uptm.official" target="_blank" rel="noopener">UPTM Official</a></blockquote>
-            </div>
-          </div>
+        <div class="juicer-body">
+          <div class="sk-instagram-feed" data-embed-id="25718752"></div>
+          <script src="https://widgets.sociablekit.com/instagram-feed/widget.js" defer></script>
         </div>
       </div>
     </div>
