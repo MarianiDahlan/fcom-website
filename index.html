@@ -190,19 +190,21 @@
   .why-grid>div:first-child p{color:#C7CBE0;font-size:1rem;margin-bottom:22px;}
   .why-cta{background:var(--red);color:var(--white);padding:13px 24px;border-radius:3px;font-weight:600;font-size:0.92rem;display:inline-flex;align-items:center;gap:8px;}
   .why-cta:hover{background:var(--red-deep);}
+  .dash-section-title{display:flex;align-items:center;gap:10px;color:var(--white);font-weight:800;font-size:1.05rem;letter-spacing:0.01em;margin-bottom:16px;}
+  .dash-section-title svg{color:#FF8A90;flex:none;}
   .why-dashboard{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-  .dash-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);border-radius:14px;padding:18px 18px 16px;}
+  .dash-card{background:var(--white);border:1px solid rgba(255,255,255,0.14);border-radius:14px;padding:18px 18px 16px;box-shadow:0 10px 30px rgba(5,10,35,0.25);}
   .dash-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-  .dash-ic{width:32px;height:32px;flex:none;border-radius:8px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;}
-  .dash-ic svg{width:16px;height:16px;color:var(--white);}
-  .dash-card h3{font-size:0.8rem;font-weight:700;letter-spacing:0.01em;color:var(--white);line-height:1.25;}
-  .dash-big{font-family:'Archivo',sans-serif;font-weight:800;font-size:1.6rem;color:var(--white);line-height:1.1;}
+  .dash-ic{width:32px;height:32px;flex:none;border-radius:8px;background:rgba(11,26,69,0.08);display:flex;align-items:center;justify-content:center;}
+  .dash-ic svg{width:16px;height:16px;color:var(--red);}
+  .dash-card h3{font-size:0.8rem;font-weight:700;letter-spacing:0.01em;color:var(--ink);line-height:1.25;}
+  .dash-big{font-family:'Archivo',sans-serif;font-weight:800;font-size:1.6rem;color:var(--ink);line-height:1.1;}
   .dash-big.sm{font-size:1.25rem;}
-  .dash-sub{font-size:0.72rem;color:#C7CBE0;margin-top:4px;}
+  .dash-sub{font-size:0.72rem;color:#5B6178;margin-top:4px;}
   .dash-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-  .dash-stats{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.12);}
-  .dash-stats span{font-size:0.72rem;color:#C7CBE0;white-space:nowrap;}
-  .dash-stats span b{color:var(--white);font-weight:700;}
+  .dash-stats{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);}
+  .dash-stats span{font-size:0.72rem;color:#5B6178;white-space:nowrap;}
+  .dash-stats span b{color:var(--ink);font-weight:700;}
   @media (max-width:900px){.why-grid{grid-template-columns:1fr;}.why-dashboard{grid-template-columns:repeat(3,1fr);}}
   @media (max-width:640px){.why-dashboard{grid-template-columns:1fr 1fr;}}
   @media (max-width:420px){.why-dashboard{grid-template-columns:1fr;}}
@@ -695,6 +697,7 @@
             <div><div class="dash-big sm">RM 7,080</div><div class="dash-sub">Income generated</div></div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </section>
