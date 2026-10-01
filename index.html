@@ -74,13 +74,11 @@
   .welcome-marquee{overflow:hidden;width:100%;max-width:430px;margin-bottom:20px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);}
   .welcome-marquee .marquee-track{display:flex;align-items:center;width:max-content;animation:welcomeMarquee 15s linear infinite;}
   .welcome-marquee .marquee-item{display:flex;align-items:center;gap:10px;white-space:nowrap;padding-right:56px;}
-  /* The FCOM logo file has its wordmark on top and a small tagline baked in underneath;
-     at this size the tagline just blurs, so we crop to show only the wordmark/icon. */
-  .welcome-marquee .marquee-logo{display:inline-block;width:85px;height:24px;overflow:hidden;position:relative;flex:none;}
-  .welcome-marquee .marquee-logo img{position:absolute;top:0;left:0;width:85px;height:auto;display:block;}
+  .welcome-marquee .marquee-logo{display:inline-flex;align-items:center;flex:none;}
+  .welcome-marquee .marquee-logo img{height:24px;width:auto;display:block;}
   .welcome-marquee .marquee-item span{font-size:0.84rem;font-weight:700;color:var(--ink);white-space:nowrap;}
   @keyframes welcomeMarquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-  @media (max-width:500px){.welcome-marquee .marquee-item span{font-size:0.76rem;} .welcome-marquee .marquee-logo{width:70px;height:20px;} .welcome-marquee .marquee-logo img{width:70px;} .welcome-marquee .marquee-item{padding-right:44px;}}
+  @media (max-width:500px){.welcome-marquee .marquee-item span{font-size:0.76rem;} .welcome-marquee .marquee-logo img{height:20px;} .welcome-marquee .marquee-item{padding-right:44px;}}
   @media (prefers-reduced-motion:reduce){.welcome-marquee .marquee-track{animation:none;}}
   .hero h1{font-size:clamp(2.6rem,5vw,3.9rem);font-weight:900;}
   .hero h1 .line{display:block;}
@@ -436,8 +434,8 @@
       <div>
         <div class="welcome-marquee">
           <div class="marquee-track">
-            <span class="marquee-item"><span class="marquee-logo"><img src="images/fcom.png" alt="FCOM"></span><span>Welcome to Faculty of Computing &amp; Multimedia</span></span>
-            <span class="marquee-item" aria-hidden="true"><span class="marquee-logo"><img src="images/fcom.png" alt="FCOM"></span><span>Welcome to Faculty of Computing &amp; Multimedia</span></span>
+            <span class="marquee-item"><span class="marquee-logo"><img src="images/fcom-mark.png" alt="FCOM"></span><span>Welcome to Faculty of Computing &amp; Multimedia</span></span>
+            <span class="marquee-item" aria-hidden="true"><span class="marquee-logo"><img src="images/fcom-mark.png" alt="FCOM"></span><span>Welcome to Faculty of Computing &amp; Multimedia</span></span>
           </div>
         </div>
         <span class="eyebrow">EMPOWERING MINDS</span>
