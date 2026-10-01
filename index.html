@@ -190,24 +190,9 @@
   .why-grid>div:first-child p{color:#C7CBE0;font-size:1rem;margin-bottom:22px;}
   .why-cta{background:var(--red);color:var(--white);padding:13px 24px;border-radius:3px;font-weight:600;font-size:0.92rem;display:inline-flex;align-items:center;gap:8px;}
   .why-cta:hover{background:var(--red-deep);}
-  .dash-section-title{display:flex;align-items:center;gap:10px;color:var(--white);font-weight:800;font-size:1.05rem;letter-spacing:0.01em;margin-bottom:16px;}
-  .dash-section-title svg{color:#FF8A90;flex:none;}
-  .why-dashboard{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-  .dash-card{background:var(--white);border:1px solid rgba(255,255,255,0.14);border-radius:14px;padding:18px 18px 16px;box-shadow:0 10px 30px rgba(5,10,35,0.25);}
-  .dash-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-  .dash-ic{width:32px;height:32px;flex:none;border-radius:8px;background:rgba(11,26,69,0.08);display:flex;align-items:center;justify-content:center;}
-  .dash-ic svg{width:16px;height:16px;color:var(--red);}
-  .dash-card h3{font-size:0.8rem;font-weight:700;letter-spacing:0.01em;color:var(--ink);line-height:1.25;}
-  .dash-big{font-family:'Archivo',sans-serif;font-weight:800;font-size:1.6rem;color:var(--ink);line-height:1.1;}
-  .dash-big.sm{font-size:1.25rem;}
-  .dash-sub{font-size:0.72rem;color:#5B6178;margin-top:4px;}
-  .dash-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-  .dash-stats{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);}
-  .dash-stats span{font-size:0.72rem;color:#5B6178;white-space:nowrap;}
-  .dash-stats span b{color:var(--ink);font-weight:700;}
-  @media (max-width:900px){.why-grid{grid-template-columns:1fr;}.why-dashboard{grid-template-columns:repeat(3,1fr);}}
-  @media (max-width:640px){.why-dashboard{grid-template-columns:1fr 1fr;}}
-  @media (max-width:420px){.why-dashboard{grid-template-columns:1fr;}}
+  .why-dashboard-img-wrap{display:flex;justify-content:center;}
+  .why-dashboard-img{width:100%;max-width:560px;border-radius:12px;display:block;box-shadow:0 14px 34px rgba(5,10,35,0.35);}
+  @media (max-width:900px){.why-grid{grid-template-columns:1fr;}.why-dashboard-img{max-width:100%;}}
 
   /* ---------- NEWS ---------- */
   .news-note{margin-top:18px;font-size:0.85rem;color:var(--slate);}
@@ -624,80 +609,8 @@
         <p>At FCOM, we combine technology and creativity to empower students, drive research, and create solutions that make a difference.</p>
         <a href="research-books.html" class="why-cta">Discover More <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
-      <div>
-      <div class="dash-section-title">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5z"/></svg>
-        <span>2025 Achievements at a Glance</span>
-      </div>
-      <div class="why-dashboard">
-        <div class="dash-card">
-          <div class="dash-head">
-            <span class="dash-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1.4 1.3-2 2.5-2s2.5.7 2.5 2-1.3 1.6-2.5 2-2.5.8-2.5 2 1.3 2 2.5 2 2.5-.6 2.5-2"/></svg></span>
-            <h3>Research Milestones</h3>
-          </div>
-          <div class="dash-big">RM 332,815</div>
-          <div class="dash-sub">Total grant secured (2025)</div>
-        </div>
-
-        <div class="dash-card">
-          <div class="dash-head">
-            <span class="dash-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v15H6.5A2.5 2.5 0 004 20.5v-15z"/><path d="M4 20.5A2.5 2.5 0 016.5 18H20"/></svg></span>
-            <h3>Publication Milestones</h3>
-          </div>
-          <div class="dash-big">32</div>
-          <div class="dash-sub">Total scholarly outputs (2025)</div>
-          <div class="dash-stats">
-            <span>WoS <b>6</b></span><span>Scopus <b>8</b></span><span>Indexed <b>4</b></span><span>Proceedings <b>8</b></span><span>Book <b>1</b></span><span>Ebooks <b>5</b></span>
-          </div>
-        </div>
-
-        <div class="dash-card">
-          <div class="dash-head">
-            <span class="dash-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l7 3v6c0 5-3.2 8.5-7 11-3.8-2.5-7-6-7-11V5z"/><path d="M9 12l2 2 4-4"/></svg></span>
-            <h3>Intellectual Property</h3>
-          </div>
-          <div class="dash-split">
-            <div><div class="dash-big sm">15</div><div class="dash-sub">Copyrights</div></div>
-            <div><div class="dash-big sm">4</div><div class="dash-sub">Patent Filings</div></div>
-          </div>
-        </div>
-
-        <div class="dash-card">
-          <div class="dash-head">
-            <span class="dash-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 4h8v4a4 4 0 01-8 0V4z"/><path d="M5 5H3v2a4 4 0 004 4M19 5h2v2a4 4 0 01-4 4"/><path d="M12 13v3M9 20h6M10 17h4v3h-4z"/></svg></span>
-            <h3>Innovation Milestones</h3>
-          </div>
-          <div class="dash-split">
-            <div><div class="dash-big sm">34</div><div class="dash-sub">International awards</div></div>
-            <div><div class="dash-big sm">5</div><div class="dash-sub">National awards</div></div>
-          </div>
-          <div class="dash-stats">
-            <span>Best of Best <b>3</b></span><span>Gold <b>13</b></span><span>Silver <b>14</b></span><span>Bronze <b>10</b></span>
-          </div>
-        </div>
-
-        <div class="dash-card">
-          <div class="dash-head">
-            <span class="dash-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M2 20c0-3 2.5-5 6-5s6 2 6 5M12 20c0-2.5 2-4.5 5-4.5s5 2 5 4.5"/></svg></span>
-            <h3>Community & Outreach</h3>
-          </div>
-          <div class="dash-split">
-            <div><div class="dash-big sm">4</div><div class="dash-sub">Knowledge/Tech Transfer</div></div>
-            <div><div class="dash-big sm">3</div><div class="dash-sub">Social Responsibility</div></div>
-          </div>
-        </div>
-
-        <div class="dash-card">
-          <div class="dash-head">
-            <span class="dash-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></span>
-            <h3>Non-Degree Training</h3>
-          </div>
-          <div class="dash-split">
-            <div><div class="dash-big sm">6</div><div class="dash-sub">Trainings conducted</div></div>
-            <div><div class="dash-big sm">RM 7,080</div><div class="dash-sub">Income generated</div></div>
-          </div>
-        </div>
-      </div>
+      <div class="why-dashboard-img-wrap">
+        <img class="why-dashboard-img" src="images/achievements-dashboard-2025.jpg?v=2" alt="FCOM 2025 Achievements Dashboard">
       </div>
     </div>
   </section>
