@@ -322,14 +322,10 @@
   .juicer-card{margin-top:24px;background:var(--white);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
   .juicer-card .embed-head{display:flex;align-items:center;gap:10px;padding:15px 18px;border-bottom:1px solid var(--line);font-family:'Archivo',sans-serif;font-weight:700;font-size:0.92rem;}
   .juicer-card .embed-head svg{width:19px;height:19px;flex:none;}
-  .juicer-card .juicer-body{padding:18px;display:flex;justify-content:center;}
-  .fb-tabs{display:flex;gap:8px;padding:14px 18px 0;}
-  .fb-tab-btn{background:var(--bg,#F3F4F8);border:1px solid var(--line);color:var(--ink-2);font-weight:700;font-size:0.84rem;padding:9px 18px;border-radius:20px;cursor:pointer;transition:background .15s ease,color .15s ease;}
-  .fb-tab-btn.active{background:var(--red);border-color:var(--red);color:var(--white);}
-  .fb-tab-panel{display:none;width:100%;max-width:500px;}
-  .fb-tab-panel.active{display:flex;justify-content:center;}
-  .fb-tab-panel .fb-page,.fb-tab-panel span,.fb-tab-panel iframe{max-width:100%;}
-  @media (max-width:540px){.fb-tabs{flex-wrap:wrap;}}
+  .juicer-card .juicer-body{padding:18px;}
+  .fb-row{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;}
+  .fb-col{flex:1 1 380px;max-width:380px;display:flex;justify-content:center;overflow:hidden;}
+  .fb-col .fb-page,.fb-col span,.fb-col iframe{max-width:100%;}
 
   /* ---------- INTRO SPLASH (staff photo wall) ---------- */
   body.intro-lock{overflow:hidden;height:100vh;}
@@ -657,24 +653,20 @@
         </div>
       </div>
 
-      <!-- SOCIAL EMBED (Facebook Page Plugin — FCOM + UPTM Official pages, switchable tabs) -->
+      <!-- SOCIAL EMBED (Facebook Page Plugin — FCOM + UPTM Official pages, side by side) -->
       <div class="juicer-card">
         <div class="embed-head">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg>
           FCOM Social Wall
         </div>
-        <div class="fb-tabs" id="fbTabs">
-          <button type="button" class="fb-tab-btn active" data-target="fbPanelFcom">FCOM</button>
-          <button type="button" class="fb-tab-btn" data-target="fbPanelUptm">UPTM Official</button>
-        </div>
-        <div class="juicer-body">
-          <div class="fb-tab-panel active" id="fbPanelFcom">
-            <div class="fb-page" data-href="https://www.facebook.com/fcomuptm" data-tabs="timeline" data-width="500" data-height="700" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false">
+        <div class="juicer-body fb-row">
+          <div class="fb-col">
+            <div class="fb-page" data-href="https://www.facebook.com/fcomuptm" data-tabs="timeline" data-width="380" data-height="420" data-small-header="true" data-hide-cover="false" data-show-facepile="false">
               <blockquote cite="https://www.facebook.com/fcomuptm" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/fcomuptm" target="_blank" rel="noopener">FCOM UPTM</a></blockquote>
             </div>
           </div>
-          <div class="fb-tab-panel" id="fbPanelUptm">
-            <div class="fb-page" data-href="https://www.facebook.com/uptm.official" data-tabs="timeline" data-width="500" data-height="700" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false">
+          <div class="fb-col">
+            <div class="fb-page" data-href="https://www.facebook.com/uptm.official" data-tabs="timeline" data-width="380" data-height="420" data-small-header="true" data-hide-cover="false" data-show-facepile="false">
               <blockquote cite="https://www.facebook.com/uptm.official" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/uptm.official" target="_blank" rel="noopener">UPTM Official</a></blockquote>
             </div>
           </div>
@@ -682,18 +674,6 @@
       </div>
     </div>
   </section>
-
-<script>
-  document.querySelectorAll('#fbTabs .fb-tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('#fbTabs .fb-tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.fb-tab-panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(btn.dataset.target).classList.add('active');
-      if (window.FB && window.FB.XFBML) { window.FB.XFBML.parse(document.getElementById(btn.dataset.target)); }
-    });
-  });
-</script>
 
   <!-- DEAN MESSAGE -->
 
