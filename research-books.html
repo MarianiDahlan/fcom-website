@@ -999,6 +999,68 @@
   const MS_MARKERS = ["apa","bagaimana","berapa","bila","kenapa","macam","mana","yang","boleh","saya","adakah","ialah","untuk","dgn","dengan","daripada","kalau","jika","tak","tidak","nak","kena","perlu","syarat","yuran","kelayakan","semester","pelajar","peraturan","gred","markah","lulus","gagal","rayuan","pengajian","pendaftaran","kehadiran","kursus"];
   const EN_MARKERS = ["what","how","when","where","why","which","can","could","does","is","are","the","for","fee","fees","credit","grade","grading","attendance","exam","examination","appeal","pass","fail","requirement","requirements","semester","student","rule","rules","regulation","regulations","transfer","exemption","deferment","suspension","misconduct","plagiarism","cheating","graduate","graduation","course"];
 
+  /* ---------- Live site search fallback: scans the actual website pages when the KB has no match ---------- */
+  const SITE_PAGES = [
+    { file: "index.html", title: "Laman Utama / Home" },
+    { file: "about.html", title: "Tentang FCOM / About FCOM" },
+    { file: "academics.html", title: "Akademik & Program / Academics & Programmes" },
+    { file: "research.html", title: "Penyelidikan / Research" },
+    { file: "research-books.html", title: "Buku & Penerbitan / Books & Publications" },
+    { file: "industry.html", title: "Industri & Kerjasama / Industry & Collaboration" },
+    { file: "news.html", title: "Berita & Aktiviti / News & Activities" },
+    { file: "contact.html", title: "Hubungi Kami / Contact Us" },
+    { file: "adjunct-professor.html", title: "Adjunct Professor" },
+    { file: "visiting-professor.html", title: "Visiting Professor" }
+  ];
+  const STOP_WORDS = new Set(["the","and","for","are","with","that","this","dan","yang","untuk","dengan","dari","pada","adalah","atau","apa","ini","itu"]);
+  let siteIndex = null;
+  let siteIndexPromise = null;
+
+  function extractPageText(htmlStr) {
+    try {
+      const doc = new DOMParser().parseFromString(htmlStr, 'text/html');
+      doc.querySelectorAll('script,style,noscript').forEach(el => el.remove());
+      return (doc.body ? doc.body.innerText : '').replace(/\s+/g, ' ').trim();
+    } catch (e) { return ''; }
+  }
+
+  function buildSiteIndex() {
+    if (siteIndexPromise) return siteIndexPromise;
+    siteIndexPromise = Promise.all(SITE_PAGES.map(p =>
+      fetch(p.file).then(r => r.ok ? r.text() : '').then(html => ({
+        file: p.file, title: p.title, text: html ? extractPageText(html) : ''
+      })).catch(() => ({ file: p.file, title: p.title, text: '' }))
+    )).then(results => { siteIndex = results.filter(r => r.text); return siteIndex; })
+      .catch(() => { siteIndex = []; return siteIndex; });
+    return siteIndexPromise;
+  }
+
+  function searchSite(query) {
+    if (!siteIndex || !siteIndex.length) return null;
+    const qWords = normalizeText(query).split(' ').filter(w => w.length > 2 && !STOP_WORDS.has(w));
+    if (!qWords.length) return null;
+    let best = null, bestScore = 0;
+    siteIndex.forEach(page => {
+      const normText = normalizeText(page.text);
+      let score = 0;
+      qWords.forEach(w => { if (normText.includes(w)) score++; });
+      if (score > bestScore) { bestScore = score; best = page; }
+    });
+    if (!best || bestScore === 0) return null;
+    const lowerOrig = best.text.toLowerCase();
+    let pos = -1;
+    for (const w of qWords) { pos = lowerOrig.indexOf(w); if (pos >= 0) break; }
+    let snippet;
+    if (pos >= 0) {
+      const start = Math.max(0, pos - 90);
+      const end = Math.min(best.text.length, pos + 210);
+      snippet = (start > 0 ? '…' : '') + best.text.slice(start, end).trim() + (end < best.text.length ? '…' : '');
+    } else {
+      snippet = best.text.slice(0, 220) + '…';
+    }
+    return { page: best, snippet };
+  }
+
   function normalizeText(s) {
     return s.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
   }
@@ -1052,8 +1114,9 @@
   chatToggle.addEventListener('click', () => {
     chatPanel.classList.toggle('open');
     if (chatPanel.classList.contains('open') && !greeted) {
-      addMsg("Hai! Saya FCOM Assistant. Tanya saya pasal program, yuran, kelayakan, Peraturan Akademik UPTM (gred, CGPA, rayuan, dll) atau cara nak hubungi kami. / Hi! I'm the FCOM Assistant — ask me about programmes, fees, entry requirements, UPTM Academic Regulations (grading, CGPA, appeals, etc.) or how to contact us.", 'bot');
+      addMsg("Hai! Saya FCOM Assistant. Tanya saya pasal program, yuran, kelayakan, Peraturan Akademik UPTM (gred, CGPA, rayuan, dll), atau apa-apa je yang ada dalam website FCOM, atau cara nak hubungi kami. / Hi! I'm the FCOM Assistant — ask me about programmes, fees, entry requirements, UPTM Academic Regulations (grading, CGPA, appeals, etc.), anything else on the FCOM website, or how to contact us.", 'bot');
       greeted = true;
+      buildSiteIndex(); // warm up the live site index quietly in the background
     }
   });
   chatClose.addEventListener('click', () => chatPanel.classList.remove('open'));
@@ -1063,7 +1126,43 @@
     if (!trimmed) return;
     addMsg(trimmed.replace(/</g,'&lt;'), 'user');
     chatInput.value = '';
-    setTimeout(() => addMsg(findAnswer(trimmed), 'bot'), 350);
+    const lang = detectLang(trimmed);
+    const q = normalizeText(trimmed);
+    let best = null, bestScore = 0;
+    FCOM_KB.forEach(entry => {
+      let score = 0;
+      entry.keywords.forEach(kw => { if (q.includes(kw)) score += kw.split(' ').length; });
+      if (score > bestScore) { bestScore = score; best = entry; }
+    });
+
+    if (best) {
+      setTimeout(() => addMsg(resolveAnswer(best.answer, lang), 'bot'), 350);
+      return;
+    }
+
+    // No KB match — fall back to a live search across the actual website pages
+    const loadingId = 'load-' + Date.now();
+    setTimeout(() => addMsg('<span id="' + loadingId + '">' + (lang === 'en' ? 'Let me check the FCOM website…' : 'Sekejap, saya semak dalam website FCOM…') + '</span>', 'bot'), 250);
+
+    buildSiteIndex().then(() => {
+      const result = searchSite(trimmed);
+      const loadingEl = document.getElementById(loadingId);
+      let msg;
+      if (result) {
+        msg = lang === 'en'
+          ? 'Found this on <b>' + result.page.title + '</b>: "' + result.snippet + '" — <a href="' + result.page.file + '" target="_blank">read more</a>.'
+          : 'Jumpa maklumat ni dekat <b>' + result.page.title + '</b>: "' + result.snippet + '" — <a href="' + result.page.file + '" target="_blank">baca lanjut</a>.';
+      } else {
+        msg = resolveAnswer(FALLBACK_ANSWER, lang);
+      }
+      if (loadingEl) { loadingEl.innerHTML = msg; chatBody.scrollTop = chatBody.scrollHeight; }
+      else addMsg(msg, 'bot');
+    }).catch(() => {
+      const loadingEl = document.getElementById(loadingId);
+      const msg = resolveAnswer(FALLBACK_ANSWER, lang);
+      if (loadingEl) { loadingEl.innerHTML = msg; chatBody.scrollTop = chatBody.scrollHeight; }
+      else addMsg(msg, 'bot');
+    });
   }
 
   chatSend.addEventListener('click', () => sendMessage(chatInput.value));
