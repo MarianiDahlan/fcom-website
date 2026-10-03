@@ -373,7 +373,7 @@
     <div class="intro-textcell" id="introTextCell">
       <img class="intro-logo" src="images/fcom.png?v=2" alt="FCOM">
       <h1>Meet the people behind FCOM</h1>
-      <p>68 staff, one Faculty of Computing &amp; Multimedia</p>
+      <p>69 staff, one Faculty of Computing &amp; Multimedia</p>
       <div class="intro-loader"><span></span><span></span><span></span></div>
       <div class="intro-progress" id="introProgress"></div>
     </div>
@@ -1622,6 +1622,7 @@
     "emi-amielda-binti-ahmad-mokhtar.png",
     "farah-farzana-binti-abdul-aziz.png",
     "fatanah-syazana-zuraine-binti-ahmad.png",
+    "fatin-faqihah-binti-majid.png",
     "fahmi-akmal-bin-dzulkifli.png",
     "hafizz-al.png",
     "harlinawati-binti-abdul-kadir.png",
@@ -1760,6 +1761,44 @@
       grid.style.gridAutoRows = bestH.toFixed(1) + 'px';
       textCell.style.gridColumn = colStart + ' / span ' + spanCols;
       textCell.style.gridRow = rowStart + ' / span ' + spanRows;
+
+      // Place every photo tile explicitly (instead of relying on CSS auto-flow)
+      // so a short trailing row can be centred instead of left-packed.
+      var occupied = [];
+      for (var r = 0; r < rows; r++) occupied.push(new Array(cols).fill(false));
+      for (var hr = rowStart - 1; hr < rowStart - 1 + spanRows && hr < rows; hr++) {
+        for (var hc = colStart - 1; hc < colStart - 1 + spanCols && hc < cols; hc++) {
+          occupied[hr][hc] = true;
+        }
+      }
+      var freeCells = [];
+      for (var r2 = 0; r2 < rows; r2++) {
+        for (var c2 = 0; c2 < cols; c2++) {
+          if (!occupied[r2][c2]) freeCells.push({ row: r2, col: c2 });
+        }
+      }
+      var tiles = grid.querySelectorAll('.intro-tile');
+      var lastRowIndex = -1, countInLastRow = 0, minColInLastRow = cols;
+      for (var i = 0; i < tiles.length && i < freeCells.length; i++) {
+        var cell = freeCells[i];
+        tiles[i].style.gridColumn = (cell.col + 1) + ' / span 1';
+        tiles[i].style.gridRow = (cell.row + 1) + ' / span 1';
+        if (cell.row > lastRowIndex) { lastRowIndex = cell.row; countInLastRow = 0; minColInLastRow = cols; }
+        countInLastRow++;
+        if (cell.col < minColInLastRow) minColInLastRow = cell.col;
+      }
+      // Centre a short trailing row that starts flush left (the common case)
+      // by shifting it so the leftover space splits evenly left/right.
+      if (lastRowIndex >= 0 && countInLastRow > 0 && countInLastRow < cols && minColInLastRow === 0) {
+        var shift = Math.floor((cols - countInLastRow) / 2);
+        if (shift > 0) {
+          for (var j = 0; j < tiles.length && j < freeCells.length; j++) {
+            if (freeCells[j].row === lastRowIndex) {
+              tiles[j].style.gridColumn = (freeCells[j].col + 1 + shift) + ' / span 1';
+            }
+          }
+        }
+      }
     }
     layoutGrid();
     var resizeTimer;
