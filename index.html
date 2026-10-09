@@ -364,6 +364,38 @@
     .intro-tile,.intro-textcell{animation:none!important;opacity:1!important;transform:none!important;}
     .intro-skip{animation:none!important;opacity:1!important;transform:translate(-50%,0)!important;}
   }
+
+  /* ===== FCOM Around the World — side tab + video panel ===== */
+  .world-tab{position:fixed;right:0;top:36%;z-index:998;display:flex;align-items:center;gap:10px;padding:16px 10px 16px 11px;border:0;cursor:pointer;color:#fff;font-family:inherit;font-weight:800;font-size:0.84rem;letter-spacing:.06em;writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);transform-origin:center;border-radius:0 12px 12px 0;background:linear-gradient(90deg,#F2434F 0%,#D71A28 45%,#A80F1B 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.35),inset 0 -3px 0 rgba(0,0,0,.22),-4px 6px 18px rgba(215,26,40,.38);transition:padding .2s ease,box-shadow .2s ease;}
+  .world-tab:hover{padding-right:16px;box-shadow:inset 0 2px 0 rgba(255,255,255,.4),inset 0 -3px 0 rgba(0,0,0,.25),-6px 8px 24px rgba(215,26,40,.5);}
+  .world-tab svg{width:18px;height:18px;flex:none;transform:rotate(90deg);}
+  .world-tab::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,rgba(255,255,255,.28),rgba(255,255,255,0) 55%);pointer-events:none;}
+  .world-overlay{position:fixed;inset:0;z-index:10000;background:rgba(7,15,45,.62);display:none;align-items:center;justify-content:center;padding:18px;}
+  .world-overlay.open{display:flex;}
+  .world-panel{background:#fff;border-radius:16px;width:min(980px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.45);}
+  .world-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;background:linear-gradient(90deg,#0B1A45,#0F2266);color:#fff;}
+  .world-head h3{margin:0;font-size:1.15rem;}
+  .world-head p{margin:2px 0 0;font-size:.82rem;opacity:.8;}
+  .world-close{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.2rem;line-height:1;}
+  .world-close:hover{background:var(--red);border-color:var(--red);}
+  .world-body{padding:20px 22px 24px;overflow-y:auto;}
+  .world-player{display:none;margin-bottom:18px;}
+  .world-player.on{display:block;}
+  .world-player .frame{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:10px;overflow:hidden;}
+  .world-player iframe,.world-player video{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .world-player .cap{margin:10px 2px 0;font-size:.92rem;color:#0B1A45;font-weight:700;}
+  .world-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;}
+  .world-card{border:1px solid #E4E7EE;border-radius:12px;padding:14px;background:#F8F9FC;cursor:pointer;text-align:left;font-family:inherit;transition:transform .15s,box-shadow .15s;}
+  .world-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(11,26,69,.14);}
+  .world-card .flag{font-size:1.8rem;}
+  .world-card h4{margin:6px 0 2px;font-size:1.05rem;font-size:1rem;color:#0B1A45;}
+  .world-card p{margin:0;font-size:.82rem;color:#5B6472;text-align:left;}
+  .world-card .play{display:inline-block;margin-top:10px;color:var(--red);font-weight:700;font-size:.85rem;}
+  .world-items{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+  .world-items button{border:1px solid #D71A28;background:#fff;color:#D71A28;font-weight:700;font-family:inherit;font-size:.85rem;padding:6px 14px;border-radius:999px;cursor:pointer;}
+  .world-items button:hover{background:#D71A28;color:#fff;}
+  .world-empty{color:#5B6472;font-size:.9rem;}
+  @media (max-width:640px){.world-tab{font-size:.72rem;padding:12px 8px;top:30%;}.world-overlay{padding:0;}.world-panel{border-radius:0;max-height:100vh;height:100vh;}}
 </style>
 </head>
 <body>
@@ -1838,6 +1870,87 @@
 
     setTimeout(finishIntro, MAX_WAIT);
   })();
+</script>
+
+
+<!-- FCOM Around the World -->
+<button class="world-tab" id="worldTab" aria-label="Open FCOM Around the World">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20 15 15 0 010-20z"/></svg>
+  FCOM Around the World
+</button>
+<div class="world-overlay" id="worldOverlay" role="dialog" aria-modal="true" aria-label="FCOM Around the World">
+  <div class="world-panel">
+    <div class="world-head">
+      <div><h3>FCOM Around the World</h3><p>Where are our students now? Click a country to watch.</p></div>
+      <button class="world-close" id="worldClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="world-body">
+      <div class="world-player" id="worldPlayer"><div class="frame" id="worldFrame"></div><div class="cap" id="worldCap"></div></div>
+      <div class="world-grid" id="worldGrid"></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  /* Tambah video baru = tambah satu baris di sini.
+     type: "youtube" (letak ID video) | "mp4" (path fail) | "link" (buka tab baru) */
+  var WORLD_VIDEOS = [
+    { country:"Hong Kong", flag:"🇭🇰", name:"", uni:"", type:"youtube", url:"Bu_t4RdhanE" },
+    { country:"Indonesia", flag:"🇮🇩", name:"", uni:"", type:"youtube", url:"RlzscxuiVZs" },
+    { country:"Russia", flag:"🇷🇺", name:"", uni:"", type:"youtube", url:"zufvBobWaWc" },
+    { country:"Singapore", flag:"🇸🇬", name:"", uni:"", items:[
+      { type:"tiktok", url:"https://www.tiktok.com/@beatopialol/video/7648957118422338823" },
+      { type:"tiktok", url:"https://www.tiktok.com/@beatopialol/video/7649238524583054599" },
+      { type:"tiktok", url:"https://www.tiktok.com/@beatopialol/video/7649976925737291016" } ] }
+  ];
+  var tab=document.getElementById('worldTab'), ov=document.getElementById('worldOverlay'),
+      grid=document.getElementById('worldGrid'), player=document.getElementById('worldPlayer'),
+      frame=document.getElementById('worldFrame'), cap=document.getElementById('worldCap');
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function stop(){frame.innerHTML='';player.classList.remove('on');}
+  function playItem(v,it){
+    if(it.type==='youtube'){
+      frame.innerHTML='<iframe src="https://www.youtube.com/embed/'+encodeURIComponent(it.url)+'?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+    } else if(it.type==='mp4'){
+      frame.innerHTML='<video src="'+esc(it.url)+'" controls autoplay playsinline></video>';
+    } else if(it.type==='tiktok'){
+      var m=/video\/(\d+)/.exec(it.url);
+      if(m){frame.innerHTML='<iframe src="https://www.tiktok.com/embed/v2/'+m[1]+'" allow="autoplay; fullscreen" allowfullscreen></iframe>';}
+      else{window.open(it.url,'_blank','noopener');return;}
+    } else { window.open(it.url,'_blank','noopener'); return; }
+  }
+  function play(v){
+    cap.innerHTML='';
+    var title=document.createElement('div'); title.textContent=v.flag+' '+v.country; cap.appendChild(title);
+    if(v.items&&v.items.length){
+      frame.innerHTML='';
+      var row=document.createElement('div'); row.className='world-items';
+      v.items.forEach(function(it,i){
+        var b=document.createElement('button'); b.type='button'; b.textContent='\u25B6 Video '+(i+1);
+        b.addEventListener('click',function(){playItem(v,it);}); row.appendChild(b);
+      });
+      cap.appendChild(row);
+      var f0=v.items[0];
+      if(f0.type==='youtube'||f0.type==='mp4'||(f0.type==='tiktok'&&/video\/\d+/.test(f0.url))){playItem(v,f0);}
+      else{frame.style.display='flex';frame.innerHTML='<div style="margin:auto;color:#fff;text-align:center;padding:20px;font-size:.95rem;">Pilih Video 1, 2 atau 3 di bawah &mdash; akan dibuka di tab baru (TikTok).</div>';}
+    } else { playItem(v,v); }
+    player.classList.add('on');
+    player.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  if(!WORLD_VIDEOS.length){grid.innerHTML='<p class="world-empty">Video akan ditambah tidak lama lagi.</p>';}
+  WORLD_VIDEOS.forEach(function(v){
+    var b=document.createElement('button'); b.className='world-card'; b.type='button';
+    b.innerHTML='<div class="flag">'+v.flag+'</div><h4>'+esc(v.country)+'</h4><span class="play">&#9654; Tonton video</span>';
+    b.addEventListener('click',function(){play(v);});
+    grid.appendChild(b);
+  });
+  function open_(){ov.classList.add('open');document.body.style.overflow='hidden';}
+  function close_(){ov.classList.remove('open');document.body.style.overflow='';stop();}
+  tab.addEventListener('click',open_);
+  document.getElementById('worldClose').addEventListener('click',close_);
+  ov.addEventListener('click',function(e){if(e.target===ov)close_();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('open'))close_();});
+})();
 </script>
 
 </body>
