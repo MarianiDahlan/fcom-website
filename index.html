@@ -1932,15 +1932,15 @@
       cap.appendChild(row);
       var f0=v.items[0];
       if(f0.type==='youtube'||f0.type==='mp4'||(f0.type==='tiktok'&&/video\/\d+/.test(f0.url))){playItem(v,f0);}
-      else{frame.style.display='flex';frame.innerHTML='<div style="margin:auto;color:#fff;text-align:center;padding:20px;font-size:.95rem;">Pilih Video 1, 2 atau 3 di bawah &mdash; akan dibuka di tab baru (TikTok).</div>';}
+      else{frame.style.display='flex';frame.innerHTML='<div style="margin:auto;color:#fff;text-align:center;padding:20px;font-size:.95rem;">Choose Video 1, 2 or 3 below &mdash; it opens in a new tab (TikTok).</div>';}
     } else { playItem(v,v); }
     player.classList.add('on');
     player.scrollIntoView({behavior:'smooth',block:'start'});
   }
-  if(!WORLD_VIDEOS.length){grid.innerHTML='<p class="world-empty">Video akan ditambah tidak lama lagi.</p>';}
+  if(!WORLD_VIDEOS.length){grid.innerHTML='<p class="world-empty">Videos coming soon.</p>';}
   WORLD_VIDEOS.forEach(function(v){
     var b=document.createElement('button'); b.className='world-card'; b.type='button';
-    b.innerHTML='<div class="flag">'+v.flag+'</div><h4>'+esc(v.country)+'</h4><span class="play">&#9654; Tonton video</span>';
+    b.innerHTML='<div class="flag">'+v.flag+'</div><h4>'+esc(v.country)+'</h4><span class="play">&#9654; Watch video</span>';
     b.addEventListener('click',function(){play(v);});
     grid.appendChild(b);
   });
